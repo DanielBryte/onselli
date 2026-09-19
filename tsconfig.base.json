@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "target": "ES2022", "lib": ["ES2022"], "strict": true,
+    "noUncheckedIndexedAccess": true, "noImplicitOverride": true,
+    "noFallthroughCasesInSwitch": true, "module": "ESNext",
+    "moduleResolution": "Bundler", "resolveJsonModule": true,
+    "skipLibCheck": true, "declaration": true
+  }
+}
