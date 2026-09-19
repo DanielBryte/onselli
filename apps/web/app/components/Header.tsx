@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Logo from './Logo';
-import { MapPin, Search, ChevronDown, User, Store } from 'lucide-react';
+import { MapPin, Search, ChevronDown, Menu, X } from 'lucide-react';
 
 interface HeaderProps {
   activeTab?: string;
@@ -12,6 +12,7 @@ interface HeaderProps {
 export default function Header({ activeTab = 'home' }: HeaderProps) {
   const [selectedLocation, setSelectedLocation] = useState('Lagos');
   const [isLocOpen, setIsLocOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const locations = ['Lagos', 'Abuja', 'Port Harcourt', 'Ibadan', 'Kano', 'Enugu'];
 
@@ -60,7 +61,7 @@ export default function Header({ activeTab = 'home' }: HeaderProps) {
         </nav>
 
         {/* Right Actions */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
           {/* Location Selector */}
           <div className="relative hidden sm:block">
             <button
@@ -108,8 +109,33 @@ export default function Header({ activeTab = 'home' }: HeaderProps) {
           <button className="px-4 py-2.5 rounded-full bg-[#00a859] text-white text-[13px] font-bold hover:bg-[#008f4c] shadow-[0_4px_14px_rgba(0,168,89,0.28)] hover:shadow-[0_6px_20px_rgba(0,168,89,0.36)] transition-all active:scale-97">
             Create Account
           </button>
+          <button
+            type="button"
+            aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+            aria-expanded={isMenuOpen}
+            onClick={() => setIsMenuOpen((open) => !open)}
+            className="md:hidden p-2 rounded-full text-[#073827] hover:bg-[#f0f8f4] transition-colors"
+          >
+            {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
         </div>
       </div>
+      {isMenuOpen && (
+        <div className="md:hidden border-t border-[#e2efe7] bg-white px-4 py-4 shadow-[0_12px_24px_rgba(7,56,39,0.08)]">
+          <nav className="mx-auto flex max-w-[1240px] flex-col gap-1" aria-label="Mobile navigation">
+            {[
+              { label: 'Home', href: '/' },
+              { label: 'Explore businesses', href: '/discover' },
+              { label: 'For businesses', href: '#for-businesses' },
+              { label: 'About Onselli', href: '#about' }
+            ].map((item) => (
+              <Link key={item.href} href={item.href} onClick={() => setIsMenuOpen(false)} className="rounded-xl px-3 py-3 text-sm font-bold text-[#264b3c] hover:bg-[#f0f8f4] hover:text-[#008f4c]">
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+        </div>
+      )}
     </header>
   );
 }

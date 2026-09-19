@@ -149,18 +149,6 @@ export default function BusinessCta() {
           </div>
 
         </div>
-        <div className="relative z-10 grid grid-cols-1 sm:grid-cols-3 border-t border-white/10">
-          {[
-            ['10k+', 'businesses building trust'],
-            ['36 states', 'across Nigeria'],
-            ['Always on', 'for your next customer']
-          ].map(([stat, label], index) => (
-            <div key={stat} className={`flex items-baseline justify-center gap-2 px-6 py-5 text-center ${index < 2 ? 'sm:border-r sm:border-white/10' : ''}`}>
-              <span className="text-xl font-extrabold tracking-tight text-white">{stat}</span>
-              <span className="text-xs font-medium text-[#a7cbb9]">{label}</span>
-            </div>
-          ))}
-        </div>
       </div>
     </section>
   );
