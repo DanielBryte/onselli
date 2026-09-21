@@ -4,19 +4,16 @@ import React, { useState, useMemo, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import BusinessCard from '../components/BusinessCard';
 import {
   Search,
   SlidersHorizontal,
   MapPin,
-  Star,
-  CheckCircle2,
-  Heart,
   X,
-  ArrowRight,
   ChevronDown,
   RotateCcw
 } from 'lucide-react';
-import { MOCK_BUSINESSES, CATEGORIES, Business } from '../data/mockData';
+import { MOCK_BUSINESSES, CATEGORIES } from '../data/mockData';
 
 function DiscoverContent() {
   const searchParams = useSearchParams();
@@ -129,10 +126,10 @@ function DiscoverContent() {
         <div className="max-w-[1240px] mx-auto">
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
             <div>
-              <span className="text-[#00a859] font-bold text-[12px] uppercase tracking-wider block mb-1">
+              <span className="text-[#00a859] font-semibold text-[12px] uppercase tracking-wider block mb-1">
                 DISCOVER & EXPLORE
               </span>
-              <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
+              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
                 Find trusted businesses & services
               </h1>
             </div>
@@ -164,7 +161,7 @@ function DiscoverContent() {
           <div className="lg:hidden flex items-center justify-between pb-4 border-b border-[#e2efe7]">
             <button
               onClick={() => setIsMobileFilterOpen(true)}
-              className="flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-[#d2e4da] text-[#073827] font-bold text-[13px] shadow-xs"
+              className="flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-[#d2e4da] text-[#073827] font-semibold text-[13px] shadow-xs"
             >
               <SlidersHorizontal className="w-4 h-4 text-[#00a859]" />
               <span>Full Filters</span>
@@ -186,14 +183,14 @@ function DiscoverContent() {
               <div className="flex items-center justify-between pb-4 border-b border-[#e2efe7]">
                 <div className="flex items-center gap-2">
                   <SlidersHorizontal className="w-4 h-4 text-[#00a859]" />
-                  <h2 className="font-extrabold text-[#073827] text-[16px]">
+                  <h2 className="font-semibold text-[#073827] text-[16px]">
                     Full Filters
                   </h2>
                 </div>
                 <div className="flex items-center gap-2">
                   <button
                     onClick={resetFilters}
-                    className="text-[11.5px] font-bold text-[#00a859] hover:underline flex items-center gap-1"
+                    className="text-[11.5px] font-semibold text-[#00a859] hover:underline flex items-center gap-1"
                     title="Reset all filters"
                   >
                     <RotateCcw className="w-3 h-3" />
@@ -210,7 +207,7 @@ function DiscoverContent() {
 
               {/* Category Filter */}
               <div>
-                <h3 className="font-bold text-[#073827] text-[13.5px] mb-2.5">
+                <h3 className="font-semibold text-[#073827] text-[13.5px] mb-2.5">
                   Category
                 </h3>
                 <div className="space-y-1.5">
@@ -218,7 +215,7 @@ function DiscoverContent() {
                     onClick={() => setSelectedCategory('All')}
                     className={`w-full text-left px-3 py-1.5 rounded-lg text-[13px] font-medium transition-colors ${
                       selectedCategory === 'All'
-                        ? 'bg-[#00a859] text-white font-bold'
+                        ? 'bg-[#00a859] text-white font-semibold'
                         : 'text-[#3e5d50] hover:bg-[#f0f8f4]'
                     }`}
                   >
@@ -230,7 +227,7 @@ function DiscoverContent() {
                       onClick={() => setSelectedCategory(cat.title)}
                       className={`w-full text-left px-3 py-1.5 rounded-lg text-[13px] font-medium transition-colors ${
                         selectedCategory === cat.title
-                          ? 'bg-[#00a859] text-white font-bold'
+                          ? 'bg-[#00a859] text-white font-semibold'
                           : 'text-[#3e5d50] hover:bg-[#f0f8f4]'
                       }`}
                     >
@@ -242,7 +239,7 @@ function DiscoverContent() {
 
               {/* Location Filter */}
               <div>
-                <h3 className="font-bold text-[#073827] text-[13.5px] mb-2.5">
+                <h3 className="font-semibold text-[#073827] text-[13.5px] mb-2.5">
                   Location
                 </h3>
                 <div className="relative">
@@ -264,10 +261,10 @@ function DiscoverContent() {
               {/* Maximum Price Range Slider */}
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <h3 className="font-bold text-[#073827] text-[13.5px]">
+                  <h3 className="font-semibold text-[#073827] text-[13.5px]">
                     Max Starting Price
                   </h3>
-                  <span className="text-[12px] font-bold text-[#00a859]">
+                  <span className="text-[12px] font-semibold text-[#00a859]">
                     ₦{maxPrice.toLocaleString()}
                   </span>
                 </div>
@@ -284,7 +281,7 @@ function DiscoverContent() {
 
               {/* Badges & Trust Toggles */}
               <div>
-                <h3 className="font-bold text-[#073827] text-[13.5px] mb-2.5">
+                <h3 className="font-semibold text-[#073827] text-[13.5px] mb-2.5">
                   Trust Signals
                 </h3>
                 <div className="space-y-2">
@@ -312,7 +309,7 @@ function DiscoverContent() {
 
               {/* Minimum Rating */}
               <div>
-                <h3 className="font-bold text-[#073827] text-[13.5px] mb-2">
+                <h3 className="font-semibold text-[#073827] text-[13.5px] mb-2">
                   Minimum Rating
                 </h3>
                 <div className="flex items-center gap-1.5">
@@ -320,7 +317,7 @@ function DiscoverContent() {
                     <button
                       key={score}
                       onClick={() => setMinRating(score)}
-                      className={`px-3 py-1 rounded-lg text-[12px] font-bold border transition-colors ${
+                      className={`px-3 py-1 rounded-lg text-[12px] font-medium border transition-colors ${
                         minRating === score
                           ? 'bg-[#00a859] text-white border-[#00a859]'
                           : 'bg-white text-[#3e5d50] border-[#d2e4da] hover:bg-[#f0f8f4]'
@@ -362,113 +359,14 @@ function DiscoverContent() {
             {filteredBusinesses.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
                 {filteredBusinesses.map((biz) => (
-                  <article
-                    key={biz.id}
-                    className="group bg-white rounded-2xl border border-[#e2efe7] overflow-hidden hover:shadow-[0_16px_36px_rgba(7,56,39,0.09)] hover:border-[#00a859]/40 transition-all duration-300 flex flex-col"
-                  >
-                    {/* Cover Image */}
-                    <div className="relative h-44 w-full bg-[#e8f2ec] overflow-hidden">
-                      <img
-                        src={biz.coverImage}
-                        alt={biz.name}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
-                      <div className="absolute inset-0 bg-black/20" />
-
-                      {/* Badges */}
-                      <div className="absolute top-3 left-3 z-10 flex items-center gap-1.5">
-                        {biz.topRated ? (
-                          <span className="px-2.5 py-1 rounded-full bg-[#fff4db] text-[#b76e00] text-[10.5px] font-bold shadow-xs">
-                            Top Rated
-                          </span>
-                        ) : biz.verified ? (
-                          <span className="px-2.5 py-1 rounded-full bg-white/90 backdrop-blur-xs text-[#00a859] text-[10.5px] font-bold flex items-center gap-1 shadow-xs">
-                            <CheckCircle2 className="w-3 h-3 text-[#00a859]" />
-                            Verified
-                          </span>
-                        ) : null}
-                      </div>
-
-                      {/* Heart Button */}
-                      <button
-                        onClick={(e) => toggleFavorite(biz.id, e)}
-                        className="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-white/80 hover:bg-white backdrop-blur-xs flex items-center justify-center text-[#425b6c] hover:text-[#e44367] transition-all shadow-xs"
-                      >
-                        <Heart
-                          className={`w-4 h-4 ${
-                            favorites[biz.id] ? 'fill-[#e44367] text-[#e44367]' : ''
-                          }`}
-                        />
-                      </button>
-                    </div>
-
-                    {/* Details */}
-                    <div className="p-4 flex-1 flex flex-col justify-between">
-                      <div>
-                        <div className="flex items-start gap-3 mb-2.5">
-                          <div
-                            className="w-9 h-9 rounded-full shrink-0 flex items-center justify-center text-white font-bold text-[12px]"
-                            style={{ backgroundColor: biz.avatarBg }}
-                          >
-                            {biz.initials}
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <h3 className="font-bold text-[#073827] text-[14px] leading-snug truncate group-hover:text-[#00a859] transition-colors">
-                              {biz.name}
-                            </h3>
-                            <div className="flex items-center gap-1 text-[12px] mt-0.5">
-                              <Star className="w-3.5 h-3.5 fill-[#00a859] text-[#00a859]" />
-                              <span className="font-bold text-[#073827]">{biz.rating}</span>
-                              <span className="text-[#7d998c]">({biz.reviewsCount})</span>
-                            </div>
-                          </div>
-                        </div>
-
-                        <p className="text-[11.5px] font-semibold text-[#4e6b5e] flex items-center gap-1 mb-2">
-                          <MapPin className="w-3 h-3 text-[#7d998c]" />
-                          <span>{biz.location}</span>
-                          <span className="text-[#a4beaf]">·</span>
-                          <span className="text-[#658577]">{biz.distance}</span>
-                        </p>
-
-                        <div className="flex flex-wrap gap-1 mb-3">
-                          {biz.tags.map((tag) => (
-                            <span
-                              key={tag}
-                              className="px-2 py-0.5 rounded-md bg-[#f0f7f3] text-[#3b5e4f] text-[10.5px] font-medium"
-                            >
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
-
-                        <p className="text-[11.5px] text-[#5c7a6c] line-clamp-2 leading-relaxed mb-4">
-                          {biz.description}
-                        </p>
-                      </div>
-
-                      <div className="pt-3 border-t border-[#e2efe7] flex items-center justify-between">
-                        <div>
-                          <span className="text-[10px] uppercase font-bold text-[#718c80] block">Starting</span>
-                          <span className="font-extrabold text-[#073827] text-[13.5px]">
-                            {biz.startingPrice}
-                          </span>
-                        </div>
-
-                        <button className="text-[12px] font-bold text-[#00a859] hover:text-[#008f4c] flex items-center gap-1 group/btn">
-                          <span>View profile</span>
-                          <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover/btn:translate-x-0.5" />
-                        </button>
-                      </div>
-                    </div>
-                  </article>
+                  <BusinessCard key={biz.id} business={biz} isFavorite={Boolean(favorites[biz.id])} onToggleFavorite={(event) => toggleFavorite(biz.id, event)} />
                 ))}
               </div>
             ) : (
               /* Empty State */
               <div className="bg-white rounded-2xl border border-[#e2efe7] p-12 text-center max-w-md mx-auto my-8">
                 <Search className="w-12 h-12 text-[#9ec4b3] mx-auto mb-3" />
-                <h3 className="font-bold text-[#073827] text-[17px] mb-1">
+                <h3 className="font-semibold text-[#073827] text-[17px] mb-1">
                   No businesses found
                 </h3>
                 <p className="text-[13px] text-[#658577] mb-6">
@@ -476,7 +374,7 @@ function DiscoverContent() {
                 </p>
                 <button
                   onClick={resetFilters}
-                  className="px-5 py-2.5 rounded-full bg-[#00a859] text-white font-bold text-[13px] hover:bg-[#008f4c] transition-colors"
+                  className="px-5 py-2.5 rounded-full bg-[#00a859] text-white font-semibold text-[13px] hover:bg-[#008f4c] transition-colors"
                 >
                   Reset All Filters
                 </button>

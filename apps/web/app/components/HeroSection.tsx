@@ -1,13 +1,13 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   Search,
   MapPin,
-  ShieldCheck,
   ChevronDown,
   ArrowRight,
+  Check,
   Shirt,
   Sofa,
   Smartphone,
@@ -17,10 +17,42 @@ import {
 } from 'lucide-react';
 import { POPULAR_SEARCHES, CATEGORIES } from '../data/mockData';
 
+const BUSINESS_OFFERS = [
+  { title: 'storefront' },
+  { title: 'ads manager' },
+  { title: 'customers' },
+  { title: 'products' },
+  { title: 'invoices' },
+] as const;
+
 export default function HeroSection() {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
   const [location, setLocation] = useState('Lagos');
+  const [isLocationOpen, setIsLocationOpen] = useState(false);
+  const [activeOffer, setActiveOffer] = useState(0);
+  const locationMenuRef = useRef<HTMLDivElement>(null);
+  const locations = ['Lagos', 'Abuja', 'Port Harcourt', 'Ibadan'];
+  const activeBusinessOffer = BUSINESS_OFFERS.at(activeOffer) ?? BUSINESS_OFFERS[0]!;
+
+  useEffect(() => {
+    const closeOnOutsideClick = (event: MouseEvent) => {
+      if (!locationMenuRef.current?.contains(event.target as Node)) setIsLocationOpen(false);
+    };
+
+    document.addEventListener('mousedown', closeOnOutsideClick);
+    return () => document.removeEventListener('mousedown', closeOnOutsideClick);
+  }, []);
+
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const intervalId = window.setInterval(() => {
+      setActiveOffer((current) => (current + 1) % BUSINESS_OFFERS.length);
+    }, 3200);
+
+    return () => window.clearInterval(intervalId);
+  }, []);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -55,35 +87,71 @@ export default function HeroSection() {
   };
 
   return (
-    <section className="bg-white pt-14 pb-16 px-4 sm:px-6">
-      <div className="max-w-[1140px] mx-auto text-center">
-        {/* Top Trust Eyebrow Badge */}
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#00a859] text-white text-[12.5px] font-semibold mb-6">
-          <ShieldCheck className="w-4 h-4 text-white" />
-          <span>Trusted by 10,000+ businesses across Nigeria</span>
+    <section className="relative overflow-hidden bg-white px-4 pb-16 pt-14 sm:px-6 sm:pt-18">
+      <div className="pointer-events-none absolute inset-0 hidden 2xl:block" aria-hidden="true">
+        <div className="hero-side-card hero-side-card--left hero-notification absolute left-8 top-[158px] flex w-fit items-center gap-2.5 rounded-full px-3.5 py-3">
+          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#e5f8ed]">
+            <span className="h-2.5 w-2.5 rounded-full bg-[#42c77d]" />
+          </span>
+          <p className="whitespace-nowrap text-[12.5px] leading-none">
+            <span className="font-bold text-[#112d21]">New customer message</span>
+            <span className="font-normal text-[#84958b]"> · just now</span>
+          </p>
         </div>
 
-        {/* Main Headline */}
-        <h1 className="text-4xl sm:text-5xl lg:text-[62px] font-extrabold text-[#073827] tracking-tight leading-[1.08] max-w-[880px] mx-auto mb-5">
-          Discover businesses,{' '}
-          <span className="text-[#00a859] relative inline-block">
-            products and services
-          </span>{' '}
-          near you.
+        <div className="hero-side-card hero-side-card--left-bottom hero-notification absolute left-14 top-[232px] flex w-fit items-center gap-2.5 rounded-full px-3.5 py-3">
+          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#edf5ff]">
+            <span className="h-2.5 w-2.5 rounded-full bg-[#5a91d6]" />
+          </span>
+          <p className="whitespace-nowrap text-[12.5px] leading-none">
+            <span className="font-bold text-[#112d21]">12 profile views</span>
+            <span className="font-normal text-[#84958b]"> · today</span>
+          </p>
+        </div>
+
+        <div className="hero-side-card hero-side-card--right-top hero-notification absolute right-8 top-[146px] flex w-fit items-center gap-2.5 rounded-full px-3.5 py-3">
+          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#02924B] text-white">
+            <Check className="h-3 w-3 stroke-[3]" aria-hidden="true" />
+          </span>
+          <p className="whitespace-nowrap text-[12.5px] leading-none">
+            <span className="font-bold text-[#112d21]">Profile is live</span>
+            <span className="font-normal text-[#84958b]"> · today</span>
+          </p>
+        </div>
+
+        <div className="hero-side-card hero-side-card--right-bottom hero-notification absolute right-14 top-[220px] flex w-fit items-center gap-2.5 rounded-full px-3.5 py-3">
+          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#fff5df]">
+            <span className="h-2.5 w-2.5 rounded-full bg-[#e5a51d]" />
+          </span>
+          <p className="whitespace-nowrap text-[12.5px] leading-none">
+            <span className="font-bold text-[#112d21]">New 5-star review</span>
+            <span className="font-normal text-[#84958b]"> · today</span>
+          </p>
+        </div>
+      </div>
+
+      <div className="max-w-[1140px] mx-auto text-center">
+        <h1 className="mx-auto max-w-[900px] whitespace-nowrap text-[clamp(2rem,9vw,4.25rem)] font-bold leading-[1.04] tracking-[-0.045em] text-[#111111]">
+          <span className="text-[#111111]">Your </span>
+          <span className="inline-block min-h-[1.08em] rounded-[0.18em] bg-[#02924B] px-[0.22em] pb-[0.07em] pt-[0.03em] text-white shadow-[0_0.08em_0_#017A3F]" aria-live="polite">
+            <span className="hero-offer-word" key={activeBusinessOffer.title}>
+              {activeBusinessOffer.title}
+            </span>
+          </span>
+          <span className="mt-1 block text-[#111111]">all in one place.</span>
         </h1>
 
-        {/* Subtitle */}
-        <p className="text-[15px] sm:text-[17px] text-[#486659] max-w-[640px] mx-auto font-medium leading-relaxed mb-9">
-          Find trusted businesses, explore quality products and services, and connect directly - all in one place.
+        <p className="mx-auto mt-6 max-w-[620px] text-[15px] font-medium leading-relaxed text-[#486659] sm:text-[17px]">
+          Onselli gives your business the tools to be discovered, build trust, and turn local attention into growth.
         </p>
 
         {/* Primary conversion action: search by need and location. */}
         <form
           onSubmit={handleSearch}
-          className="max-w-[820px] mx-auto bg-white p-2 rounded-2xl border border-[#c9ded2] shadow-[0_10px_24px_rgba(7,56,39,0.07)] flex flex-col sm:flex-row items-stretch gap-2 transition-[border-color,box-shadow] focus-within:border-[#00a859] focus-within:shadow-[0_10px_24px_rgba(7,56,39,0.12)]"
+          className="mx-auto mt-8 flex max-w-[820px] flex-col items-stretch gap-2 rounded-2xl border border-[#c9ded2] bg-white p-2 shadow-[0_10px_24px_rgba(5,41,31,0.07)] transition-[border-color,box-shadow] focus-within:border-[#02924B] focus-within:shadow-[0_10px_24px_rgba(5,41,31,0.12)] sm:flex-row"
         >
           <div className="flex-1 flex items-center gap-3 px-4 min-h-14 w-full text-left">
-            <Search className="w-5 h-5 text-[#00a859] shrink-0" aria-hidden="true" />
+            <Search className="w-5 h-5 text-[#02924B] shrink-0" aria-hidden="true" />
             <div className="w-full">
               <label htmlFor="business-search" className="sr-only">
                 What are you looking for?
@@ -94,35 +162,60 @@ export default function HeroSection() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search businesses, products or services"
-                className="w-full text-[15px] font-semibold text-[#073827] placeholder-[#7d998c] bg-transparent outline-none border-none p-0"
+                className="w-full text-[15px] font-semibold text-[#05291F] placeholder-[#7d998c] bg-transparent outline-none border-none p-0"
               />
             </div>
           </div>
 
           <div className="h-px w-full bg-[#e2efe7] sm:h-10 sm:w-px self-center" />
 
-          <div className="relative flex items-center gap-2 px-4 min-h-14 bg-[#f6fbf8] rounded-xl w-full sm:w-[178px] shrink-0">
-            <MapPin className="w-4 h-4 text-[#00a859] shrink-0" />
-            <label htmlFor="search-location" className="sr-only">
-              Search location
-            </label>
-            <select
+          <div className="relative w-full sm:w-[190px] shrink-0" ref={locationMenuRef}>
+            <button
+              type="button"
               id="search-location"
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-              className="w-full bg-transparent text-[14px] font-bold text-[#073827] outline-none cursor-pointer pr-5 border-none p-0 appearance-none"
+              aria-haspopup="listbox"
+              aria-expanded={isLocationOpen}
+              aria-controls="search-location-options"
+              onClick={() => setIsLocationOpen((open) => !open)}
+              onKeyDown={(event) => {
+                if (event.key === 'Escape') setIsLocationOpen(false);
+              }}
+              className="relative flex min-h-14 w-full items-center gap-2 rounded-xl bg-[#F2F3F0] px-4 text-left text-[14px] font-semibold text-[#05291F] outline-none transition-colors hover:bg-[#e8eee9] focus-visible:ring-2 focus-visible:ring-[#02924B] focus-visible:ring-offset-2"
             >
-              <option value="Lagos">Lagos</option>
-              <option value="Abuja">Abuja</option>
-              <option value="Port Harcourt">Port Harcourt</option>
-              <option value="Ibadan">Ibadan</option>
-            </select>
-            <ChevronDown className="w-3.5 h-3.5 text-[#6b8b7d] absolute right-4 pointer-events-none" />
+              <MapPin className="w-4 h-4 text-[#02924B] shrink-0" aria-hidden="true" />
+              <span className="flex-1 truncate">{location}</span>
+              <ChevronDown className={`h-4 w-4 text-[#557367] transition-transform ${isLocationOpen ? 'rotate-180' : ''}`} aria-hidden="true" />
+            </button>
+
+            {isLocationOpen && (
+              <div id="search-location-options" role="listbox" aria-labelledby="search-location" className="absolute left-0 right-0 top-[calc(100%+8px)] z-20 overflow-hidden rounded-xl border border-[#d8e5dd] bg-white p-1.5 shadow-[0_16px_32px_rgba(5,41,31,0.14)]">
+                <p className="px-3 pb-1.5 pt-2 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#658276]">Choose location</p>
+                {locations.map((city) => {
+                  const isSelected = city === location;
+                  return (
+                    <button
+                      type="button"
+                      role="option"
+                      aria-selected={isSelected}
+                      key={city}
+                      onClick={() => {
+                        setLocation(city);
+                        setIsLocationOpen(false);
+                      }}
+                      className={`flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-left text-[13px] font-medium transition-colors ${isSelected ? 'bg-[#e7f5ed] text-[#02924B] font-semibold' : 'text-[#25483a] hover:bg-[#F2F3F0]'}`}
+                    >
+                      <span>{city}</span>
+                      {isSelected && <span className="h-1.5 w-1.5 rounded-full bg-[#02924B]" aria-hidden="true" />}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
           </div>
 
           <button
             type="submit"
-            className="min-h-14 w-full sm:w-auto px-6 rounded-xl bg-[#00a859] hover:bg-[#008f4c] text-white font-bold text-[14px] flex items-center justify-center gap-2 transition-colors shadow-[0_6px_14px_rgba(0,168,89,0.24)] active:scale-[0.98] shrink-0"
+            className="flex min-h-14 w-full shrink-0 items-center justify-center gap-2 rounded-xl bg-[#02924B] px-6 text-[14px] font-semibold text-white shadow-[0_3px_0_#017A3F] transition-all hover:translate-y-px hover:bg-[#017A3F] hover:shadow-[0_2px_0_#017A3F] active:translate-y-[2px] active:shadow-none sm:w-auto"
           >
             <span>Search</span>
             <ArrowRight className="w-4 h-4" />
@@ -131,7 +224,7 @@ export default function HeroSection() {
 
         {/* Popular Searches Pills */}
         <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 mt-6 text-[12.5px]">
-          <span className="font-bold text-[#073827] mr-1">Popular searches:</span>
+          <span className="font-semibold text-[#05291F] mr-1">Popular searches:</span>
           {POPULAR_SEARCHES.map((tag) => (
             <button
               key={tag}
@@ -157,7 +250,7 @@ export default function HeroSection() {
               >
                 {getCategoryIcon(cat.iconName)}
               </div>
-              <h3 className="font-bold text-[#073827] text-[13.5px] leading-tight mb-1 group-hover:text-[#00a859] transition-colors">
+              <h3 className="font-semibold text-[#073827] text-[13.5px] leading-tight mb-1 group-hover:text-[#00a859] transition-colors">
                 {cat.title}
               </h3>
               <p className="text-[11px] text-[#718c80] leading-snug">

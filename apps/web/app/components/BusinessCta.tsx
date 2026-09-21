@@ -14,17 +14,17 @@ import {
 export default function BusinessCta() {
   return (
     <section className="px-4 pb-14 pt-16 sm:px-6 sm:pb-20" id="for-businesses">
-      <div className="max-w-[1240px] mx-auto rounded-[28px] overflow-hidden bg-[#073827] border border-[#164f3a] text-white">
+      <div className="max-w-[1240px] mx-auto rounded-[28px] overflow-hidden bg-[#05291F] border border-[#164f3a] text-white">
 
         <div className="grid grid-cols-1 lg:grid-cols-12 lg:items-stretch">
           {/* Left Column - Headline & CTA */}
           <div className="lg:col-span-5 px-7 py-10 sm:px-12 sm:py-14 lg:px-14 lg:py-16 flex flex-col justify-center">
-            <div className="inline-flex w-fit items-center gap-2 rounded-full bg-[#00a859] px-3 py-1.5 text-white text-[12px] font-bold">
+            <div className="inline-flex w-fit items-center gap-2 rounded-full bg-[#02924B] px-3 py-1.5 text-white text-[12px] font-semibold">
               <Building2 className="w-4 h-4" />
               <span>For business owners</span>
             </div>
 
-            <h2 className="mt-5 text-[34px] sm:text-5xl font-extrabold tracking-[-0.045em] leading-[1.06] text-white">
+            <h2 className="mt-5 text-[34px] sm:text-5xl font-bold tracking-[-0.045em] leading-[1.06] text-white">
               Get discovered. <br className="hidden sm:block" />Grow with confidence.
             </h2>
 
@@ -33,7 +33,7 @@ export default function BusinessCta() {
             </p>
 
             <div className="mt-8 flex flex-col sm:items-start gap-4">
-              <Link href="/discover" className="px-6 py-3.5 rounded-full bg-[#00a859] hover:bg-[#18b969] font-extrabold text-[14px] inline-flex justify-center items-center gap-2 transition-colors group">
+              <Link href="/discover" className="px-6 py-3.5 rounded-full bg-[#02924B] hover:bg-[#017A3F] font-semibold text-[14px] inline-flex justify-center items-center gap-2 transition-colors group">
                 <span>List your business</span>
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </Link>
@@ -45,56 +45,56 @@ export default function BusinessCta() {
           </div>
 
           {/* Middle Column - Interactive Dashboard UI Mockup */}
-          <div className="lg:col-span-7 bg-[#f3f9f5] p-7 sm:p-10 lg:p-12 flex items-center justify-center">
-            <div className="w-full max-w-[440px] bg-white rounded-2xl p-5 text-[#073827] border border-[#d4ede0]">
+          <div className="lg:col-span-7 bg-[#F2F3F0] p-7 sm:p-10 lg:p-12 flex items-center justify-center">
+            <div className="w-full max-w-[440px] bg-white rounded-2xl p-5 text-[#05291F] border border-[#d4ede0]">
               {/* Header inside Dashboard Mockup */}
               <div className="flex items-center justify-between pb-3 border-b border-[#e2efe7]">
                 <div className="flex items-center gap-2">
                   <Logo variant="icon" className="w-6 h-6" />
-                  <span className="font-extrabold text-[13px] text-[#073827]">
+                  <span className="font-semibold text-[13px] text-[#05291F]">
                     Ade Fashion House
                   </span>
                 </div>
-                <span className="px-2 py-0.5 rounded-full bg-[#e6f4ec] text-[#00a859] text-[9.5px] font-bold flex items-center gap-1">
-                  <CheckCircle2 className="w-2.5 h-2.5 text-[#00a859]" />
+                <span className="px-2 py-0.5 rounded-full bg-[#e6f4ec] text-[#02924B] text-[9.5px] font-semibold flex items-center gap-1">
+                  <CheckCircle2 className="w-2.5 h-2.5 text-[#02924B]" />
                   Verified
                 </span>
               </div>
 
               {/* Live Metric Stats Cards */}
               <div className="grid grid-cols-3 gap-2 my-3 text-center">
-                <div className="p-2 rounded-xl bg-[#f4f9f6] border border-[#e2efe7]">
+                <div className="p-2 rounded-xl bg-[#F2F3F0] border border-[#e2efe7]">
                   <span className="text-[9.5px] text-[#6b897c] font-medium block">
                     Views
                   </span>
-                  <span className="font-extrabold text-[13px] text-[#073827] block">
+                  <span className="font-semibold text-[13px] text-[#05291F] block">
                     2.4K
                   </span>
-                  <span className="text-[9px] font-bold text-[#00a859] flex items-center justify-center gap-0.5">
+                  <span className="text-[9px] font-semibold text-[#02924B] flex items-center justify-center gap-0.5">
                     <TrendingUp className="w-2.5 h-2.5" /> +18%
                   </span>
                 </div>
 
-                <div className="p-2 rounded-xl bg-[#f4f9f6] border border-[#e2efe7]">
+                <div className="p-2 rounded-xl bg-[#F2F3F0] border border-[#e2efe7]">
                   <span className="text-[9.5px] text-[#6b897c] font-medium block">
                     Inquiries
                   </span>
-                  <span className="font-extrabold text-[13px] text-[#073827] block">
+                  <span className="font-semibold text-[13px] text-[#05291F] block">
                     312
                   </span>
-                  <span className="text-[9px] font-bold text-[#00a859] flex items-center justify-center gap-0.5">
+                  <span className="text-[9px] font-semibold text-[#02924B] flex items-center justify-center gap-0.5">
                     <TrendingUp className="w-2.5 h-2.5" /> +24%
                   </span>
                 </div>
 
-                <div className="p-2 rounded-xl bg-[#f4f9f6] border border-[#e2efe7]">
+                <div className="p-2 rounded-xl bg-[#F2F3F0] border border-[#e2efe7]">
                   <span className="text-[9.5px] text-[#6b897c] font-medium block">
                     Orders
                   </span>
-                  <span className="font-extrabold text-[13px] text-[#073827] block">
+                  <span className="font-semibold text-[13px] text-[#05291F] block">
                     87
                   </span>
-                  <span className="text-[9px] font-bold text-[#00a859] flex items-center justify-center gap-0.5">
+                  <span className="text-[9px] font-semibold text-[#02924B] flex items-center justify-center gap-0.5">
                     <TrendingUp className="w-2.5 h-2.5" /> +12%
                   </span>
                 </div>
@@ -102,19 +102,19 @@ export default function BusinessCta() {
 
               {/* Smooth Animated Green Chart Graphic */}
               <div className="bg-[#f0f8f4] p-3 rounded-xl border border-[#d8ebdf] mb-3">
-                <div className="flex items-center justify-between text-[10px] text-[#557567] mb-1.5 font-bold">
+                <div className="flex items-center justify-between text-[10px] text-[#557567] mb-1.5 font-medium">
                   <span>Weekly Growth</span>
-                  <span className="text-[#00a859]">Live</span>
+                  <span className="text-[#02924B]">Live</span>
                 </div>
                 <svg viewBox="0 0 200 45" className="w-full h-10 overflow-visible">
                   <path
                     d="M 0 35 Q 30 25, 60 30 T 120 15 T 180 5 L 200 8"
                     fill="none"
-                    stroke="#00a859"
+                    stroke="#02924B"
                     strokeWidth="3"
                     strokeLinecap="round"
                   />
-                  <circle cx="180" cy="5" r="4" fill="#00a859" />
+                  <circle cx="180" cy="5" r="4" fill="#02924B" />
                 </svg>
               </div>
 
@@ -141,7 +141,7 @@ export default function BusinessCta() {
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <div className="flex-1 text-right text-[10.5px] font-bold text-[#00a859]">
+                <div className="flex-1 text-right text-[10.5px] font-semibold text-[#02924B]">
                   + 14 more
                 </div>
               </div>
