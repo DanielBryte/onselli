@@ -126,8 +126,8 @@ export default function HomePage() {
           <div className="home-footer__columns">
             <div className="home-footer__column"><h2>Product</h2><Link href="#platform">The platform</Link><Link href="#how-it-works">How it works</Link><Link href="/signup">Courses & workshops</Link><Link href="/signup">Digital products</Link><Link href="/signup">Creator storefront</Link></div>
             <div className="home-footer__column"><h2>Explore</h2><Link href="/discover">Find creators</Link><Link href="#for-creators">Who it’s for</Link><Link href="/discover">Creator stories</Link><Link href="/signup">Start selling</Link></div>
-            <div className="home-footer__column"><h2>Resources</h2><Link href="#how-it-works">Getting started</Link><Link href="#platform">Create an offer</Link><Link href="mailto:hello@onselli.com?subject=Onselli%20support">Help & support</Link><Link href="mailto:hello@onselli.com">Contact us</Link></div>
-            <div className="home-footer__column"><h2>Onselli</h2><Link href="#for-creators">About</Link><Link href="/login">Log in</Link><Link href="/signup">Start for free</Link><a href="mailto:hello@onselli.com?subject=Privacy%20request">Privacy</a></div>
+            <div className="home-footer__column"><h2>Resources</h2><Link href="#how-it-works">Getting started</Link><Link href="#platform">Create an offer</Link><a href="mailto:support@onselli.com?subject=Onselli%20support">Help & support</a><a href="mailto:support@onselli.com">Contact us</a></div>
+            <div className="home-footer__column"><h2>Legal</h2><Link href="/legal/terms">Terms of Service</Link><Link href="/legal/privacy">Privacy Policy</Link><Link href="/legal/cookies">Cookie Policy</Link><a href="mailto:support@onselli.com">support@onselli.com</a></div>
           </div>
           <div className="home-footer__bottom"><Link href="/" className="home-footer__brand"><Logo/><span className="home-footer__tagline">Made for what you know.</span></Link><small>© {new Date().getFullYear()} Onselli. Built for what you know.</small><a className="home-footer__locale" href="#top">◎ English</a></div>
         </div>
