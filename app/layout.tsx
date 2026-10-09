@@ -4,6 +4,11 @@ import './globals.css';
 export const metadata: Metadata = {
   title: { default: 'Onselli — Build a business around what you know', template: '%s · Onselli' },
   description: 'Create, sell and grow your knowledge business with Onselli.',
+  manifest: '/site.webmanifest',
+  icons: {
+    icon: [{ url: '/favicon.ico', sizes: 'any' }],
+    apple: [{ url: '/apple-icon.png', sizes: '180x180', type: 'image/png' }],
+  },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

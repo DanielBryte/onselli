@@ -73,22 +73,36 @@ export default function HomePage() {
       </section>
 
       <section className="creator-types" id="for-creators">
-        <div className="creator-types__intro"><p className="section-overline">ONSelli IS FOR THE KNOWLEDGE YOU CARRY</p><h2>Different paths.<br/><em>Something worth sharing.</em></h2></div>
+        <div className="creator-types__intro"><p className="section-overline">Onselli is for the knowledge you carry</p><h2>Different paths.<br/><em>Something worth sharing.</em></h2></div>
         <div className="creator-marquee" aria-label="Creators who can build on Onselli">
           {creatorRows.map((row, rowIndex) => <div className="creator-marquee__window" key={rowIndex}><div className={`creator-marquee__track${rowIndex === 0 ? ' creator-marquee__track--left' : ' creator-marquee__track--right'}`} aria-hidden="true">{[...row, ...row].map((creator, index) => <article className="creator-type" key={`${creator.name}-${index}`}><Image className="creator-type__portrait" src={`https://images.unsplash.com/${creator.photo}?auto=format&fit=crop&w=180&h=180&q=85`} alt="" width={88} height={88} unoptimized/><span>{creator.role}</span></article>)}</div></div>)}
         </div>
       </section>
 
       <section className="channel-section" id="how-it-works">
-        <div className="channel-section__marks" aria-hidden="true">
-          <span className="channel-mark channel-mark--x"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 2h3.1l-6.8 7.8L23.2 22h-6.3L12 14.6 5.5 22H2.4l7.3-8.4L1.8 2h6.5l4.4 6.8L18.9 2Zm-1.1 18h1.7L7.2 3.9H5.4L17.8 20Z"/></svg></span>
-          <span className="channel-mark channel-mark--tiktok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.6 7.1a6.7 6.7 0 0 1-4.1-1.4v8.1a6.2 6.2 0 1 1-5.4-6.1v3.3a3 3 0 1 0 2.1 2.8V2h3.3a6.7 6.7 0 0 0 4.1 4.1v1Z"/></svg></span>
-          <span className="channel-mark channel-mark--instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle className="social-icon__dot" cx="17.5" cy="6.5" r="1"/></svg></span>
-          <span className="channel-mark channel-mark--youtube"><svg viewBox="0 0 24 24" aria-hidden="true"><path className="social-icon__solid" d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.6V8.4l6.3 3.6-6.3 3.6Z"/></svg></span>
-          <span className="channel-mark channel-mark--community"><Users size={25}/></span>
+        <div className="creator-orbit">
+          <div className="creator-orbit__icons" aria-hidden="true">
+            <span className="orbit-icon orbit-icon--framer"><img src="https://cdn.simpleicons.org/framer/0055FF" alt="" /></span>
+            <span className="orbit-icon orbit-icon--stripe"><img src="https://cdn.simpleicons.org/stripe/635BFF" alt="" /></span>
+            <span className="orbit-icon orbit-icon--canva"><img src="https://cdn.simpleicons.org/canva/00C4CC" alt="" /></span>
+            <span className="orbit-icon orbit-icon--notion"><img src="https://cdn.simpleicons.org/notion/000000" alt="" /></span>
+            <span className="orbit-icon orbit-icon--figma"><img src="https://cdn.simpleicons.org/figma/F24E1E" alt="" /></span>
+            <span className="orbit-icon orbit-icon--wordpress"><img src="https://cdn.simpleicons.org/wordpress/21759B" alt="" /></span>
+            <span className="orbit-icon orbit-icon--youtube"><img src="https://cdn.simpleicons.org/youtube/FF0033" alt="" /></span>
+            <span className="orbit-icon orbit-icon--tiktok"><img src="https://cdn.simpleicons.org/tiktok/000000" alt="" /></span>
+            <span className="orbit-icon orbit-icon--instagram"><img src="https://cdn.simpleicons.org/instagram/E4405F" alt="" /></span>
+            <span className="orbit-icon orbit-icon--discord"><img src="https://cdn.simpleicons.org/discord/5865F2" alt="" /></span>
+            <span className="orbit-icon orbit-icon--x"><img src="https://cdn.simpleicons.org/x/000000" alt="" /></span>
+            <span className="orbit-icon orbit-icon--google"><img src="https://cdn.simpleicons.org/google/4285F4" alt="" /></span>
+          </div>
+          <div className="creator-orbit__content">
+            <span className="creator-orbit__brand"><Logo/></span>
+            <span className="section-overline">YOUR COMPLETE CREATOR PLATFORM</span>
+            <h2>Everything you need<br/>to earn from <em>what you know.</em></h2>
+            <p>Stop stitching together a website, payment links, course tools, and a community. Bring your knowledge business together in one place—with a home that’s yours.</p>
+            <Link href="/signup" className="home-button home-button--green">Start for free <ArrowRight size={17}/></Link>
+          </div>
         </div>
-        <div className="channel-section__copy"><span className="section-overline">YOUR AUDIENCE IS ALREADY OUT THERE</span><h2>Bring your people<br/>closer to <em>what you know.</em></h2><p>From a post on X to a TikTok that takes off, turn the attention you’ve earned into a place people can keep learning from you.</p><Link href="/signup" className="home-button home-button--green">Start for free <ArrowRight size={17}/></Link></div>
-        <span className="channel-section__note">ONE LINK. YOUR WHOLE BODY OF WORK.</span>
       </section>
 
       <section className="home-feature-panel" id="platform">

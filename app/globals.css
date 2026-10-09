@@ -339,7 +339,7 @@ body,.home-page{font-family:'Urbanist',-apple-system,BlinkMacSystemFont,'Segoe U
 .creator-marquee__track--right{animation:creator-rail-right 54s linear infinite}
 .creator-marquee:hover .creator-marquee__track{animation-play-state:paused}
 .creator-type{justify-content:flex-start;gap:17px;font-size:19px;font-weight:650;white-space:nowrap}
-.creator-type__portrait{width:88px;height:88px;border:0;border-radius:38% 62% 48% 52% / 57% 42% 58% 43%;object-fit:cover;box-shadow:0 12px 28px rgba(7,45,27,.16);transform:rotate(-7deg);transition:transform .25s ease}
+.creator-type__portrait{width:88px;height:88px;border:0;border-radius:38% 62% 48% 52% / 57% 42% 58% 43%;object-fit:cover;box-shadow:none;transform:rotate(-7deg);transition:transform .25s ease}
 .creator-type:nth-child(even) .creator-type__portrait{transform:rotate(7deg);border-radius:58% 42% 61% 39% / 42% 57% 43% 58%}
 .creator-type:hover .creator-type__portrait{transform:rotate(0) scale(1.06)}
 @keyframes creator-rail-left{to{transform:translateX(-50%)}}
@@ -391,3 +391,160 @@ body,.home-page{font-family:'Urbanist',-apple-system,BlinkMacSystemFont,'Segoe U
   .home-last-call h2{font-size:39px}
   .home-footer__inner{padding-inline:19px}
 }
+
+/* Make the hero proof point legible and the storefront preview feel like a live Safari page. */
+.home-platform-note{margin-top:30px;color:rgba(240,250,244,.84);font-size:15px;font-weight:550;line-height:1.45}
+.home-platform-list{gap:17px;margin-top:12px;font-size:15px;font-weight:700;line-height:1.4}
+.home-platform-list i{width:4px;height:4px;flex:none;background:rgba(255,255,255,.72)}
+.home-product{bottom:-195px;width:min(940px,82vw);max-width:940px;padding:0;overflow:hidden;border:1px solid rgba(17,42,28,.16);border-radius:16px;background:#f7f8f6;box-shadow:0 38px 110px rgba(0,19,11,.34);opacity:1;transform:translateX(-50%);filter:none}
+.home-product__chrome{height:58px;display:grid;grid-template-columns:auto auto minmax(190px,1fr) auto;align-items:center;gap:20px;padding:0 19px;background:#f3f4f2;border-bottom:1px solid #e1e5e1;color:#657269}
+.home-product__traffic{display:flex;gap:7px}
+.home-product__traffic i{width:12px;height:12px;border-radius:50%;background:#ff6058;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
+.home-product__traffic i:nth-child(2){background:#ffbd2e}.home-product__traffic i:nth-child(3){background:#28c840}
+.home-product__browser-actions{display:flex;align-items:center;gap:7px}
+.home-product__browser-actions i{display:grid;width:25px;height:25px;place-items:center;border-radius:6px;color:#737d75}
+.home-product__browser-actions svg,.home-product__address svg,.home-product__toolbar-icons svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.home-product__address{height:34px;min-width:0;display:flex;align-items:center;justify-content:center;gap:9px;padding:0 14px;border:1px solid #e0e4df;border-radius:9px;background:#fff;color:#778179}
+.home-product__address svg{width:12px;height:12px;color:#839087}
+.home-product__address small{overflow:hidden;color:#4f5d54;font-size:11px;text-overflow:ellipsis;white-space:nowrap}
+.home-product__toolbar-icons{display:flex;align-items:center;gap:16px;color:#778179}
+.home-product__toolbar-icons svg{width:16px;height:16px}
+.home-product__viewport{display:grid;grid-template-columns:1.08fr .92fr;grid-template-rows:auto 1fr auto;min-height:390px;background:#fff}
+.home-product__sitebar{grid-column:1/-1;min-height:56px;display:flex;align-items:center;gap:29px;padding:0 28px;border-bottom:1px solid #eef1ec;background:#fff}
+.home-product__sitebar>b{color:#18291d;font-size:12px;font-weight:850;letter-spacing:.03em}
+.home-product__sitebar nav{display:flex;gap:22px;margin-left:auto;color:#718075;font-size:9px;font-weight:750;letter-spacing:.08em}
+.home-product__site-cta{display:inline-flex;align-items:center;gap:4px;padding:9px 12px;border-radius:999px;background:#014733;color:#fff;font-size:9px;font-weight:750}
+.home-product__cover{min-height:266px;padding:33px 36px 25px;border:0;border-radius:0;background:radial-gradient(ellipse at 96% 2%,#eff6ed 0,transparent 43%),#fff}
+.home-product__avatar{position:absolute;right:29px;top:27px;width:48px;height:48px;border:2px solid #fff;border-radius:50%;background:#e8f1e4;object-fit:cover;box-shadow:0 0 0 4px #f0f4ef}
+.home-product__name{font-size:9px;color:#718076;letter-spacing:.13em}
+.home-product__cover h2{max-width:420px;margin:31px 0 11px;font-size:clamp(30px,3.4vw,43px);line-height:1.03;letter-spacing:-.065em}
+.home-product__cover p{max-width:410px;font-size:14px;line-height:1.65}
+.home-product__link{margin-top:19px;color:#014733;font-size:12px}
+.home-product__offers{grid-column:2;grid-row:2;padding:24px 24px 18px;border-left:1px solid #edf0ec;background:#fbfcfa}
+.home-product__offers-head{margin:0 3px 13px;font-size:14px}
+.home-product__offers-head span{font-size:10px}
+.home-product__offers .home-offer{gap:10px;padding:10px;margin-top:9px;border-color:#e9eee8;border-radius:10px;background:#fff}
+.home-product__offers .home-offer__art{width:43px;height:43px;border-radius:9px}
+.home-product__offers .home-offer__text small{font-size:8px}
+.home-product__offers .home-offer__text b{font-size:11px}
+.home-product__offers .home-offer__text i{font-size:10px}
+.home-product__proof{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 26px;border-top:1px solid #edf0ec;background:#fafbf9;color:#859087;font-size:9px}
+.home-product__proof span:first-child{display:inline-flex;align-items:center;gap:6px;color:#477253;font-size:8px;font-weight:800;letter-spacing:.08em}
+.home-product__proof svg{color:#438454}
+@media(max-width:760px){
+  .home-platform-note{margin-top:24px;font-size:14px}
+  .home-platform-list{gap:11px;font-size:13px}
+  .home-product{bottom:-205px;width:calc(100% - 24px);max-width:570px;border-radius:14px}
+  .home-product__chrome{height:48px;grid-template-columns:auto minmax(0,1fr) auto;gap:11px;padding:0 12px}
+  .home-product__traffic i{width:9px;height:9px}
+  .home-product__browser-actions{display:none}
+  .home-product__address{height:30px;gap:6px;padding:0 9px}
+  .home-product__address small{font-size:9px}
+  .home-product__toolbar-icons{gap:9px}
+  .home-product__toolbar-icons svg{width:14px;height:14px}
+  .home-product__viewport{grid-template-columns:1fr;grid-template-rows:auto auto auto auto;min-height:0}
+  .home-product__sitebar{min-height:45px;gap:8px;padding:0 14px}
+  .home-product__sitebar>b{font-size:10px}
+  .home-product__sitebar nav{display:none}
+  .home-product__site-cta{margin-left:auto;padding:7px 9px;font-size:8px}
+  .home-product__cover{min-height:190px;padding:23px 20px 18px}
+  .home-product__avatar{right:18px;top:20px;width:38px;height:38px}
+  .home-product__name{font-size:7px;max-width:calc(100% - 50px)}
+  .home-product__cover h2{max-width:310px;margin:24px 0 8px;font-size:clamp(27px,7vw,34px)}
+  .home-product__cover p{max-width:330px;font-size:11px}
+  .home-product__link{margin-top:12px;font-size:10px}
+  .home-product__offers{grid-column:1;grid-row:auto;padding:12px 12px 15px;border-top:1px solid #edf0ec;border-left:0}
+  .home-product__offers-head{font-size:12px}
+  .home-product__offers .home-offer{padding:8px;margin-top:6px}
+  .home-product__offers .home-offer__art{width:34px;height:34px}
+  .home-product__offers .home-offer__text b{font-size:9px}
+  .home-product__offers .home-offer__text i{font-size:8px}
+  .home-product__proof{grid-column:1;padding:9px 14px;font-size:8px}
+}
+@media(max-width:390px){.home-platform-list{gap:8px;font-size:12px}.home-platform-note{font-size:13px}.home-product__toolbar-icons svg:last-child{display:none}.home-product__address small{font-size:8px}}
+
+/* Creator workflow: show the path from social discovery to owned revenue. */
+.channel-section{max-width:none;min-height:0;padding:112px clamp(24px,6vw,96px) 96px;background:#f7f9f6;text-align:left}
+.creator-engine{width:min(1240px,100%);margin:0 auto}
+.creator-engine__intro{max-width:790px;margin:0 auto 54px;text-align:center}
+.creator-engine__intro h2{margin:18px 0 17px;color:#101a14;font-size:clamp(43px,5.5vw,68px);font-weight:650;line-height:1.02;letter-spacing:-.065em}
+.creator-engine__intro h2 em{color:#176b4c;font-style:normal}
+.creator-engine__intro p{max-width:690px;margin:0 auto;color:#69766e;font-size:18px;line-height:1.7}
+.creator-engine__map{min-height:290px;display:grid;grid-template-columns:minmax(170px,1fr) 52px minmax(300px,1.25fr) 52px minmax(170px,1fr);align-items:center;gap:17px;padding:34px 36px;border:1px solid #e5ebe5;border-radius:28px;background:#fff;box-shadow:0 22px 70px rgba(20,55,34,.055)}
+.creator-engine__stage{min-width:0}
+.creator-engine__stage-label{display:block;margin-bottom:20px;color:#78877d;font-size:11px;font-weight:800;letter-spacing:.14em}
+.creator-engine__apps{display:flex;align-items:center;gap:11px}
+.creator-engine__app,.creator-engine__tool{width:48px;height:48px;display:grid;place-items:center;border:1px solid #edf0eb;border-radius:15px;background:#fff;box-shadow:0 8px 20px rgba(12,46,27,.07);color:#14221a}
+.creator-engine__app svg{width:22px;height:22px;fill:currentColor}
+.creator-engine__app.app-instagram svg{fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.creator-engine__app.app-instagram .social-icon__dot{fill:currentColor;stroke:none}
+.creator-engine__app.app-youtube{color:#e62117}
+.creator-engine__stage p{max-width:275px;margin:15px 0 0;color:#727e75;font-size:14px;line-height:1.55}
+.creator-engine__connector{display:flex;align-items:center;gap:0;color:#39785a}
+.creator-engine__connector span{height:1px;flex:1;background:#cddbd0}
+.creator-engine__connector svg{flex:none}
+.creator-engine__hub{min-height:188px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 18px;border-radius:22px;background:#014733;color:#fff;text-align:center;box-shadow:0 18px 35px rgba(1,71,51,.2)}
+.creator-engine__hub-mark{display:block;margin-bottom:10px;filter:brightness(0) invert(1)}
+.creator-engine__hub-mark .onselli-logo-mark{width:35px;height:35px;object-fit:contain;border-radius:9px}
+.creator-engine__hub-mark .onselli-wordmark strong{font-size:20px;color:#fff;letter-spacing:-.05em}
+.creator-engine__hub-mark .onselli-wordmark small{display:none}
+.creator-engine__hub>b{font-size:19px;font-weight:750;letter-spacing:-.035em}
+.creator-engine__hub>span:not(.creator-engine__hub-mark){margin-top:4px;color:rgba(255,255,255,.75);font-size:12px}
+.creator-engine__hub-pills{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-top:16px}
+.creator-engine__hub-pills i{padding:6px 9px;border:1px solid rgba(255,255,255,.2);border-radius:999px;color:#f2fff7;font-size:10px;font-style:normal}
+.creator-engine__apps--maker{gap:12px}
+.creator-engine__tool{width:54px;height:54px;border-radius:17px}
+.creator-engine__tool b{font-size:27px;line-height:1}
+.tool-canva{background:#f0fbfa}
+.tool-canva img,.tool-notion img{width:29px;height:29px;object-fit:contain}
+.tool-notion{background:#fff;border:1.5px solid #1d211e}
+.tool-community{color:#586eae;background:#f0f2ff}
+.creator-engine__outcomes{display:flex;align-items:center;justify-content:center;gap:17px;margin:27px 0 24px;color:#45564a;font-size:13px;font-weight:650}
+.creator-engine__outcomes span{display:flex;align-items:center;gap:7px;white-space:nowrap}
+.creator-engine__outcomes b{color:#27724e;font-size:10px;letter-spacing:.05em}
+.creator-engine__outcomes>i{width:3px;height:3px;border-radius:50%;background:#aab9ac}
+.creator-engine__actions{display:flex;align-items:center;justify-content:center;gap:15px}
+.creator-engine__actions>span{color:#758178;font-size:13px}
+@media(max-width:900px){.creator-engine__map{grid-template-columns:1fr 42px 1.15fr;gap:14px;padding:28px 24px}.creator-engine__connector--end{display:none}.creator-engine__stage--build{grid-column:1/-1;padding-top:24px;border-top:1px solid #edf0eb}.creator-engine__stage--build p{max-width:none}.creator-engine__outcomes{flex-wrap:wrap;row-gap:12px}}
+@media(max-width:600px){.channel-section{padding:76px 18px 70px}.creator-engine__intro{margin-bottom:34px}.creator-engine__intro h2{font-size:clamp(39px,10vw,54px)}.creator-engine__intro p{font-size:16px;line-height:1.65}.creator-engine__map{grid-template-columns:1fr;gap:20px;padding:22px 19px;border-radius:22px}.creator-engine__stage-label{margin-bottom:13px}.creator-engine__connector{width:100%;height:20px;justify-content:center;transform:rotate(90deg)}.creator-engine__connector span{max-width:45px}.creator-engine__hub{min-height:178px}.creator-engine__stage--build{grid-column:auto;padding-top:19px}.creator-engine__outcomes{align-items:flex-start;flex-direction:column;gap:10px;margin:23px 0}.creator-engine__outcomes>i{display:none}.creator-engine__outcomes span{white-space:normal}.creator-engine__actions{align-items:flex-start;flex-direction:column}.creator-engine__actions .home-button{align-self:stretch;justify-content:center}.creator-engine__actions>span{align-self:center}}
+
+/* The one-home constellation: familiar creator tools orbit Onselli. */
+.channel-section{min-height:0;padding:76px 28px 92px;background:#fff}
+.creator-orbit{position:relative;width:min(1480px,100%);min-height:640px;margin:0 auto;display:grid;place-items:center;overflow:hidden}
+.creator-orbit__content{position:relative;z-index:2;width:min(760px,100%);padding:38px 24px;text-align:center}
+.creator-orbit__brand{display:flex;justify-content:center;margin-bottom:27px}
+.creator-orbit__brand .onselli-lockup{gap:12px}
+.creator-orbit__brand .onselli-logo-mark{width:42px;height:42px;border-radius:11px}
+.creator-orbit__brand .onselli-wordmark strong{font-size:31px;letter-spacing:-.06em}
+.creator-orbit__content .section-overline{display:block;color:#6d8073;font-size:11px;letter-spacing:.16em}
+.creator-orbit__content h2{margin:18px 0 19px;color:#101712;font-size:clamp(44px,5.2vw,68px);font-weight:650;line-height:1.02;letter-spacing:-.065em}
+.creator-orbit__content h2 em{color:#176b4c;font-style:normal}
+.creator-orbit__content p{max-width:650px;margin:0 auto;color:#68766d;font-size:18px;line-height:1.7}
+.creator-orbit__content .home-button{margin-top:27px}
+.creator-orbit__icons{position:absolute;inset:0;pointer-events:none}
+.orbit-icon{position:absolute;width:48px;height:48px;display:grid;place-items:center;opacity:.92;transition:transform .25s ease}
+.orbit-icon img{display:block;width:100%;height:100%;object-fit:contain}
+.orbit-icon--framer{top:8%;left:17%;width:34px;height:34px}
+.orbit-icon--stripe{top:9%;left:42%;width:47px;height:47px}
+.orbit-icon--canva{top:14%;right:26%;width:58px;height:58px}
+.orbit-icon--notion{top:12%;right:10%;width:42px;height:42px}
+.orbit-icon--figma{top:39%;left:7%;width:48px;height:48px}
+.orbit-icon--wordpress{bottom:18%;left:14%;width:48px;height:48px}
+.orbit-icon--youtube{bottom:9%;left:35%;width:43px;height:43px}
+.orbit-icon--tiktok{top:39%;right:7%;width:43px;height:43px}
+.orbit-icon--instagram{bottom:18%;right:14%;width:43px;height:43px}
+.orbit-icon--discord{bottom:8%;right:39%;width:51px;height:51px}
+.orbit-icon--x{top:19%;left:29%;width:28px;height:28px}
+.orbit-icon--google{top:26%;right:20%;width:34px;height:34px}
+@media(max-width:760px){.channel-section{padding:52px 16px 65px}.creator-orbit{min-height:650px}.creator-orbit__content{width:min(600px,100%);padding:82px 15px}.creator-orbit__brand{margin-bottom:20px}.creator-orbit__brand .onselli-logo-mark{width:36px;height:36px}.creator-orbit__brand .onselli-wordmark strong{font-size:27px}.creator-orbit__content h2{font-size:clamp(40px,9.5vw,56px)}.creator-orbit__content p{font-size:16px;line-height:1.65}.orbit-icon{width:35px;height:35px}.orbit-icon--framer{top:4%;left:12%;width:27px;height:27px}.orbit-icon--stripe{top:6%;left:44%;width:36px;height:36px}.orbit-icon--canva{top:5%;right:12%;width:42px;height:42px}.orbit-icon--notion{top:27%;right:4%;width:31px;height:31px}.orbit-icon--figma{top:31%;left:3%;width:36px;height:36px}.orbit-icon--wordpress{bottom:21%;left:5%;width:36px;height:36px}.orbit-icon--youtube{bottom:6%;left:22%;width:32px;height:32px}.orbit-icon--tiktok{top:45%;right:3%;width:32px;height:32px}.orbit-icon--instagram{bottom:21%;right:5%;width:32px;height:32px}.orbit-icon--discord{bottom:5%;right:25%;width:38px;height:38px}.orbit-icon--x{top:16%;left:28%;width:23px;height:23px}.orbit-icon--google{top:17%;right:27%;width:27px;height:27px}}
+@media(max-width:420px){.creator-orbit{min-height:680px}.creator-orbit__content{padding-inline:7px}.creator-orbit__content h2{font-size:39px}.creator-orbit__content p{font-size:15px}.orbit-icon--x,.orbit-icon--google{display:none}}
+
+/* Final legibility and brand consistency refinements. */
+.home-footer__inner{background:#fafbf8}
+.home-footer__columns{background:transparent}
+.section-overline{text-transform:uppercase}
+.home-product__chrome .home-product__traffic i{width:13px;height:13px;border:1px solid rgba(0,0,0,.16);box-shadow:inset 0 0 0 1px rgba(255,255,255,.28)}
+.home-product__chrome .home-product__traffic i:nth-child(1){background-color:#ff5f57!important}
+.home-product__chrome .home-product__traffic i:nth-child(2){background-color:#febc2e!important}
+.home-product__chrome .home-product__traffic i:nth-child(3){background-color:#28c840!important}
+@media(max-width:760px){.home-product__chrome .home-product__traffic i{width:11px;height:11px}}
