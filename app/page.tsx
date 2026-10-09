@@ -99,7 +99,7 @@ export default function HomePage() {
             <span className="creator-orbit__brand"><Logo/></span>
             <span className="section-overline">YOUR COMPLETE CREATOR PLATFORM</span>
             <h2>Everything you need<br/>to earn from <em>what you know.</em></h2>
-            <p>Stop stitching together a website, payment links, course tools, and a community. Bring your knowledge business together in one place—with a home that’s yours.</p>
+            <p>Stop stitching together a website, payment links, course tools, and a community. Bring your knowledge and business together in one place - with a home that’s yours.</p>
             <Link href="/signup" className="home-button home-button--green">Start for free <ArrowRight size={17}/></Link>
           </div>
         </div>
@@ -128,12 +128,6 @@ export default function HomePage() {
             <div className="home-footer__column"><h2>Explore</h2><Link href="/discover">Find creators</Link><Link href="#for-creators">Who it’s for</Link><Link href="/discover">Creator stories</Link><Link href="/signup">Start selling</Link></div>
             <div className="home-footer__column"><h2>Resources</h2><Link href="#how-it-works">Getting started</Link><Link href="#platform">Create an offer</Link><Link href="mailto:hello@onselli.com?subject=Onselli%20support">Help & support</Link><Link href="mailto:hello@onselli.com">Contact us</Link></div>
             <div className="home-footer__column"><h2>Onselli</h2><Link href="#for-creators">About</Link><Link href="/login">Log in</Link><Link href="/signup">Start for free</Link><a href="mailto:hello@onselli.com?subject=Privacy%20request">Privacy</a></div>
-            <div className="home-footer__social"><span>FOLLOW ALONG</span><div>
-              <a href="https://www.instagram.com/" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle className="social-icon__dot" cx="17.5" cy="6.5" r="1"/></svg></a>
-              <a href="https://www.youtube.com/" aria-label="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><path className="social-icon__solid" d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.6V8.4l6.3 3.6-6.3 3.6Z"/></svg></a>
-              <a href="https://www.tiktok.com/" aria-label="TikTok"><svg viewBox="0 0 24 24" aria-hidden="true"><path className="social-icon__solid" d="M19.6 7.1a6.7 6.7 0 0 1-4.1-1.4v8.1a6.2 6.2 0 1 1-5.4-6.1v3.3a3 3 0 1 0 2.1 2.8V2h3.3a6.7 6.7 0 0 0 4.1 4.1v1Z"/></svg></a>
-              <a href="https://x.com/" aria-label="X"><svg viewBox="0 0 24 24" aria-hidden="true"><path className="social-icon__solid" d="M18.9 2h3.1l-6.8 7.8L23.2 22h-6.3L12 14.6 5.5 22H2.4l7.3-8.4L1.8 2h6.5l4.4 6.8L18.9 2Zm-1.1 18h1.7L7.2 3.9H5.4L17.8 20Z"/></svg></a>
-            </div></div>
           </div>
           <div className="home-footer__bottom"><Link href="/" className="home-footer__brand"><Logo/><span className="home-footer__tagline">Made for what you know.</span></Link><small>© {new Date().getFullYear()} Onselli. Built for what you know.</small><a className="home-footer__locale" href="#top">◎ English</a></div>
         </div>

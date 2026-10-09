@@ -77,6 +77,7 @@
 .home-hero__lede{max-width:485px;margin:0;color:#667166;font-size:15px;line-height:1.8}
 .home-hero__actions{display:flex;align-items:center;gap:25px;margin-top:30px}
 .home-button{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:0 20px;border-radius:10px;font-size:12px;font-weight:800;transition:transform .18s ease,background .18s ease,box-shadow .18s ease}
+.home-button svg,.home-button [data-lucide],.button svg,.button [data-lucide]{color:inherit;stroke:currentColor;fill:currentColor}
 .home-button:hover{transform:translateY(-2px)}
 .home-button--green{background:var(--home-green);color:#fff;box-shadow:0 3px 0 #477d43}
 .home-button--green:hover{background:#4f874a;box-shadow:0 4px 0 #3b703a}
@@ -264,26 +265,24 @@ body,.home-page{font-family:'Urbanist',-apple-system,BlinkMacSystemFont,'Segoe U
 .home-last-call p{max-width:560px;color:#e2f2e8;font-size:15px;line-height:1.7}
 .home-last-call .home-button--white{display:inline-flex;align-items:center;gap:9px;margin-top:24px;padding:0 25px;min-height:54px;border-radius:999px;background:#fff;color:#090e0a;box-shadow:0 3px 0 rgba(0,38,19,.18)}
 .home-last-call .home-button--white:hover{background:#eff6f0;color:#090e0a}
-.home-last-call__spark{position:absolute;left:50%;bottom:-37px;color:#041c10;font-size:83px;line-height:1;transform:translateX(-50%);opacity:.9}
+.home-last-call__spark{position:absolute;left:50%;bottom:-37px;color:#fff;font-size:83px;line-height:1;transform:translateX(-50%);opacity:.9}
 .home-footer{padding:0 30px 30px;background:#fff;border:0}
 .home-footer__inner{display:block;max-width:1440px;margin:0 auto;padding:63px 5.2% 28px;border-radius:27px;background:#f2f5e9}
-.home-footer__columns{display:grid;grid-template-columns:1.1fr 1fr 1.2fr 1fr auto;gap:35px;min-height:345px}
+.home-footer__columns{display:grid;grid-template-columns:1.15fr 1fr 1.2fr 1fr;gap:35px;min-height:345px}
 .home-footer__column{display:flex;flex-direction:column;align-items:flex-start;gap:14px}
-.home-footer__column h2{margin:0 0 4px;color:#72806c;font-size:13px;font-weight:650}
-.home-footer__column a{color:#26382a;font-size:13px;font-weight:520;line-height:1.35;transition:color .16s ease}
+.home-footer__column h2{margin:0 0 4px;color:#586d5f;font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:none}
+.home-footer__column a{color:#24392d;font-size:13px;font-weight:520;line-height:1.35;transition:color .16s ease}
 .home-footer__column a:hover{color:#014733}
-.home-footer__social{display:flex;flex-direction:column;align-items:flex-end;gap:16px}
-.home-footer__social>span{color:#72806c;font-size:9px;font-weight:800;letter-spacing:.15em}
-.home-footer__social>div{display:flex;gap:12px}
-.home-footer__social a{display:grid;place-items:center;width:31px;height:31px;border-radius:50%;color:#687765;font-size:15px;font-weight:800;transition:background .16s ease,color .16s ease}
-.home-footer__social a:hover{background:#dfe9d5;color:#014733}
 .home-footer__bottom{display:flex;align-items:center;justify-content:space-between;gap:24px;padding-top:20px;border-top:1px solid #dce5d6}
 .home-footer__brand{display:flex;align-items:center;gap:13px}
 .home-footer__brand img{height:30px;width:auto}
-.home-footer__brand span,.home-footer__bottom>small{color:#7d8977;font-size:10px}
-.home-footer__locale{padding:9px 13px;border:1px solid #b8c7af;border-radius:999px;color:#53664f;font-size:11px}
-@media(max-width:900px){.home-footer__columns{grid-template-columns:repeat(3,minmax(0,1fr));gap:40px 24px}.home-footer__social{align-items:flex-start}.home-footer__bottom{margin-top:36px}}
-@media(max-width:600px){.home-last-call{padding:0 14px 14px}.home-last-call__inner{min-height:390px;padding:55px 23px 72px;border-radius:21px}.home-last-call h2{font-size:clamp(39px,11vw,56px)}.home-last-call p{font-size:13px}.home-footer{padding:0 14px 14px}.home-footer__inner{padding:42px 25px 22px;border-radius:21px}.home-footer__columns{grid-template-columns:repeat(2,minmax(0,1fr));gap:34px 20px;min-height:0}.home-footer__column{gap:12px}.home-footer__social{align-items:flex-start}.home-footer__bottom{display:grid;grid-template-columns:1fr auto;gap:17px;margin-top:34px}.home-footer__bottom>small{grid-column:1/-1;grid-row:2}.home-footer__brand{align-items:flex-start;flex-direction:column;gap:6px}.home-footer__locale{justify-self:end}}
+.home-footer__brand .onselli-wordmark{color:#014733}
+.home-footer__brand .onselli-wordmark strong{color:#014733;letter-spacing:-.05em}
+.home-footer__brand .onselli-wordmark small{color:#557164}
+.home-footer__brand span,.home-footer__bottom>small{color:#5e7568;font-size:10px}
+.home-footer__locale{padding:9px 13px;border:1px solid #b8c7af;border-radius:999px;color:#2b4a3a;font-size:11px}
+@media(max-width:900px){.home-footer__columns{grid-template-columns:repeat(2,minmax(0,1fr));gap:40px 24px}.home-footer__bottom{margin-top:36px}}
+@media(max-width:600px){.home-last-call{padding:0 14px 14px}.home-last-call__inner{min-height:390px;padding:55px 23px 72px;border-radius:21px}.home-last-call h2{font-size:clamp(39px,11vw,56px)}.home-last-call p{font-size:13px}.home-footer{padding:0 14px 14px}.home-footer__inner{padding:42px 25px 22px;border-radius:21px}.home-footer__columns{grid-template-columns:repeat(2,minmax(0,1fr));gap:34px 20px;min-height:0}.home-footer__column{gap:12px}.home-footer__bottom{display:grid;grid-template-columns:1fr auto;gap:17px;margin-top:34px}.home-footer__bottom>small{grid-column:1/-1;grid-row:2}.home-footer__brand{align-items:flex-start;flex-direction:column;gap:6px}.home-footer__locale{justify-self:end}}
 
 /* Keep every button shape consistent with Onselli's pill silhouette. */
 .home-page :is(.button,.home-button,.menu-toggle,.mobile-nav a){border-radius:999px}
@@ -294,7 +293,7 @@ body,.home-page{font-family:'Urbanist',-apple-system,BlinkMacSystemFont,'Segoe U
 .onselli-lockup{display:inline-flex;align-items:center;gap:11px;white-space:nowrap}
 .onselli-logo-mark{display:block;width:38px;height:38px;flex:none;object-fit:cover;border-radius:10px}
 .onselli-wordmark{display:flex;flex-direction:column;justify-content:center;color:#102219;line-height:1}
-.onselli-wordmark strong{font-size:24px;font-weight:800;letter-spacing:-.065em}
+.onselli-wordmark strong{font-size:24px;font-weight:800;letter-spacing:-.04em}
 .onselli-wordmark small{margin-top:5px;color:#718078;font-size:10px;font-weight:550;letter-spacing:.02em}
 .onselli-wordmark--white{color:#fff}
 .onselli-wordmark--white small{color:rgba(255,255,255,.74)}
@@ -319,8 +318,8 @@ body,.home-page{font-family:'Urbanist',-apple-system,BlinkMacSystemFont,'Segoe U
 .home-footer__column a{font-size:15px;line-height:1.45}
 .home-footer__social>span{font-size:11px}
 .home-footer__brand{align-items:flex-start;gap:8px}
-.home-footer__tagline{color:#748074;font-size:13px;line-height:1.4}
-.home-footer__bottom>small{font-size:12px}
+.home-footer__tagline{color:#5d7167;font-size:13px;line-height:1.4}
+.home-footer__bottom>small{font-size:12px;color:#64786c}
 .home-footer__locale{font-size:13px}
 .channel-mark svg{width:28px;height:28px;display:block;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .channel-mark--x svg,.channel-mark--tiktok svg,.channel-mark--youtube svg{fill:currentColor;stroke:none}
@@ -359,11 +358,11 @@ body,.home-page{font-family:'Urbanist',-apple-system,BlinkMacSystemFont,'Segoe U
 .site-header--light{position:sticky;top:0;z-index:100;isolation:isolate}
 .site-header--light .brand-lockup--home .onselli-lockup{gap:14px}
 .site-header--light .brand-lockup--home img.onselli-logo-mark{width:44px;height:44px;border-radius:11px}
-.site-header--light .brand-lockup--home .onselli-wordmark strong{font-size:29px;letter-spacing:-.06em}
+.site-header--light .brand-lockup--home .onselli-wordmark strong{font-size:29px;letter-spacing:-.045em}
 .home-footer__brand{display:flex;flex-direction:column;align-items:flex-start;gap:9px}
 .home-footer__brand .onselli-lockup{gap:14px}
 .home-footer__brand .onselli-logo-mark{width:42px;height:42px;border-radius:11px}
-.home-footer__brand .onselli-wordmark strong{font-size:28px;letter-spacing:-.06em}
+.home-footer__brand .onselli-wordmark strong{font-size:28px;letter-spacing:-.045em}
 .home-footer__tagline{padding-left:56px;font-size:14px}
 .site-header--light .mobile-nav{display:none}
 @media(max-width:760px){
@@ -486,7 +485,7 @@ body,.home-page{font-family:'Urbanist',-apple-system,BlinkMacSystemFont,'Segoe U
 .creator-engine__hub{min-height:188px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 18px;border-radius:22px;background:#014733;color:#fff;text-align:center;box-shadow:0 18px 35px rgba(1,71,51,.2)}
 .creator-engine__hub-mark{display:block;margin-bottom:10px;filter:brightness(0) invert(1)}
 .creator-engine__hub-mark .onselli-logo-mark{width:35px;height:35px;object-fit:contain;border-radius:9px}
-.creator-engine__hub-mark .onselli-wordmark strong{font-size:20px;color:#fff;letter-spacing:-.05em}
+.creator-engine__hub-mark .onselli-wordmark strong{font-size:20px;color:#fff;letter-spacing:-.04em}
 .creator-engine__hub-mark .onselli-wordmark small{display:none}
 .creator-engine__hub>b{font-size:19px;font-weight:750;letter-spacing:-.035em}
 .creator-engine__hub>span:not(.creator-engine__hub-mark){margin-top:4px;color:rgba(255,255,255,.75);font-size:12px}
@@ -515,7 +514,7 @@ body,.home-page{font-family:'Urbanist',-apple-system,BlinkMacSystemFont,'Segoe U
 .creator-orbit__brand{display:flex;justify-content:center;margin-bottom:27px}
 .creator-orbit__brand .onselli-lockup{gap:12px}
 .creator-orbit__brand .onselli-logo-mark{width:42px;height:42px;border-radius:11px}
-.creator-orbit__brand .onselli-wordmark strong{font-size:31px;letter-spacing:-.06em}
+.creator-orbit__brand .onselli-wordmark strong{font-size:31px;letter-spacing:-.045em}
 .creator-orbit__content .section-overline{display:block;color:#6d8073;font-size:11px;letter-spacing:.16em}
 .creator-orbit__content h2{margin:18px 0 19px;color:#101712;font-size:clamp(44px,5.2vw,68px);font-weight:650;line-height:1.02;letter-spacing:-.065em}
 .creator-orbit__content h2 em{color:#176b4c;font-style:normal}
@@ -549,3 +548,25 @@ body,.home-page{font-family:'Urbanist',-apple-system,BlinkMacSystemFont,'Segoe U
 .home-product__chrome .home-product__traffic i:nth-child(2){background-color:#febc2e!important}
 .home-product__chrome .home-product__traffic i:nth-child(3){background-color:#28c840!important}
 @media(max-width:760px){.home-product__chrome .home-product__traffic i{width:11px;height:11px}}
+
+h1,h2,h3,h4,h5,h6,
+.onselli-wordmark strong,
+.hero h1,
+.home-page .hero h1,
+.home-hero h1,
+.section-heading h2,
+.creator-cta h2,
+.home-bridge h2,
+.home-section-head h2,
+.home-feature-panel h2,
+.channel-section h2,
+.home-offers-section h2,
+.creator-types__intro h2,
+.home-last-call h2,
+.creator-orbit__content h2,
+.page-title,
+.home-product__cover h2,
+.offer-art__course b,
+.offer-art__store b,
+.home-offer-card__body h3,
+.creator-engine__intro h2{letter-spacing:-.025em}
