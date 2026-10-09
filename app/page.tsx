@@ -5,8 +5,9 @@ import Header from './components/Header';
 import Logo from './components/Logo';
 
 export const metadata = {
-  title: 'Onselli — Turn what you know into what you earn',
-  description: 'Build a home for your knowledge, sell courses and digital products, and grow a business around what you know.',
+  title: 'Turn what you know into what you earn | Onselli',
+  description:
+    'Build a premium home for your knowledge business with courses, digital products, workshops, and a creator storefront that sells with clarity.',
 };
 
 const offers = [
