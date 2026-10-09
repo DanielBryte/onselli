@@ -510,7 +510,7 @@ body,.home-page{font-family:'Urbanist',-apple-system,BlinkMacSystemFont,'Segoe U
 
 /* The one-home constellation: familiar creator tools orbit Onselli. */
 .channel-section{min-height:0;padding:76px 28px 92px;background:#fff}
-.creator-orbit{position:relative;width:min(1480px,100%);min-height:640px;margin:0 auto;display:grid;place-items:center;overflow:hidden}
+.creator-orbit{position:relative;width:min(1480px,100%);min-height:640px;margin:0 auto;display:grid;place-items:center;overflow:visible}
 .creator-orbit__content{position:relative;z-index:2;width:min(760px,100%);padding:38px 24px;text-align:center}
 .creator-orbit__brand{display:flex;justify-content:center;margin-bottom:27px}
 .creator-orbit__brand .onselli-lockup{gap:12px}
@@ -525,7 +525,7 @@ body,.home-page{font-family:'Urbanist',-apple-system,BlinkMacSystemFont,'Segoe U
 .orbit-icon{position:absolute;width:48px;height:48px;display:grid;place-items:center;opacity:.92;transition:transform .25s ease}
 .orbit-icon img{display:block;width:100%;height:100%;object-fit:contain}
 .orbit-icon--framer{top:8%;left:17%;width:34px;height:34px}
-.orbit-icon--stripe{top:9%;left:42%;width:47px;height:47px}
+.orbit-icon--stripe{top:0%;left:50%;width:54px;height:54px;transform:translateX(-50%) translateY(-16px)}
 .orbit-icon--canva{top:14%;right:26%;width:58px;height:58px}
 .orbit-icon--notion{top:12%;right:10%;width:42px;height:42px}
 .orbit-icon--figma{top:39%;left:7%;width:48px;height:48px}
@@ -536,7 +536,8 @@ body,.home-page{font-family:'Urbanist',-apple-system,BlinkMacSystemFont,'Segoe U
 .orbit-icon--discord{bottom:8%;right:39%;width:51px;height:51px}
 .orbit-icon--x{top:19%;left:29%;width:28px;height:28px}
 .orbit-icon--google{top:26%;right:20%;width:34px;height:34px}
-@media(max-width:760px){.channel-section{padding:52px 16px 65px}.creator-orbit{min-height:650px}.creator-orbit__content{width:min(600px,100%);padding:82px 15px}.creator-orbit__brand{margin-bottom:20px}.creator-orbit__brand .onselli-logo-mark{width:36px;height:36px}.creator-orbit__brand .onselli-wordmark strong{font-size:27px}.creator-orbit__content h2{font-size:clamp(40px,9.5vw,56px)}.creator-orbit__content p{font-size:16px;line-height:1.65}.orbit-icon{width:35px;height:35px}.orbit-icon--framer{top:4%;left:12%;width:27px;height:27px}.orbit-icon--stripe{top:6%;left:44%;width:36px;height:36px}.orbit-icon--canva{top:5%;right:12%;width:42px;height:42px}.orbit-icon--notion{top:27%;right:4%;width:31px;height:31px}.orbit-icon--figma{top:31%;left:3%;width:36px;height:36px}.orbit-icon--wordpress{bottom:21%;left:5%;width:36px;height:36px}.orbit-icon--youtube{bottom:6%;left:22%;width:32px;height:32px}.orbit-icon--tiktok{top:45%;right:3%;width:32px;height:32px}.orbit-icon--instagram{bottom:21%;right:5%;width:32px;height:32px}.orbit-icon--discord{bottom:5%;right:25%;width:38px;height:38px}.orbit-icon--x{top:16%;left:28%;width:23px;height:23px}.orbit-icon--google{top:17%;right:27%;width:27px;height:27px}}
+.orbit-icon--canva img{width:58px;height:58px}
+@media(max-width:760px){.channel-section{padding:52px 16px 65px}.creator-orbit{min-height:650px;overflow:visible}.creator-orbit__content{width:min(600px,100%);padding:82px 15px}.creator-orbit__brand{margin-bottom:20px}.creator-orbit__brand .onselli-logo-mark{width:36px;height:36px}.creator-orbit__brand .onselli-wordmark strong{font-size:27px}.creator-orbit__content h2{font-size:clamp(40px,9.5vw,56px)}.creator-orbit__content p{font-size:16px;line-height:1.65}.orbit-icon{width:35px;height:35px}.orbit-icon--framer{top:4%;left:12%;width:27px;height:27px}.orbit-icon--stripe{top:0%;left:50%;width:38px;height:38px;transform:translateX(-50%) translateY(-10px)}.orbit-icon--canva{top:5%;right:12%;width:42px;height:42px}.orbit-icon--canva img{width:42px;height:42px}.orbit-icon--notion{top:27%;right:4%;width:31px;height:31px}.orbit-icon--figma{top:31%;left:3%;width:36px;height:36px}.orbit-icon--wordpress{bottom:21%;left:5%;width:36px;height:36px}.orbit-icon--youtube{bottom:6%;left:22%;width:32px;height:32px}.orbit-icon--tiktok{top:45%;right:3%;width:32px;height:32px}.orbit-icon--instagram{bottom:21%;right:5%;width:32px;height:32px}.orbit-icon--discord{bottom:5%;right:25%;width:38px;height:38px}.orbit-icon--x{top:16%;left:28%;width:23px;height:23px}.orbit-icon--google{top:17%;right:27%;width:27px;height:27px}}
 @media(max-width:420px){.creator-orbit{min-height:680px}.creator-orbit__content{padding-inline:7px}.creator-orbit__content h2{font-size:39px}.creator-orbit__content p{font-size:15px}.orbit-icon--x,.orbit-icon--google{display:none}}
 
 /* Final legibility and brand consistency refinements. */

@@ -84,7 +84,7 @@ export default function HomePage() {
           <div className="creator-orbit__icons" aria-hidden="true">
             <span className="orbit-icon orbit-icon--framer"><img src="https://cdn.simpleicons.org/framer/0055FF" alt="" /></span>
             <span className="orbit-icon orbit-icon--stripe"><img src="https://cdn.simpleicons.org/stripe/635BFF" alt="" /></span>
-            <span className="orbit-icon orbit-icon--canva"><img src="https://cdn.simpleicons.org/canva/00C4CC" alt="" /></span>
+            <span className="orbit-icon orbit-icon--canva"><img src="/icons/canva.svg" alt="" /></span>
             <span className="orbit-icon orbit-icon--notion"><img src="https://cdn.simpleicons.org/notion/000000" alt="" /></span>
             <span className="orbit-icon orbit-icon--figma"><img src="https://cdn.simpleicons.org/figma/F24E1E" alt="" /></span>
             <span className="orbit-icon orbit-icon--wordpress"><img src="https://cdn.simpleicons.org/wordpress/21759B" alt="" /></span>
