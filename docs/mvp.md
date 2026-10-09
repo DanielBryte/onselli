@@ -1,28 +1,27 @@
-# ONSELLI MVP scope
+# Onselli creator web MVP
 
-## Included
+## Product direction
 
-Discovery across categories, businesses, products, services, storefronts, search, location,
-and shareable links; customer messaging, inquiries, quotes, requests, bookings, orders,
-reviews, forms/data collection, notifications, verification, moderation, and paid promoted
-visibility.
+Onselli is becoming a web platform for creators to build a business around their knowledge. The long-term product connects creation, sales, learning delivery, customer relationships, marketing, community, analytics, and creator operations. The first release should validate one complete creator workflow before broadening into the full platform.
 
-## Explicitly excluded
+## Current vertical slice
 
-Customer-to-business payment, checkout, escrow, commissions, seller payouts, refunds,
-disputes, microservices, Redis, AI features, and a dedicated search engine.
+- Email/password sign up and sign in through Supabase Auth.
+- Creator profile and public storefront setup.
+- Creator product records for courses, downloads, coaching, workshops, and communities.
+- Draft and published offer states.
+- Public creator directory, storefront, and offer detail pages.
+- RLS scopes creator management to its owner and allows public access only to published profiles and offers.
 
-## Business location modes
+The codebase contains Bachs Connect checkout, order creation, signed webhook processing, creator payout onboarding, entitlement fulfillment, full refunds, and dispute state handling. Production payments remain disabled until Bachs approval, creator settlement terms, support operations, legal responsibilities, and end-to-end live readiness are confirmed. Paystack is a potential secondary processor, but marketplace checkout remains intentionally unavailable until creator settlement onboarding and reconciliation exist.
 
-- `PHYSICAL`: public shop address and map point.
-- `SERVICE_AREA`: operating point and optional radius; address can remain private.
-- `ONLINE`: no shop address; show website/social/contact channels and fulfil remotely.
+## Product discovery gates
 
-Listings may expose configurable inquiry forms. Form submissions create a typed inquiry and
-are visible only to the customer and authorized business members.
+The recommended initial audience is social-first creators teaching a practical skill. Validate with creator and buyer interviews and a concierge pilot before treating this audience or offer mix as settled. A proposed early continuation signal is several creators independently naming the same sales/delivery pain, five creators agreeing to pilot, and three pilot creators making sales beyond their immediate personal circle.
 
-## First vertical slice
+## Explicitly out of scope for this web MVP
 
-An authenticated user can create a business, select online/physical/service-area mode,
-become its owner, create a draft listing, and publish it after required validation. Public
-web can render published storefront shells. RLS protects private data.
+- Native app implementation.
+- Automatic payment failover, escrow, automated recurring billing, and unreviewed live payment collection.
+- Full course lesson authoring and private asset delivery, learner progress, email campaigns, community, affiliate management, and AI features.
+- Marketplace discovery ranking or paid placements.

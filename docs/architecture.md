@@ -1,57 +1,65 @@
-# ONSELLI architecture
+# Onselli web product architecture
 
-## Product boundary
+## Product direction
 
-ONSELLI is a discovery, connection, and business-workspace product. PostgreSQL is the
-system of record. The MVP records requests, bookings, quotes, orders, and promotion
-payments; it does not process customer-to-business checkout, escrow, payouts,
-commissions, refunds, or disputes.
+Onselli is a web-first operating platform for creators who teach, coach, and sell expertise. It helps a creator move from an audience on X, TikTok, YouTube, Instagram, or email to an owned business: a public creator page, paid or free offers, checkout, learner access, and customer relationships. The product is not a local business directory and does not require a native mobile app.
 
-## Runtime topology
+## Runtime and deployment boundary
 
-This repository is a TypeScript modular monolith. `apps/web` is the public discovery
-surface and authenticated workspace. `apps/mobile` is the Expo Router client. Both
-consume shared contracts in `packages/*` and the same Supabase project. Domain logic is
-organized by business capability, not deployment service.
+The product is a TypeScript modular monolith with one Next.js App Router application rooted at `/app`. Run it directly from the repository root with `npm run dev`. Supabase provides authentication, PostgreSQL with row-level security, and private storage. Keep browser code limited to publishable configuration. Credentials, provider calls, webhook verification, order creation, refunds, and entitlement changes stay server-side.
 
-```
-apps/{web,mobile} -> packages/{api,auth,validation,types,database,ui,config,utils}
-                           -> Supabase (Auth, PostgreSQL/PostGIS, Realtime, Storage,
-                                         Edge Functions, pgmq, pg_cron)
+```text
+Creator / learner browser
+        │
+        ▼
+app/ — Next.js pages, server routes, server actions
+lib/ ├── domains            creator, offer, commerce, learning rules
+     ├── payments           Bachs and Paystack provider adapters
+     └── Supabase           auth, PostgreSQL/RLS, private storage
 ```
 
-Next.js server routes/server actions and Supabase Edge Functions are the privileged
-boundary. Browser and mobile clients only use the Supabase publishable key. They never
-receive service-role, payment, Cloudinary signing, RevenueCat, Resend, or Termii secrets.
+## Product domains
 
-## Authorization
+- **Identity and creator profile:** Auth user identity, public slug, brand, biography, and connected social links.
+- **Offers:** Courses, downloads, workshops, coaching, and later memberships or cohorts. Offer content and publication status belong to the creator.
+- **Storefront and discovery:** Public creator page and offer pages are the shareable destination for social audiences. Discovery is an optional acquisition surface; each creator owns their audience relationship.
+- **Commerce:** Orders, payment attempts, refunds, disputes, and webhook event ledger. A provider callback alone never grants access.
+- **Learning:** Entitlements are derived from confirmed orders and control access to private course/download content. Revocation follows refunds or lost disputes.
+- **Creator operations:** Sales, payout onboarding and status, learner support, and later analytics/CRM.
 
-Supabase Auth owns identity. `public.users` mirrors the authenticated user and uses the
-same UUID. Business data is scoped through `business_memberships`:
+Keep route files as thin HTTP/UI adapters. Put reusable validation and domain rules in feature-owned modules rather than coupling product behavior to page components or provider payloads. Internal `packages/` are domain/database contracts only; there is no separate web or mobile app workspace.
 
-```
-auth.uid() -> users.id -> business_memberships.user_id -> businesses.id
-```
+## Route map
 
-RLS checks membership for business-private records. Customer users can read public
-discovery data, their own profile, their conversation membership and messages; business
-members cannot read another business's private customers, requests, orders, or documents.
-Support/admin privileges are evaluated server-side and in RLS using `users.platform_role`.
+- `/` — public product and creator acquisition page
+- `/signup`, `/login` — identity entry points
+- `/creator/*` — authenticated creator setup, offers, sales, and payout workspace
+- `/c/[slug]` and `/c/[slug]/[productSlug]` — creator-owned public storefront and offer pages
+- `/learn` — buyer learning library, guarded by entitlements
+- `/discover` — optional creator/offer discovery
+- `/api/checkout` — authenticated order and checkout-session creation
+- `/api/webhooks/{provider}` — signed, idempotent provider event ingestion
 
-## Location and online businesses
+`/studio/*` is retained as a temporary redirect to `/creator/*` for existing links.
 
-`businesses.location_mode` is `PHYSICAL`, `SERVICE_AREA`, or `ONLINE`. Physical
-businesses store a PostGIS `geography(Point, 4326)` plus a display address. Service-area
-businesses store a point/radius when available. Online businesses require no shop address
-and can publish `online_url`; discovery filters must not exclude them merely because they
-lack coordinates. Nearby queries use PostGIS, never city text alone.
+## Payments architecture
 
-## Search, media, messaging, promotions
+Bachs is the preferred checkout and connected-account provider. Paystack is a separately configured secondary provider for the currencies and settlement models it can support. Select the provider before creating an order, persist that provider and its identifiers, and process its webhook independently. Do not silently retry a second processor after an ambiguous timeout: that can charge a buyer twice. A fallback attempt is safe only when the first provider confirms failure or an operator-approved recovery flow establishes that no charge can settle.
 
-The initial `PostgresSearchProvider` uses maintained full-text vectors, `pg_trgm`,
-category/location filters, and cursor pagination. A `SearchProvider` interface isolates
-product use-cases from PostgreSQL. Sponsored rows are separately labelled; organic
-relevance is never overwritten. Cloudinary holds public imagery and Supabase Storage's
-private bucket holds verification files. Conversations use Supabase Realtime. Queued Edge
-Functions handle notification fan-out. Promotion entitlement is provider-neutral: verified
-Paystack webhooks and RevenueCat both activate the same campaign state.
+Normalize provider operations behind an adapter boundary, while retaining provider-specific account, checkout, charge, refund, and dispute IDs. Verify signatures over the raw webhook body, record event IDs under a unique constraint, validate amount/currency/account against the order, and fulfill an order atomically and idempotently. Keep live payment controls disabled until merchant settlement roles, platform fees, tax/refund/dispute ownership, regional coverage, and support operations are explicitly approved.
+
+## Persistence and authorization
+
+`auth.uid()` identifies the signed-in person. `creators.user_id` establishes creator ownership; products and creator operations are scoped through the creator. RLS is the enforcement layer for user-facing reads and writes. Service-role access is server-only and must check the caller’s identity and ownership before privileged mutations. Anonymous users can read only published creator and offer records.
+
+Never store paid course files in a public bucket. Grant learning access only after server-side payment confirmation; serve private assets through an ownership-checked route or short-lived signed URL. Refunds and chargebacks update the entitlement state through the same commerce domain.
+
+## Build sequence
+
+1. Reliable creator profile and offer publishing.
+2. Safe hosted checkout, payment confirmation, and learner entitlement delivery.
+3. Creator sales and payout operations, with provider reconciliation and refund/dispute support.
+4. Email capture, launch tools, analytics, and imports from creator social channels.
+5. Courses, memberships, cohorts, community, and workflow automation based on creator demand.
+
+Do not add broad integrations or marketplace features ahead of proving the full creator-to-paid-learner loop.

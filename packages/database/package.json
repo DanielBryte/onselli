@@ -1,6 +1,6 @@
 {
   "name": "@onselli/database", "version": "0.1.0", "private": true,
-  "exports": {"./browser": "./src/browser.ts", "./types": "./src/database.types.ts"},
+  "exports": {"./browser": "./src/browser.ts", "./server": "./src/server.ts", "./types": "./src/database.types.ts"},
   "scripts": {"typecheck": "tsc --noEmit"},
   "dependencies": {"@supabase/supabase-js": "^2.49.4"}
 }

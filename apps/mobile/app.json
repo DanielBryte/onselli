@@ -1,1 +1,0 @@
-{"expo":{"name":"ONSELLI","slug":"onselli","scheme":"onselli","version":"0.1.0","orientation":"portrait","ios":{"bundleIdentifier":"com.onselli.app","supportsTablet":true},"android":{"package":"com.onselli.app"},"plugins":["expo-router"],"experiments":{"typedRoutes":true}}}
