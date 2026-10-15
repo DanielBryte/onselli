@@ -3,7 +3,11 @@
   "private": true,
   "version": "0.1.0",
   "packageManager": "npm@10.2.4",
-  "workspaces": ["packages/database", "packages/types", "packages/validation"],
+  "workspaces": [
+    "packages/database",
+    "packages/types",
+    "packages/validation"
+  ],
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -13,6 +17,8 @@
     "format:check": "prettier --check ."
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.1150.0",
+    "@aws-sdk/s3-request-presigner": "^3.1150.0",
     "lucide-react": "^1.47.0",
     "next": "^15.3.1",
     "react": "^19.1.0",

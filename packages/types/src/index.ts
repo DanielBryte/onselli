@@ -38,7 +38,7 @@ export interface CreatorOrder {
   amount: number;
   currency: string;
   status: 'PENDING' | 'PAID' | 'FAILED' | 'REFUNDED' | 'DISPUTED';
-  paymentProvider: 'bachs' | 'paystack';
+  paymentProvider: 'bachs';
 }
 
 export interface CreatorEntitlement {

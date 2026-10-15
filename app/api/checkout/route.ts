@@ -18,8 +18,7 @@ export async function POST(request: Request) {
     if (Number(product.price_amount) <= 0) return NextResponse.json({ error: 'Free offers do not need checkout yet.' }, { status: 400 });
     const currency = String(product.currency).trim().toUpperCase();
     if (!/^[A-Z]{3}$/.test(currency)) return NextResponse.json({ error: 'This offer has an invalid currency.' }, { status: 400 });
-    const provider = process.env.PAYMENT_PROVIDER === 'paystack' ? 'paystack' : 'bachs';
-    if (provider !== 'bachs') return NextResponse.json({ error: 'Paystack marketplace split payments are not enabled yet. Choose Bachs or wait until this seller settlement route is available.' }, { status: 503 });
+    const provider = 'bachs';
     const { data: creatorPayment } = await admin.from('creator_payment_accounts').select('provider_account_id').eq('creator_id', creator.id).maybeSingle();
     if (!creatorPayment?.provider_account_id) return NextResponse.json({ error: 'This creator has not completed payout setup.' }, { status: 409 });
     const connect = await refreshBachsAccount(creatorPayment.provider_account_id);
@@ -54,6 +53,7 @@ export async function POST(request: Request) {
     }
     const { error: updateError } = await admin.from('creator_orders').update({ provider_checkout_id: session.checkoutId }).eq('id', order.id);
     if (updateError) throw new Error('Could not prepare the checkout session. Please try again.');
+    await admin.rpc('record_creator_product_metric', { product_id_input: product.id, metric_input: 'CHECKOUT_START' });
     return NextResponse.json({ checkoutUrl: session.checkoutUrl });
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Checkout is temporarily unavailable.';

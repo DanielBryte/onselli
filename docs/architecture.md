@@ -6,7 +6,7 @@ Onselli is a web-first operating platform for creators who teach, coach, and sel
 
 ## Runtime and deployment boundary
 
-The product is a TypeScript modular monolith with one Next.js App Router application rooted at `/app`. Run it directly from the repository root with `npm run dev`. Supabase provides authentication, PostgreSQL with row-level security, and private storage. Keep browser code limited to publishable configuration. Credentials, provider calls, webhook verification, order creation, refunds, and entitlement changes stay server-side.
+The product is a TypeScript modular monolith with one Next.js App Router application rooted at `/app`. Run it directly from the repository root with `npm run dev`. Supabase provides authentication and PostgreSQL with row-level security; Cloudflare R2 stores private digital product files. Keep browser code limited to publishable configuration. Credentials, provider calls, webhook verification, order creation, refunds, and entitlement changes stay server-side.
 
 ```text
 Creator / learner browser
@@ -14,8 +14,9 @@ Creator / learner browser
         ▼
 app/ — Next.js pages, server routes, server actions
 lib/ ├── domains            creator, offer, commerce, learning rules
-     ├── payments           Bachs and Paystack provider adapters
-     └── Supabase           auth, PostgreSQL/RLS, private storage
+     ├── payments           Bachs checkout and webhook integration
+     ├── Supabase           auth and PostgreSQL/RLS
+     └── Cloudflare R2      private digital product files
 ```
 
 ## Product domains
@@ -38,21 +39,19 @@ Keep route files as thin HTTP/UI adapters. Put reusable validation and domain ru
 - `/learn` — buyer learning library, guarded by entitlements
 - `/discover` — optional creator/offer discovery
 - `/api/checkout` — authenticated order and checkout-session creation
-- `/api/webhooks/{provider}` — signed, idempotent provider event ingestion
-
-`/studio/*` is retained as a temporary redirect to `/creator/*` for existing links.
+- `/api/webhooks/bachs` — signed, idempotent Bachs event ingestion
 
 ## Payments architecture
 
-Bachs is the preferred checkout and connected-account provider. Paystack is a separately configured secondary provider for the currencies and settlement models it can support. Select the provider before creating an order, persist that provider and its identifiers, and process its webhook independently. Do not silently retry a second processor after an ambiguous timeout: that can charge a buyer twice. A fallback attempt is safe only when the first provider confirms failure or an operator-approved recovery flow establishes that no charge can settle.
+Bachs Connect is Onselli's only payment gateway. Every checkout, webhook, refund, and dispute flow uses Bachs and its connected creator account. Persist the provider and its identifiers on each order. Never create a second charge attempt after an ambiguous timeout; confirm the original attempt's status with Bachs first.
 
-Normalize provider operations behind an adapter boundary, while retaining provider-specific account, checkout, charge, refund, and dispute IDs. Verify signatures over the raw webhook body, record event IDs under a unique constraint, validate amount/currency/account against the order, and fulfill an order atomically and idempotently. Keep live payment controls disabled until merchant settlement roles, platform fees, tax/refund/dispute ownership, regional coverage, and support operations are explicitly approved.
+Verify Bachs signatures over the raw webhook body, record event IDs under a unique constraint, validate amount/currency/account against the order, and fulfill an order atomically and idempotently. Keep live payment controls disabled until merchant settlement roles, platform fees, tax/refund/dispute ownership, regional coverage, and support operations are explicitly approved.
 
 ## Persistence and authorization
 
 `auth.uid()` identifies the signed-in person. `creators.user_id` establishes creator ownership; products and creator operations are scoped through the creator. RLS is the enforcement layer for user-facing reads and writes. Service-role access is server-only and must check the caller’s identity and ownership before privileged mutations. Anonymous users can read only published creator and offer records.
 
-Never store paid course files in a public bucket. Grant learning access only after server-side payment confirmation; serve private assets through an ownership-checked route or short-lived signed URL. Refunds and chargebacks update the entitlement state through the same commerce domain.
+Never store paid product files in a public bucket. Grant learning access only after server-side payment confirmation; issue a short-lived R2 download URL only after checking the buyer's active entitlement. Refunds and chargebacks update the entitlement state through the same commerce domain.
 
 ## Build sequence
 

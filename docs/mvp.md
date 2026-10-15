@@ -13,7 +13,7 @@ Onselli is becoming a web platform for creators to build a business around their
 - Public creator directory, storefront, and offer detail pages.
 - RLS scopes creator management to its owner and allows public access only to published profiles and offers.
 
-The codebase contains Bachs Connect checkout, order creation, signed webhook processing, creator payout onboarding, entitlement fulfillment, full refunds, and dispute state handling. Production payments remain disabled until Bachs approval, creator settlement terms, support operations, legal responsibilities, and end-to-end live readiness are confirmed. Paystack is a potential secondary processor, but marketplace checkout remains intentionally unavailable until creator settlement onboarding and reconciliation exist.
+The codebase contains Bachs Connect checkout, order creation, signed webhook processing, creator payout onboarding, entitlement fulfillment, full refunds, and dispute state handling. Bachs is the only payment gateway. Production payments remain disabled until Bachs approval, creator settlement terms, support operations, legal responsibilities, and end-to-end live readiness are confirmed.
 
 ## Product discovery gates
 
@@ -23,5 +23,5 @@ The recommended initial audience is social-first creators teaching a practical s
 
 - Native app implementation.
 - Automatic payment failover, escrow, automated recurring billing, and unreviewed live payment collection.
-- Full course lesson authoring and private asset delivery, learner progress, email campaigns, community, affiliate management, and AI features.
+- Full course lesson authoring and learner progress, email campaigns, community, affiliate management, and AI features. Digital download delivery is the first private asset workflow.
 - Marketplace discovery ranking or paid placements.

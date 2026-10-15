@@ -23,6 +23,13 @@ export default function PublicProductPage({ creatorSlug, productSlug }: { creato
       if (!profile) { setLoading(false); return; }
       const { data: offer } = await supabase.from('creator_products').select('id,title,slug,kind,description,price_amount,currency').eq('creator_id', profile.id).eq('slug', productSlug).eq('status', 'PUBLISHED').maybeSingle();
       if (!active) return;
+      if (offer && typeof window !== 'undefined') {
+        const key = `onselli:view:${offer.id}`;
+        if (!window.sessionStorage.getItem(key)) {
+          window.sessionStorage.setItem(key, '1');
+          void fetch('/api/analytics/product-view', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ productId: offer.id }) }).catch(() => undefined);
+        }
+      }
       setCreator(profile as Creator); setProduct(offer as Product | null); setLoading(false);
     })();
     return () => { active = false; };
