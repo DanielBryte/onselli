@@ -1,0 +1,82 @@
+:root{
+  --ui-color-brand:#014733;
+  --ui-color-brand-strong:#07573d;
+  --ui-color-brand-tint:#edf4ef;
+  --ui-color-ink:#071a14;
+  --ui-color-muted:#5b655f;
+  --ui-color-border:#dce7e0;
+  --ui-color-surface:#fff;
+  --ui-color-canvas:#f6f8f6;
+  --ui-color-focus:#087653;
+  --ui-color-danger:#b93630;
+  --ui-color-danger-tint:#fff4f2;
+  --ui-color-text-on-brand:#fff;
+  --ui-color-subtle:#f5f8f6;
+  --ui-space-1:4px;
+  --ui-space-2:8px;
+  --ui-space-3:12px;
+  --ui-space-4:16px;
+  --ui-space-5:20px;
+  --ui-space-6:24px;
+  --ui-space-8:32px;
+  --ui-radius-control:10px;
+  --ui-radius-card:14px;
+  --ui-radius-panel:20px;
+  --ui-font-sans:'Urbanist',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --ui-shadow-card:0 2px 8px rgba(24,42,30,.045);
+}
+
+.ui-button{
+  min-height:44px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:var(--ui-space-2);
+  padding:0 var(--ui-space-4);
+  border:1px solid transparent;
+  border-radius:var(--ui-radius-control);
+  background:transparent;
+  color:var(--ui-color-ink);
+  font:600 14px/1 var(--ui-font-sans);
+  text-decoration:none;
+  cursor:pointer;
+  transition:background-color .15s ease,border-color .15s ease,color .15s ease,transform .15s ease;
+}
+.ui-button:hover:not(:disabled){transform:translateY(-1px)}
+.ui-button:disabled{opacity:.55;cursor:not-allowed}
+.ui-button:focus-visible{outline:3px solid var(--ui-color-focus);outline-offset:2px}
+.ui-button--primary{border-color:var(--ui-color-brand-strong);background:var(--ui-color-brand-strong);color:#fff}
+.ui-button--primary:hover:not(:disabled){border-color:var(--ui-color-brand);background:var(--ui-color-brand)}
+.ui-button--secondary{border-color:var(--ui-color-border);background:var(--ui-color-surface);color:#425348}
+.ui-button--secondary:hover:not(:disabled){border-color:#b8cdbd;background:#f8faf8}
+.ui-button--quiet{border-color:transparent;background:transparent;color:#425348}
+.ui-button--quiet:hover:not(:disabled){background:#f3f6f3}
+.ui-button--danger{border-color:var(--ui-color-danger);background:var(--ui-color-danger);color:#fff}
+.ui-button--danger:hover:not(:disabled){border-color:#9d2f2a;background:#9d2f2a}
+.ui-button--sm{min-height:36px;padding-inline:11px;font-size:12px}
+.ui-button--lg{min-height:48px;padding-inline:var(--ui-space-5);font-size:15px}
+
+.ui-surface{border:1px solid var(--ui-color-border);border-radius:var(--ui-radius-card);background:var(--ui-color-surface);box-shadow:var(--ui-shadow-card)}
+
+.ui-input{width:100%;min-width:0;min-height:44px;padding:0 var(--ui-space-3);border:1px solid var(--ui-color-border);border-radius:var(--ui-radius-control);background:var(--ui-color-surface);color:var(--ui-color-ink);font:500 14px/1.4 var(--ui-font-sans);transition:border-color .15s ease,box-shadow .15s ease}
+.ui-input::placeholder{color:var(--ui-color-muted);opacity:1}
+.ui-input:hover:not(:disabled){border-color:#b7c9bd}
+.ui-input:focus-visible{border-color:var(--ui-color-brand);outline:0;box-shadow:0 0 0 3px color-mix(in srgb,var(--ui-color-brand) 15%,transparent)}
+.ui-input[aria-invalid=true]{border-color:var(--ui-color-danger);box-shadow:0 0 0 3px color-mix(in srgb,var(--ui-color-danger) 12%,transparent)}
+.ui-input:disabled{background:var(--ui-color-subtle);color:var(--ui-color-muted);cursor:not-allowed;opacity:1}
+
+.ui-choice-card{position:relative;display:flex;align-items:flex-start;gap:var(--ui-space-3);min-width:0;padding:var(--ui-space-4);border:1px solid var(--ui-color-border);border-radius:var(--ui-radius-card);background:var(--ui-color-surface);color:var(--ui-color-ink);cursor:pointer;transition:border-color .15s ease,background-color .15s ease,box-shadow .15s ease}
+.ui-choice-card:hover{border-color:#b7c9bd;background:#fbfcfb}
+.ui-choice-card:has(input:checked){border-color:var(--ui-color-brand);background:var(--ui-color-brand-tint);box-shadow:inset 0 0 0 1px var(--ui-color-brand)}
+.ui-choice-card:focus-within{outline:3px solid color-mix(in srgb,var(--ui-color-focus) 45%,transparent);outline-offset:2px}
+.ui-choice-card input{width:18px;height:18px;flex:none;margin:1px 0 0;accent-color:var(--ui-color-brand)}
+.ui-choice-card__copy{display:grid;min-width:0;gap:4px}
+.ui-choice-card__copy strong{color:var(--ui-color-ink);font-size:14px;font-weight:650;line-height:1.35}
+.ui-choice-card__copy small{color:var(--ui-color-muted);font-size:12px;line-height:1.45}
+
+.ui-dialog__overlay{position:fixed;inset:0;z-index:100;display:grid;place-items:center;overflow-y:auto;padding:24px;background:rgba(15,25,20,.48);animation:ui-dialog-fade-in .14s ease-out}
+.ui-dialog__content{position:fixed;top:50%;left:50%;z-index:101;width:min(100% - 32px,560px);max-height:min(86vh,760px);overflow:auto;transform:translate(-50%,-50%);border:1px solid var(--ui-color-border);border-radius:var(--ui-radius-panel);background:var(--ui-color-surface);color:var(--ui-color-ink);box-shadow:0 24px 64px rgba(10,32,20,.2);animation:ui-dialog-rise-in .16s ease-out}
+.ui-dialog__content:focus{outline:none}
+@keyframes ui-dialog-fade-in{from{opacity:0}to{opacity:1}}
+@keyframes ui-dialog-rise-in{from{opacity:0;transform:translate(-50%,-50%) scale(.99)}to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+@media(max-width:600px){.ui-dialog__overlay{padding:12px}.ui-dialog__content{width:calc(100% - 24px);max-height:90dvh;border-radius:18px}}
