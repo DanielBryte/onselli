@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import PricingPlanGrid from './PricingPlanGrid';
-import '../home-pricing.css';
 
 export default function HomePricing() {
   return <section className="home-pricing" id="pricing" aria-labelledby="home-pricing-title">
