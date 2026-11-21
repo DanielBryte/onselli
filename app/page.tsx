@@ -1,8 +1,9 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowRight, ArrowUpRight, BookOpen, Check, CreditCard, Link2, Mail, Sparkles, Users, Video } from 'lucide-react';
+import { ArrowRight, BookOpen, Check, Link2, Video } from 'lucide-react';
 import Header from './components/Header';
 import Logo from './components/Logo';
+import HomePricing from './components/HomePricing';
 
 export const metadata = {
   title: 'Turn what you know into what you earn | Onselli',
@@ -49,7 +50,7 @@ export default function HomePage() {
               <p className="home-hero__lede">Build a home for your knowledge. Create courses, downloads, workshops, or coaching—and sell them to the audience you’ve already grown.</p>
               <div className="home-hero__actions">
                 <Link href="/signup" className="home-button home-button--hero">Start for free <ArrowRight size={17} /></Link>
-                <Link href="#how-it-works" className="home-button home-button--quiet">See how it works <ArrowUpRight size={16} /></Link>
+                <Link href="#how-it-works" className="home-button home-button--quiet">See how it works <ArrowRight size={16} /></Link>
               </div>
               <div className="home-platform-note"><span>One home for everything you know</span><div className="home-platform-list"><b>Courses</b><i /><b>Downloads</b><i /><b>Workshops</b><i /><b>Coaching</b></div></div>
             </div>
@@ -61,9 +62,9 @@ export default function HomePage() {
                 <span className="home-product__address"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><small>onselli.com/c/amara-ade</small><svg className="home-product__reload" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7v5h-5M4.9 9a7.5 7.5 0 0 1 12.6-2L20 12M4 17v-5h5m10.1 3a7.5 7.5 0 0 1-12.6 2L4 12"/></svg></span>
                 <span className="home-product__toolbar-icons"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V3m-5 5 5-5 5 5M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 8h8v8H8z"/></svg></span>
               </div>
-              <div className="home-product__viewport"><div className="home-product__sitebar"><b>AMARA ADE</b><nav><span>COURSES</span><span>ABOUT</span><span>CONTACT</span></nav><span className="home-product__site-cta">Explore offers <ArrowUpRight size={12}/></span></div>
-              <div className="home-product__cover"><Image className="home-product__avatar" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=120&h=120&q=85" alt="Amara Ade" width={60} height={60} unoptimized/><span className="home-product__name">AMARA ADE <i /> BRAND STRATEGIST</span><h2>Build a brand that feels like you.</h2><p>Clear ideas, useful tools, and a little more confidence in your next move.</p><span className="home-product__link">Explore Amara’s work <ArrowUpRight size={13} /></span></div>
-              <div className="home-product__offers"><div className="home-product__offers-head"><b>Learn with Amara</b><span>2 offers</span></div>{offers.map((offer) => <article className="home-offer" key={offer.title}><span className={`home-offer__art home-offer__art--${offer.color}`}><BookOpen size={17} /></span><span className="home-offer__text"><small>{offer.kind}</small><b>{offer.title}</b><i>{offer.detail}</i></span><ArrowUpRight className="home-offer__arrow" size={16} /></article>)}</div>
+              <div className="home-product__viewport"><div className="home-product__sitebar"><b>AMARA ADE</b><nav><span>COURSES</span><span>ABOUT</span><span>CONTACT</span></nav><span className="home-product__site-cta">Explore offers <ArrowRight size={12}/></span></div>
+              <div className="home-product__cover"><Image className="home-product__avatar" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=120&h=120&q=85" alt="Amara Ade" width={60} height={60} unoptimized/><span className="home-product__name">AMARA ADE <i /> BRAND STRATEGIST</span><h2>Build a brand that feels like you.</h2><p>Clear ideas, useful tools, and a little more confidence in your next move.</p><span className="home-product__link">Explore Amara’s work <ArrowRight size={13} /></span></div>
+              <div className="home-product__offers"><div className="home-product__offers-head"><b>Learn with Amara</b><span>2 offers</span></div>{offers.map((offer) => <article className="home-offer" key={offer.title}><span className={`home-offer__art home-offer__art--${offer.color}`}><BookOpen size={17} /></span><span className="home-offer__text"><small>{offer.kind}</small><b>{offer.title}</b><i>{offer.detail}</i></span><ArrowRight className="home-offer__arrow" size={16} /></article>)}</div>
               <div className="home-product__proof"><span><Check size={13}/> SECURE CHECKOUT</span><span>Instant access after purchase</span></div></div>
               <div className="home-float home-float--top"><span className="home-float__icon"><Link2 size={15}/></span><span><b>One link to share</b><small>Your work, in one place</small></span></div>
               <div className="home-float home-float--bottom"><span className="home-float__icon"><Check size={15}/></span><span><b>Payment confirmed</b><small>Learning access unlocked</small></span></div>
@@ -74,7 +75,7 @@ export default function HomePage() {
       </section>
 
       <section className="creator-types" id="for-creators">
-        <div className="creator-types__intro"><p className="section-overline">Onselli is for the knowledge you carry</p><h2>Different paths.<br/><em>Something worth sharing.</em></h2></div>
+        <div className="creator-types__intro"><p className="section-overline">Onselli is for the knowledge you carry</p><h2>Earn from what you know.</h2></div>
         <div className="creator-marquee" aria-label="Creators who can build on Onselli">
           {creatorRows.map((row, rowIndex) => <div className="creator-marquee__window" key={rowIndex}><div className={`creator-marquee__track${rowIndex === 0 ? ' creator-marquee__track--left' : ' creator-marquee__track--right'}`} aria-hidden="true">{[...row, ...row].map((creator, index) => <article className="creator-type" key={`${creator.name}-${index}`}><Image className="creator-type__portrait" src={`https://images.unsplash.com/${creator.photo}?auto=format&fit=crop&w=180&h=180&q=85`} alt="" width={88} height={88} unoptimized/><span>{creator.role}</span></article>)}</div></div>)}
         </div>
@@ -108,7 +109,7 @@ export default function HomePage() {
 
       <section className="home-feature-panel" id="platform">
         <div className="home-feature-panel__copy"><span className="section-overline">A BUSINESS THAT FEELS LIKE YOURS</span><h2>Create, share,<br/>and grow <em>your way.</em></h2><p>Build a home for your knowledge business with your offers, your voice, and a learning experience your audience can return to.</p><Link href="/signup" className="home-button home-button--green">Get started — it’s free <ArrowRight size={17}/></Link></div>
-        <div className="feature-visual" aria-label="Preview of an Onselli creator workspace"><div className="feature-visual__orb feature-visual__orb--one"/><div className="feature-visual__orb feature-visual__orb--two"/><div className="feature-visual__card"><div className="feature-visual__top"><span>YOUR CREATOR SPACE</span><span className="feature-visual__status">● LIVE</span></div><div className="feature-visual__avatar">AA</div><b>Amara’s studio</b><small>Ideas worth learning from.</small><div className="feature-visual__progress"><i/><i/><i/></div><div className="feature-visual__offer"><span><Video size={17}/></span><div><b>Build a brand that feels like you</b><small>Course · 6 lessons</small></div><ArrowUpRight size={16}/></div><div className="feature-visual__offer"><span><BookOpen size={17}/></span><div><b>The Brand Clarity Workbook</b><small>Digital guide · instant access</small></div><ArrowUpRight size={16}/></div></div></div>
+        <div className="feature-visual" aria-label="Preview of an Onselli creator workspace"><div className="feature-visual__orb feature-visual__orb--one"/><div className="feature-visual__orb feature-visual__orb--two"/><div className="feature-visual__card"><div className="feature-visual__top"><span>YOUR CREATOR SPACE</span><span className="feature-visual__status">● LIVE</span></div><div className="feature-visual__avatar">AA</div><b>Amara’s studio</b><small>Ideas worth learning from.</small><div className="feature-visual__progress"><i/><i/><i/></div><div className="feature-visual__offer"><span><Video size={17}/></span><div><b>Build a brand that feels like you</b><small>Course · 6 lessons</small></div><ArrowRight size={16}/></div><div className="feature-visual__offer"><span><BookOpen size={17}/></span><div><b>The Brand Clarity Workbook</b><small>Digital guide · instant access</small></div><ArrowRight size={16}/></div></div></div>
       </section>
 
       <section className="home-offers-section">
@@ -120,7 +121,17 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="home-last-call" id="pricing"><div className="home-last-call__inner"><span className="home-last-call__eyebrow">YOUR KNOWLEDGE HAS VALUE</span><h2>What you know can<br/>take someone further.</h2><p>Give your next great idea a home—and make it easy for people to learn from you.</p><Link href="/signup" className="home-button home-button--white">Start for free <ArrowRight size={17}/></Link><span className="home-last-call__spark" aria-hidden="true">✳</span></div></section>
+      <HomePricing />
+
+      <section className="home-last-call" aria-labelledby="home-last-call-title">
+        <div className="home-last-call__inner">
+          <span className="home-last-call__eyebrow">YOUR KNOWLEDGE HAS VALUE</span>
+          <h2 id="home-last-call-title">What you know can<br/>take someone further.</h2>
+          <p>Give your next great idea a home—and make it easy for people to learn from you.</p>
+          <Link href="/signup" className="home-button home-button--white">Start for free <ArrowRight size={20}/></Link>
+          <span className="home-last-call__spark" aria-hidden="true">✳</span>
+        </div>
+      </section>
 
       <footer className="home-footer" id="company">
         <div className="home-footer__inner">
