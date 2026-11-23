@@ -4,30 +4,28 @@
 
 ---
 
-## 1. Environments & 3-Branch Setup
+## 1. Environments & Branch Setup
 
-A frictionless 3-branch workflow designed for rapid solo development without the overhead of juggling micro-feature branches:
+A streamlined 2-branch workflow optimized for fast solo execution and zero overhead:
 
 | Branch | Environment | Live URL | Database / Services | How You Use It |
 | :--- | :--- | :--- | :--- | :--- |
-| **`dev`** | **Local Development** | `localhost:3000` | Local / Neon Dev branch | **Your daily workhorse.** You stay here and commit directly as you build. |
-| **`staging`** | **Staging (QA)** | [onselli-dev](https://onselli-dev) | Neon DB (Staging), Bachs Sandbox | Merge `dev` here when you want to test on the staging link. |
-| **`master`** | **Production** | [onselli.com](https://onselli.com) | Neon DB (Prod), Live Bachs/Stripe | Merge `staging` here when ready to ship live to real users. |
+| **`dev`** | **Staging & Local Workhorse** | [onselli-dev](https://onselli-dev) | Neon DB (Staging), Bachs Sandbox | **Your daily branch.** Code locally on `localhost:3000`. Pushing to `origin dev` instantly deploys to `onselli-dev` for end-to-end testing. |
+| **`master`** | **Production** | [onselli.com](https://onselli.com) | Neon DB (Prod), Live Bachs/Stripe | **Protected production.** Merge `dev` here only when staging is verified and you are ready to ship live to real creators and buyers. |
 
 ---
 
-## 2. Frictionless Solo Workflow
+## 2. Fast Solo Developer Workflow
 
 ```mermaid
 flowchart LR
-    A["1. Code directly in 'dev'"] --> B["2. Test locally (localhost:3000)"]
-    B --> C["3. Push to 'staging' (onselli-dev)"]
-    C --> D["4. Verify on staging link"]
-    D --> E["5. Push to 'master' (onselli.com)"]
+    A["1. Code on dev (localhost:3000)"] --> B["2. git push origin dev"]
+    B --> C["3. Verify live on onselli-dev"]
+    C --> D["4. Merge dev -> master & push (onselli.com)"]
 ```
 
 ### Daily Coding Routine (Stay on `dev`):
-You don't need to create new branches for every small task. Just keep working directly in `dev`:
+You don't juggle feature branches. Stay on `dev`, test on `localhost:3000`, and commit:
 ```bash
 # Verify you are on dev
 git checkout dev
@@ -37,29 +35,24 @@ git add <files>
 git commit -m "feat(courses): add video upload progress indicator"
 ```
 
----
-
-### Ready to test on Staging (`onselli-dev`)?
-When you want to see your changes live on the staging URL:
+### Deploy to Staging (`onselli-dev`):
+Whenever you want to test on the live staging link or preview on mobile:
 ```bash
-git checkout staging
-git merge dev
-git push origin staging
-git checkout dev    # switch back to dev to keep coding
+git push origin dev
 ```
-*Your staging environment (`onselli-dev`) will automatically build and deploy.*
+*Your staging environment (`onselli-dev`) automatically deploys.*
 
 ---
 
-### Ready to ship to Production (`onselli.com`)?
+### Release to Production (`onselli.com`):
 Once you verify that everything looks and works great on `onselli-dev`:
 ```bash
 git checkout master
-git merge staging
+git merge dev
 git push origin master
-git checkout dev    # switch back to dev
+git checkout dev    # return to dev to continue coding
 ```
-*Your live site (`onselli.com`) is now updated.*
+*Your live production site (`onselli.com`) is updated instantly.*
 
 ---
 
