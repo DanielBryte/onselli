@@ -3,116 +3,69 @@ import Logo from '../../components/Logo';
 
 export const metadata = {
   title: 'Terms of Service | Onselli',
-  description: 'Onselli terms of service covering platform usage, payments, content, and creator obligations.',
+  description: 'Terms governing creator and customer use of the Onselli platform.',
 };
 
 export default function TermsPage() {
   return (
     <main className="legal-page legal-page--document">
-      <header className="legal-header">
-        <div className="legal-header__inner">
-          <Link href="/" className="legal-brand" aria-label="Go to Onselli home">
-            <Logo />
-          </Link>
-          <Link href="/legal" className="legal-inline-link">Legal center</Link>
-        </div>
-      </header>
-
+      <header className="legal-header"><div className="legal-header__inner">
+        <Link href="/" className="legal-brand" aria-label="Go to Onselli home"><Logo /></Link>
+        <Link href="/legal" className="legal-inline-link">Legal center</Link>
+      </div></header>
       <section className="legal-document">
         <div className="legal-document__intro">
           <span className="section-overline legal-kicker">TERMS OF SERVICE</span>
           <h1>Terms of Service</h1>
-          <p>Effective as of October 2026.</p>
+          <p>Effective 2 November 2026 · Updated 2 November 2026</p>
         </div>
-
         <div className="legal-document__content">
-          <p>
-            These Terms of Service (&ldquo;Terms&rdquo;) govern your access to and use of the Onselli platform and
-            related services (the &ldquo;Service&rdquo;). By creating an account, subscribing to a plan, or otherwise
-            using the Service, you agree to be bound by these Terms.
-          </p>
+          <p><strong>Operator details must be completed before these terms are published as final:</strong> replace <em>[LEGAL COMPANY NAME]</em>, <em>[COMPANY NUMBER]</em>, and <em>[REGISTERED ADDRESS]</em> with the registered details of the Onselli operating entity. This draft is written for Onselli’s current creator-commerce service and needs Nigerian legal review, particularly for payment and marketplace responsibilities.</p>
 
-          <h2>1. Overview</h2>
-          <p>
-            Onselli provides a digital commerce and creator platform that allows individuals and businesses to host
-            their offers, sell digital products, deliver learning experiences, and manage customer relationships.
-            We provide the infrastructure, but your content, identity, and commercial decisions remain yours.
-          </p>
+          <h2>1. Who these terms cover</h2>
+          <p>These Terms govern your access to onselli.com, the Onselli workspace, creator storefronts hosted by Onselli, and related services (the “Service”). The Service is operated by [LEGAL COMPANY NAME], company number [COMPANY NUMBER], of [REGISTERED ADDRESS] (“Onselli”, “we”, “us”). By creating an account or using the Service, you agree to these Terms. If you use the Service for a business, you confirm that you can bind that business to these Terms.</p>
+          <p>“Creator” means a person or business using Onselli to publish or sell offers. “Customer” means a person who visits a storefront, submits a form, books a service, or buys an offer. Some people may use the Service in both roles.</p>
 
-          <h2>2. Eligibility and account responsibility</h2>
-          <p>
-            You must be at least 18 years old, or have parental or guardian consent where required by law, to use
-            the Service. You are responsible for keeping your login credentials secure and for all activity that occurs
-            under your account. If you become aware of any unauthorized access, you must notify us immediately at
-            <a href="mailto:support@onselli.com">support@onselli.com</a>.
-          </p>
+          <h2>2. Eligibility and accounts</h2>
+          <p>You must be at least 18 and legally able to enter a contract to create an account or sell through Onselli. Keep your account information accurate, protect your credentials and authentication factors, and tell us promptly at <a href="mailto:support@onselli.com">support@onselli.com</a> if you suspect unauthorized access. You are responsible for activity under your account unless it resulted from our failure to use reasonable security.</p>
+          <p>We may require identity, business, tax, or payout information to verify an account, prevent fraud, meet legal obligations, or enable a feature. Do not submit information you are not authorized to provide.</p>
 
-          <h2>3. Your content and intellectual property</h2>
-          <p>
-            You remain the owner of the content you upload or publish through the Service, including courses,
-            presentations, digital downloads, written materials, and brand assets. By using Onselli, you grant us a
-            limited license to host, process, and distribute that content solely to the extent necessary to provide the
-            Service and to support the features you request.
-          </p>
-          <p>
-            You agree not to upload content that violates third-party rights, includes unlawful material, infringes on
-            copyright, misrepresents the identity of a person, or contains harmful, deceptive, or abusive material.
-          </p>
+          <h2>3. The Service and creator offers</h2>
+          <p>Onselli provides tools for creators to publish storefronts, offer digital products and courses, collect leads, manage contacts, send permitted marketing messages, and review business activity. Feature availability may depend on your plan, location, account status, and third-party provider availability.</p>
+          <p>Unless the checkout page expressly identifies Onselli as the seller, the creator named on the offer and checkout is responsible for the offer, its description, price, delivery, support, and applicable refund or cancellation terms. Onselli provides the platform and may coordinate payment processing and order delivery through service providers. The checkout disclosure for a particular transaction controls who the buyer contracts with and how payment is processed. Onselli does not become the creator’s agent or reseller solely because it hosts an offer.</p>
+          <p>Creators must provide accurate information before purchase, deliver what they advertised, comply with consumer, tax, privacy, intellectual-property, and marketing laws that apply to them, and respond to customer issues promptly. Creators must not collect payment card credentials through forms or store them in Onselli content fields.</p>
 
-          <h2>4. Payments, fees, and refunds</h2>
-          <p>
-            Fees for access to the Service, subscriptions, or transaction processing may apply. Pricing, billing cycles,
-            and payment methods are described in the relevant plan details at the time of purchase. You are responsible
-            for providing accurate billing information and for any taxes or duties associated with your use of the Service.
-          </p>
-          <p>
-            Refund eligibility depends on the product or plan purchased and any applicable policy shown at checkout or
-            in the relevant order details. Unless otherwise stated, digital products and instant-access content are not
-            always refundable once access has been granted, subject to applicable consumer protections.
-          </p>
+          <h2>4. Prices, subscriptions, payments, and refunds</h2>
+          <p>The price, currency, billing interval, taxes, renewal terms, and payment provider for an order or subscription will be shown before you confirm payment. Subscription prices may be charged in USD where shown. Your bank or card issuer may apply conversion rates or fees. A plan’s usage limits, including contact, email, workspace, and storage limits, are shown in the plan details and may change prospectively with reasonable notice.</p>
+          <p>Payments are processed by the provider named at checkout. Onselli does not request or store full card numbers or security codes. Where creator payouts are offered, they are subject to verification, provider rules, settlement, reserves, disputes, and applicable law. A pending balance is not a promise that funds are immediately withdrawable. We may delay or restrict a payout where reasonably necessary to investigate fraud, resolve a dispute, verify identity, or comply with law, and will provide an explanation where permitted.</p>
+          <p>The seller’s refund, cancellation, and digital-delivery terms must be shown before purchase. Mandatory consumer rights continue to apply and cannot be excluded by a “no refunds” label. For a problem with a creator’s offer, contact the creator first using the contact details shown at checkout; you may also contact <a href="mailto:support@onselli.com">support@onselli.com</a> if the issue concerns the platform, payment status, or an unresolved complaint. Nothing here limits a right to a refund or other remedy required by law.</p>
 
-          <h2>5. Acceptable use</h2>
-          <p>
-            You may not use the Service to engage in fraud, phishing, spam, abusive marketing, or any activity that
-            materially interferes with the safety, integrity, or performance of the platform. You may not attempt to
-            reverse engineer the Service, access data not intended for you, or interfere with other users&apos; access or
-            commercial activity.
-          </p>
+          <h2>5. Creator content and intellectual property</h2>
+          <p>Creators retain ownership of content they upload. They grant Onselli a worldwide, non-exclusive, royalty-free license to host, reproduce, process, display, transmit, and make that content available only as needed to operate, secure, support, and promote the Service as requested by the creator. This license ends when the content is deleted, except for copies retained in backups, transaction records, or as required by law.</p>
+          <p>Creators must own or have permission to use their content, brand assets, customer lists, and other materials. Do not upload unlawful, deceptive, infringing, abusive, or harmful material; facilitate fraud; sell prohibited goods or services; or use the Service to send unsolicited bulk messages. Customers may use purchased content only under the license or terms provided by its creator.</p>
+          <p>To report alleged copyright infringement or other unlawful content, email <a href="mailto:support@onselli.com">support@onselli.com</a> with the relevant URL, a description of the issue, your contact details, and evidence that you are authorized to make the report. We may remove or restrict access to reported content while we review it and may suspend repeat infringers.</p>
 
-          <h2>6. Service availability and changes</h2>
-          <p>
-            We work to provide a reliable Service, but we do not guarantee uninterrupted availability or that the Service
-            will be free from defect. We may update, improve, suspend, or discontinue features as needed to support the
-            platform, maintain security, or comply with applicable law. We will notify users where reasonably necessary.
-          </p>
+          <h2>6. Privacy and customer communications</h2>
+          <p>Our <Link href="/legal/privacy">Privacy Policy</Link> explains how Onselli handles personal data. Creators are responsible for having a lawful basis and giving required notices when they collect or use customer information through their storefronts, forms, exports, and marketing tools. Marketing consent must be separate, clear, optional where required, and recorded; a purchase or form submission alone is not permission to send marketing.</p>
+          <p>Creators must honor unsubscribes and suppression requests, use customer data only for disclosed and lawful purposes, secure exports, and delete data they no longer need. Do not upload purchased, scraped, or otherwise unlawfully obtained contact lists.</p>
 
-          <h2>7. Termination</h2>
-          <p>
-            We may suspend or terminate your access to the Service if you breach these Terms, fail to pay charges owed,
-            or engage in conduct that risks the platform, other users, or our legal obligations. Upon termination, your
-            right to access the Service will end, and we may remove or archive content in accordance with our Privacy
-            Policy and applicable legal requirements.
-          </p>
+          <h2>7. Suspension and termination</h2>
+          <p>You may stop using the Service at any time. We may restrict or suspend access where reasonably necessary to protect users, investigate suspected abuse or security incidents, enforce these Terms, address non-payment, or comply with law. Where practicable, we will explain the reason and provide a way to appeal. We may terminate an account for a serious or repeated breach, or where we are legally required to do so.</p>
+          <p>On account closure, creators should export information they are entitled to keep. We will handle remaining personal data under the Privacy Policy and applicable retention duties. Closing an account does not cancel an outstanding payment, refund, chargeback, tax, or legal obligation.</p>
 
-          <h2>8. Limitation of liability</h2>
-          <p>
-            To the maximum extent permitted by law, Onselli provides the Service on an &ldquo;as is&rdquo; basis and does
-            not guarantee specific outcomes, revenue, or customer acquisition. We are not liable for indirect,
-            incidental, consequential, or punitive damages arising from your use of the Service, except where liability
-            cannot be excluded under applicable law.
-          </p>
+          <h2>8. Service changes and disclaimers</h2>
+          <p>We may update or discontinue features to maintain security, improve the Service, or meet legal or provider requirements. We will give reasonable notice of material changes when practical. We work to keep the Service available but do not promise uninterrupted operation or particular commercial results. Nothing in these Terms excludes a statutory guarantee or other liability that applicable law does not allow us to exclude.</p>
 
-          <h2>9. Governing law and support</h2>
-          <p>
-            These Terms are governed by the laws of the jurisdiction in which Onselli operates, without regard to
-            conflict-of-laws principles. If you have questions or would like to discuss a concern, contact us at
-            <a href="mailto:support@onselli.com">support@onselli.com</a>.
-          </p>
+          <h2>9. Liability</h2>
+          <p>To the extent permitted by law, neither party is liable to the other for indirect or consequential losses that were not reasonably foreseeable. Nothing in these Terms limits liability for fraud, willful misconduct, death or personal injury caused by negligence, a breach of a non-excludable consumer right, or any other liability that cannot lawfully be limited. Any other liability cap must be clearly stated in the final terms and reviewed for enforceability before publication.</p>
 
-          <p>
-            We may update these Terms from time to time. Continued use of the Service after changes are published
-            constitutes acceptance of the revised Terms.
-          </p>
+          <h2>10. Complaints and governing law</h2>
+          <p>Contact <a href="mailto:support@onselli.com">support@onselli.com</a> for platform complaints. Include the account email, transaction reference or storefront URL, and a description of the issue; do not email passwords, full bank details, or payment-card information. We aim to acknowledge complaints within five business days and provide a meaningful update within 15 business days, or explain why more time is needed. These response targets do not shorten any statutory deadline or consumer right.</p>
+          <p>These Terms are governed by the laws of the Federal Republic of Nigeria, subject to mandatory consumer protections and any non-waivable right to bring a claim in another competent forum. Before publication, counsel should confirm the correct operating entity, dispute forum, and whether this governing-law clause suits Onselli’s customer locations.</p>
+
+          <h2>11. Changes and contact</h2>
+          <p>We may update these Terms to reflect changes in the Service or law. We will post the updated version and effective date and give notice of material changes where required. Continued use after the effective date means you accept the changes, except where applicable law requires a different form of consent.</p>
+          <p>Legal notices: [LEGAL COMPANY NAME], [REGISTERED ADDRESS]. General support: <a href="mailto:support@onselli.com">support@onselli.com</a>.</p>
         </div>
       </section>
     </main>

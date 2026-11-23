@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { FormEvent, useEffect, useState } from 'react';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
-import { getSupabase } from '@/lib/supabase';
+import { authClient } from '@/src/server/auth/client';
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState('');
@@ -17,12 +17,9 @@ export default function ForgotPasswordPage() {
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault(); setError(''); setBusy(true);
-    const supabase = getSupabase();
-    if (!supabase) { setError('Password recovery is temporarily unavailable.'); setBusy(false); return; }
-    const redirectTo = new URL(`/auth/callback?next=${encodeURIComponent('/auth/reset-password')}`, window.location.origin).toString();
     try {
-      const { error: resetError } = await supabase.auth.resetPasswordForEmail(email.trim(), { redirectTo });
-      if (resetError) { setError(resetError.message); return; }
+      const { error: resetError } = await authClient.requestPasswordReset({ email: email.trim(), redirectTo: '/auth/reset-password' });
+      if (resetError) { setError(resetError.message || 'Could not request a reset link. Please try again.'); return; }
       setSent(true);
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : 'Could not send the reset link. Please try again.');

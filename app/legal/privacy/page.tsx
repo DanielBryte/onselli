@@ -3,116 +3,69 @@ import Logo from '../../components/Logo';
 
 export const metadata = {
   title: 'Privacy Policy | Onselli',
-  description: 'Onselli privacy policy covering personal data, account details, payments, analytics, and user rights.',
+  description: 'How Onselli uses and protects personal data across creator workspaces, storefronts, and customer purchases.',
 };
 
 export default function PrivacyPage() {
   return (
     <main className="legal-page legal-page--document">
-      <header className="legal-header">
-        <div className="legal-header__inner">
-          <Link href="/" className="legal-brand" aria-label="Go to Onselli home">
-            <Logo />
-          </Link>
-          <Link href="/legal" className="legal-inline-link">Legal center</Link>
-        </div>
-      </header>
-
+      <header className="legal-header"><div className="legal-header__inner">
+        <Link href="/" className="legal-brand" aria-label="Go to Onselli home"><Logo /></Link>
+        <Link href="/legal" className="legal-inline-link">Legal center</Link>
+      </div></header>
       <section className="legal-document">
         <div className="legal-document__intro">
           <span className="section-overline legal-kicker">PRIVACY POLICY</span>
           <h1>Privacy Policy</h1>
-          <p>Effective as of October 2026.</p>
+          <p>Effective 2 November 2026 · Updated 2 November 2026</p>
         </div>
-
         <div className="legal-document__content">
-          <p>
-            Onselli respects the privacy of the people who use our platform. This Privacy Policy explains how we collect,
-            use, disclose, retain, and protect personal information in connection with the Onselli platform and services.
-          </p>
+          <p><strong>Before publication, complete:</strong> [LEGAL COMPANY NAME], [REGISTERED ADDRESS], and [PRIVACY/DPO CONTACT]. These details identify the data controller and are required for people to contact the responsible organization. This policy describes Onselli’s current product; update it whenever providers or data practices change.</p>
 
-          <h2>1. Information we collect</h2>
-          <p>
-            We may collect information you provide directly to us, such as your name, email address, billing information,
-            account profile details, and any content or digital products you upload or sell. We also collect information
-            automatically when you use the Service, including device and browser data, IP address, activity logs, and usage
-            metrics.
-          </p>
+          <h2>1. Who is responsible for your data?</h2>
+          <p>[LEGAL COMPANY NAME] (“Onselli”, “we”, “us”) operates the Onselli platform and is responsible for personal data used to create and secure accounts, operate subscriptions, administer the service, prevent abuse, and meet our legal obligations. Contact us at <a href="mailto:support@onselli.com">support@onselli.com</a> or [PRIVACY/DPO CONTACT].</p>
+          <p>Creators decide why they collect information from their customers through creator forms, storefronts, and marketing. For those creator-directed purposes, the creator may be the data controller and Onselli may process data on the creator’s instructions to provide the platform. Onselli may separately use limited data to secure the platform, administer transactions, handle support, and comply with law. A creator’s own privacy notice applies to their independent use of customer data.</p>
 
-          <h2>2. How we use your information</h2>
-          <p>
-            We use personal data to provide, improve, secure, and personalize the Service. This includes account
-            administration, payment processing, order fulfillment, customer support, product analytics, fraud prevention,
-            security monitoring, and communication about service updates, offers, or important notices.
-          </p>
-          <p>
-            We may also use your information to understand how features are used and to improve the quality of the
-            experience for creators and customers alike.
-          </p>
+          <h2>2. Personal data we handle</h2>
+          <ul>
+            <li><strong>Account and workspace data:</strong> name, email, authentication and account settings, profile and business details, country, and workspace content.</li>
+            <li><strong>Commerce records:</strong> product and order details, transaction references, subscription status, payout requests, and limited payout destination information. Card details are collected by the payment provider, not stored by Onselli.</li>
+            <li><strong>Creator/customer data:</strong> contact details, form responses, support messages, consent and unsubscribe status, and creator-uploaded content.</li>
+            <li><strong>Technical and security data:</strong> device/browser information, session and access logs, approximate network identifiers, rate-limit/security signals, and usage events.</li>
+            <li><strong>Support and compliance records:</strong> identity or business verification information and records needed to resolve disputes, prevent fraud, administer payouts, and meet legal duties.</li>
+          </ul>
+          <p>Do not use general creator forms to collect passwords, payment-card data, bank credentials, government identifiers, health information, or children’s information. If a feature specifically requests verification data, provide only what is requested through that secured flow.</p>
 
-          <h2>3. Sharing with third parties</h2>
-          <p>
-            We may share personal information with trusted service providers that help operate the platform, such as
-            payment processors, cloud infrastructure providers, analytics tools, and customer support systems. These
-            providers are bound by contractual obligations to handle data securely and only for the purposes described here.
-          </p>
-          <p>
-            We may also share information when required by law, for legal proceedings, or to protect the legitimate
-            interests of Onselli, its users, and the public.
-          </p>
+          <h2>3. Why and on what basis we use data</h2>
+          <p>We use personal data to provide accounts and workspaces; publish storefronts; process orders and subscriptions; deliver products; manage contacts and support; maintain security; prevent fraud and abuse; troubleshoot and improve the Service; communicate operational messages; and meet accounting, tax, and legal duties. Where required, we use consent for optional marketing, non-essential cookies, or other consent-based processing. We rely on contract, legal obligation, legitimate interests, and consent as appropriate to the purpose and applicable law.</p>
+          <p>Creators are responsible for selecting and documenting a lawful basis for their own marketing and customer-data uses. We do not treat the act of submitting a form or buying a product as consent to marketing.</p>
 
-          <h2>4. Cookies and tracking technologies</h2>
-          <p>
-            Onselli uses cookies and related technologies to recognize returning users, remember preferences, analyze
-            performance, and support core platform functionality. You can manage cookie preferences through your browser
-            settings or the cookie controls presented in our services where available.
-          </p>
+          <h2>4. When we share data</h2>
+          <p>We share only the information needed with service providers that host or operate parts of Onselli, such as database and cloud-storage providers, authentication and security services, payment processors, transactional and campaign email providers, job-processing services, and error or product analytics tools when enabled. Providers must be subject to appropriate contractual safeguards and may use the data only for the services they provide to us.</p>
+          <p>We may disclose information to a creator when you interact with that creator’s offer; to payment, banking, or fraud-prevention partners to process or investigate a transaction; to professional advisers; or to authorities where legally required or necessary to protect people, rights, and the Service. We do not sell personal data.</p>
 
-          <h2>5. Data retention</h2>
-          <p>
-            We retain personal information only for as long as necessary to fulfill the purposes for which it was
-            collected, comply with applicable legal obligations, resolve disputes, and enforce our agreements. When data
-            is no longer needed, we remove it or anonymize it in a secure manner.
-          </p>
+          <h2>5. International processing</h2>
+          <p>Our providers may process data in countries outside Nigeria or your country. Before a transfer, Onselli must use a transfer basis and safeguards required by applicable data-protection law, such as an adequacy decision, approved contractual protection, or another permitted ground. Contact us if you would like information about the safeguards relevant to your data.</p>
 
-          <h2>6. Your rights</h2>
-          <p>
-            Depending on your location, you may have rights to access, correct, delete, restrict, or object to the
-            processing of your personal data. You may also have the right to data portability and to withdraw consent
-            where consent is used as the lawful basis for processing. To exercise these rights, contact us at
-            <a href="mailto:support@onselli.com">support@onselli.com</a>.
-          </p>
+          <h2>6. How long we keep data</h2>
+          <p>We keep data only for as long as needed for the stated purpose, to provide the Service, resolve disputes, enforce agreements, protect against fraud, and meet legal or accounting duties. Different records have different retention periods. When a creator or user closes an account, some data may remain in backups for a limited backup cycle or in transaction, security, suppression, or legal records where retention is necessary. Onselli must maintain and follow an internal retention schedule; contact us to ask about the period for a particular record.</p>
 
-          <h2>7. Security</h2>
-          <p>
-            We implement reasonable administrative, technical, and organizational safeguards designed to protect personal
-            information against unauthorized access, use, disclosure, alteration, or destruction. No method of transmission
-            or storage is completely infallible, and we cannot guarantee absolute security.
-          </p>
+          <h2>7. Your choices and rights</h2>
+          <p>Depending on applicable law, you may have the right to request access, correction, deletion, restriction, objection, or portability; withdraw consent; and complain to a data-protection authority. You can unsubscribe from creator marketing using the link in the message. To exercise a privacy right, email <a href="mailto:support@onselli.com">support@onselli.com</a> with enough information for us to locate your data. We may ask for reasonable verification and may need to retain some information to meet legal obligations or protect others’ rights.</p>
+          <p>If your data relates to a creator’s independent use, contact that creator first. We will assist the creator as required by our contract and applicable law.</p>
 
-          <h2>8. Children&apos;s privacy</h2>
-          <p>
-            The Service is not directed to children under the age of 13, and we do not knowingly collect personal
-            information from children without appropriate parental consent or as required by applicable law.
-          </p>
+          <h2>8. Security and incidents</h2>
+          <p>We use administrative and technical safeguards designed to protect personal data, including access controls, encryption for payout account details, abuse prevention, and monitoring. No system is risk-free. If a security incident affects your data, we will investigate, contain it, preserve relevant evidence, and notify the appropriate authority and affected people when required by law.</p>
 
-          <h2>9. International transfers</h2>
-          <p>
-            Data processed by Onselli may be transferred to and stored in countries outside your jurisdiction. Where
-            applicable, we implement appropriate safeguards to support lawful and secure international transfers.
-          </p>
+          <h2>9. Children</h2>
+          <p>Onselli’s creator and customer account services are intended for people aged 18 or older. Creators must not knowingly collect or market to children through the Service without a lawful basis and any required parental authorization. If you believe a child has provided personal data, contact us so we can review and take appropriate action.</p>
 
-          <h2>10. Updates to this policy</h2>
-          <p>
-            We may update this Privacy Policy from time to time to reflect changes in services, legal requirements, or
-            operational practices. Material updates will be communicated through the Service or by direct notification
-            where appropriate.
-          </p>
+          <h2>10. Cookies and analytics</h2>
+          <p>Necessary cookies support sign-in, security, and core operation. Optional analytics or similar technologies should be used only with the choice and consent required in the visitor’s location. See our <Link href="/legal/cookies">Cookie Policy</Link> for details. We must keep that policy aligned with the actual cookies and tools enabled in production.</p>
 
-          <p>
-            If you have questions about this policy, please contact us at
-            <a href="mailto:support@onselli.com">support@onselli.com</a>.
-          </p>
+          <h2>11. Changes and complaints</h2>
+          <p>We will update this policy when our data practices or legal obligations materially change and show the new effective date. Where required, we will notify you or ask for consent. If you are not satisfied with our response, you may complain to the Nigeria Data Protection Commission or another authority with jurisdiction over you.</p>
+          <p>Privacy contact: [PRIVACY/DPO CONTACT]. General support: <a href="mailto:support@onselli.com">support@onselli.com</a>. Postal address: [REGISTERED ADDRESS].</p>
         </div>
       </section>
     </main>

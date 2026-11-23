@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowRight, BookOpen, Check, Link2, Video } from 'lucide-react';
+import { ArrowRight, BookOpen, Check, Link2, Search, ShoppingBag, Video } from 'lucide-react';
 import Header from './components/Header';
 import Logo from './components/Logo';
 import HomePricing from './components/HomePricing';
@@ -12,8 +12,8 @@ export const metadata = {
 };
 
 const offers = [
-  { kind: 'WORKSHOP', title: 'The Brand Clarity Workshop', detail: 'A practical place to start', color: 'sage' },
-  { kind: 'FIELD GUIDE', title: 'The Creator’s Brand Playbook', detail: 'A resource to keep close', color: 'cream' },
+  { kind: 'WORKSHOP', title: 'The Brand Clarity Workshop', detail: 'A practical place to start', price: '₦18,000', color: 'sage' },
+  { kind: 'FIELD GUIDE', title: 'The Creator’s Brand Playbook', detail: 'A resource to keep close', price: '₦8,500', color: 'cream' },
 ];
 
 const creatorRows = [
@@ -62,16 +62,31 @@ export default function HomePage() {
                 <span className="home-product__address"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><small>onselli.com/c/amara-ade</small><svg className="home-product__reload" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7v5h-5M4.9 9a7.5 7.5 0 0 1 12.6-2L20 12M4 17v-5h5m10.1 3a7.5 7.5 0 0 1-12.6 2L4 12"/></svg></span>
                 <span className="home-product__toolbar-icons"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V3m-5 5 5-5 5 5M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 8h8v8H8z"/></svg></span>
               </div>
-              <div className="home-product__viewport"><div className="home-product__sitebar"><b>AMARA ADE</b><nav><span>COURSES</span><span>ABOUT</span><span>CONTACT</span></nav><span className="home-product__site-cta">Explore offers <ArrowRight size={12}/></span></div>
-              <div className="home-product__cover"><Image className="home-product__avatar" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=120&h=120&q=85" alt="Amara Ade" width={60} height={60} unoptimized/><span className="home-product__name">AMARA ADE <i /> BRAND STRATEGIST</span><h2>Build a brand that feels like you.</h2><p>Clear ideas, useful tools, and a little more confidence in your next move.</p><span className="home-product__link">Explore Amara’s work <ArrowRight size={13} /></span></div>
-              <div className="home-product__offers"><div className="home-product__offers-head"><b>Learn with Amara</b><span>2 offers</span></div>{offers.map((offer) => <article className="home-offer" key={offer.title}><span className={`home-offer__art home-offer__art--${offer.color}`}><BookOpen size={17} /></span><span className="home-offer__text"><small>{offer.kind}</small><b>{offer.title}</b><i>{offer.detail}</i></span><ArrowRight className="home-offer__arrow" size={16} /></article>)}</div>
-              <div className="home-product__proof"><span><Check size={13}/> SECURE CHECKOUT</span><span>Instant access after purchase</span></div></div>
+              <div className="home-product__viewport">
+                <div className="home-product__sitebar">
+                  <span className="home-product__store-brand"><Image src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=80&h=80&q=85" alt="" width={38} height={38} unoptimized/></span>
+                  <nav aria-label="Sample storefront navigation"><span className="is-active">All products</span><span>Products</span><span>Store</span></nav>
+                  <span className="home-product__store-actions"><small><ShoppingBag size={12}/> Cart</small><small>NGN⌄</small><small>Log in</small></span>
+                </div>
+                <div className="home-product__storefront">
+                  <section className="home-product__profile">
+                    <Image className="home-product__avatar" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=180&h=180&q=85" alt="" width={76} height={76} unoptimized/>
+                    <div className="home-product__profile-details"><h2>Amara Ade</h2><p>@amara-ade</p><span>AMARA ADE’S STORE</span><small>Brand strategist helping creators build clear, confident brands.</small></div>
+                  </section>
+                  <section className="home-product__catalog">
+                    <div className="home-product__catalog-head"><h3>All products</h3><span><Search size={12}/> Search products</span></div>
+                    <div className="home-product__catalog-grid">{offers.map((offer) => <article className="home-product__card" key={offer.title}>
+                      <div className={`home-product__card-art home-product__card-art--${offer.color}`}><BookOpen size={23}/></div>
+                      <div className="home-product__card-body"><small>{offer.kind}</small><b>{offer.title}</b><p>{offer.detail}</p><footer><strong>{offer.price}</strong><ArrowRight size={14}/></footer></div>
+                    </article>)}</div>
+                  </section>
+                </div>
+              </div>
               <div className="home-float home-float--top"><span className="home-float__icon"><Link2 size={15}/></span><span><b>One link to share</b><small>Your work, in one place</small></span></div>
               <div className="home-float home-float--bottom"><span className="home-float__icon"><Check size={15}/></span><span><b>Payment confirmed</b><small>Learning access unlocked</small></span></div>
             </div>
           </div>
         </div>
-        <div className="home-scroll-cue"><span /> YOUR KNOWLEDGE, ON YOUR TERMS</div>
       </section>
 
       <section className="creator-types" id="for-creators">

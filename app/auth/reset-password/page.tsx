@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { FormEvent, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ArrowRight } from 'lucide-react';
-import { getSupabase } from '@/lib/supabase';
+import { authClient } from '@/src/server/auth/client';
 
 export default function ResetPasswordPage() {
   const router = useRouter();
@@ -16,15 +16,13 @@ export default function ResetPasswordPage() {
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault(); setError('');
     if (password !== confirm) { setError('Those passwords don’t match.'); return; }
-    const supabase = getSupabase();
-    if (!supabase) { setError('Password reset is temporarily unavailable.'); return; }
     setBusy(true);
     try {
-      const { data: sessionData } = await supabase.auth.getSession();
-      if (!sessionData.session) { setError('This reset link is invalid or has expired. Request a new one to continue.'); return; }
-      const { error: updateError } = await supabase.auth.updateUser({ password });
-      if (updateError) { setError(updateError.message); return; }
-      router.replace('/creator');
+      const token = new URLSearchParams(window.location.search).get('token');
+      if (!token) { setError('This reset link is invalid or has expired. Request a new one to continue.'); return; }
+      const { error: updateError } = await authClient.resetPassword({ newPassword: password, token });
+      if (updateError) { setError(updateError.message || 'This password reset link has expired. Request a new one.'); return; }
+      router.replace('/login');
       router.refresh();
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : 'Could not update your password. Please try again.');

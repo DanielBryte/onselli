@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { getSupabase } from '@/lib/supabase';
+import { authClient } from '@/src/server/auth/client';
 
 function safeNext(value: string | null) {
   if (!value || !value.startsWith('/') || value.startsWith('//') || value.includes('\\')) return null;
@@ -23,26 +23,15 @@ export default function AuthCallbackPage() {
     let active = true;
     void (async () => {
       try {
-      const supabase = getSupabase();
-      if (!supabase) { setError('Sign-in is temporarily unavailable. Please try again later.'); return; }
-
       const query = new URLSearchParams(window.location.search);
-      const hash = new URLSearchParams(window.location.hash.replace(/^#/, ''));
-      const providerError = query.get('error_description') ?? hash.get('error_description');
+      const providerError = query.get('error_description');
       if (providerError) { setError(providerError.replaceAll('+', ' ')); return; }
-
-      const code = query.get('code');
-      if (code) {
-        const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code);
-        if (exchangeError) { if (active) setError('This sign-in link has expired or was already used. Please request a new one.'); return; }
-      }
-
-      const { data, error: sessionError } = await supabase.auth.getSession();
+      const { data } = await authClient.getSession();
       if (!active) return;
-      if (sessionError || !data.session) { setError('We could not complete sign-in. Please return to the login page and try again.'); return; }
+      if (!data?.session) { setError('This sign-in link has expired or was already used. Please sign in again.'); return; }
 
       const next = safeNext(query.get('next'));
-      router.replace(next ?? '/creator');
+      router.replace(next ?? '/workspace');
       router.refresh();
       } catch {
         if (active) setError('We could not complete sign-in. Please return to the login page and try again.');

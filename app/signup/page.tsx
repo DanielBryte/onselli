@@ -1,3 +1,9 @@
 import AuthForm from '../components/AuthForm';
+import { getEnv } from '@/src/server/config/env';
+
+export const dynamic = 'force-dynamic';
 export const metadata = { title: 'Create your Onselli account' };
-export default function SignupPage() { return <AuthForm mode="signup" />; }
+export default function SignupPage() {
+  const env = getEnv();
+  return <AuthForm mode="signup" googleEnabled={Boolean(env.GOOGLE_CLIENT_ID && env.GOOGLE_CLIENT_SECRET)} />;
+}
