@@ -9,7 +9,7 @@
 | Branch | Environment | Live URL | Database / Services | How You Use It |
 | :--- | :--- | :--- | :--- | :--- |
 | **`feat/*` / `fix/*`** | **Local Feature Branch** | `localhost:3000` | Local / Neon Dev branch | **Created off `dev` for every feature/fix.** Isolated work environment. |
-| **`dev`** | **Staging (QA)** | [onselli-dev](https://onselli-dev) | Neon DB (Staging), Bachs Sandbox | **Staging trunk.** Feature branches merge here. Pushing `origin dev` triggers staging deployment. |
+| **`dev`** | **Staging (QA)** | [onselli-dev](https://onselli-dev.vercel.app) | Neon DB (Staging), Bachs Sandbox | **Staging trunk.** Feature branches merge here. Pushing `origin dev` triggers staging deployment. |
 | **`master`** | **Production** | [onselli.com](https://onselli.com) | Neon DB (Prod), Live Bachs/Stripe | **Protected production.** Merged from `dev` only after QA verification on staging. |
 
 ---
