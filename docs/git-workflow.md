@@ -1,6 +1,6 @@
-# Onselli Solo Developer Git Workflow (2-Branch Model)
+# Onselli Feature Branching Workflow
 
-This document outlines the standard 2-branch workflow for **Onselli**. It eliminates the friction of managing dozens of micro-branches while keeping production completely protected.
+This document defines the feature branching workflow for **Onselli**. All new features, refactors, and fixes are developed in isolated feature branches off `dev`, then merged to `dev` for staging deployment (`onselli-dev`), and finally promoted to `master` for production (`onselli.com`).
 
 ---
 
@@ -8,33 +8,46 @@ This document outlines the standard 2-branch workflow for **Onselli**. It elimin
 
 | Branch | Environment | Live URL | Database | Usage |
 | :--- | :--- | :--- | :--- | :--- |
-| **`dev`** | Staging & Local | [onselli-dev](https://onselli-dev) | Neon DB (Staging), Bachs Sandbox | Active coding branch. Tested locally on `localhost:3000`. Pushing to `origin dev` deploys to `onselli-dev`. |
+| **`feat/*`, `fix/*`** | Local Work | `localhost:3000` | Local / Neon Dev | Feature-specific development branches branched off `dev`. |
+| **`dev`** | Staging (QA) | [onselli-dev](https://onselli-dev) | Neon DB (Staging), Bachs Sandbox | Staging trunk. Feature branches merge here. Pushing to `origin dev` deploys to `onselli-dev`. |
 | **`master`** | Production | [onselli.com](https://onselli.com) | Prod Neon DB, Live Bachs/Stripe | Real creators & live transactions. Deploys to `onselli.com` when `dev` is merged. |
 
 ---
 
-## 2. Daily Workflow
+## 2. Step-by-Step Feature Workflow
 
-### Active Coding (Stay on `dev`)
-Work directly on `dev`:
+### 1. Branch from `dev`
 ```bash
 git checkout dev
-# make changes...
-git add <files>
-git commit -m "feat(courses): implement video upload and module ordering"
+git pull origin dev
+git checkout -b feat/creator-product-flow
 ```
 
-### Deploy to Staging (`onselli-dev`)
-Whenever you want to test on the live staging link:
+### 2. Develop & Test Locally
+Implement features using shared UI primitives (`app/components/ui/`).
+Verify health check:
 ```bash
+npm run typecheck
+```
+
+### 3. Commit
+```bash
+git add <files>
+git commit -m "feat(products): revamp creator product creation, edit flow, and preview page"
+```
+
+### 4. Merge to `dev` & Deploy to Staging (`onselli-dev`)
+```bash
+git checkout dev
+git merge feat/creator-product-flow
 git push origin dev
 ```
 
-### Deploy to Production (`onselli.com`)
-Once verified on `onselli-dev`:
+### 5. Release to Production (`onselli.com`)
+After testing on `onselli-dev`:
 ```bash
 git checkout master
 git merge dev
 git push origin master
-git checkout dev    # return to dev to continue coding
+git checkout dev
 ```

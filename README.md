@@ -4,55 +4,69 @@
 
 ---
 
-## 1. Environments & Branch Setup
-
-A streamlined 2-branch workflow optimized for fast solo execution and zero overhead:
+## 1. Environments & Branch Strategy
 
 | Branch | Environment | Live URL | Database / Services | How You Use It |
 | :--- | :--- | :--- | :--- | :--- |
-| **`dev`** | **Staging & Local Workhorse** | [onselli-dev](https://onselli-dev) | Neon DB (Staging), Bachs Sandbox | **Your daily branch.** Code locally on `localhost:3000`. Pushing to `origin dev` instantly deploys to `onselli-dev` for end-to-end testing. |
-| **`master`** | **Production** | [onselli.com](https://onselli.com) | Neon DB (Prod), Live Bachs/Stripe | **Protected production.** Merge `dev` here only when staging is verified and you are ready to ship live to real creators and buyers. |
+| **`feat/*` / `fix/*`** | **Local Feature Branch** | `localhost:3000` | Local / Neon Dev branch | **Created off `dev` for every feature/fix.** Isolated work environment. |
+| **`dev`** | **Staging (QA)** | [onselli-dev](https://onselli-dev) | Neon DB (Staging), Bachs Sandbox | **Staging trunk.** Feature branches merge here. Pushing `origin dev` triggers staging deployment. |
+| **`master`** | **Production** | [onselli.com](https://onselli.com) | Neon DB (Prod), Live Bachs/Stripe | **Protected production.** Merged from `dev` only after QA verification on staging. |
 
 ---
 
-## 2. Fast Solo Developer Workflow
+## 2. Standard Feature Branch Workflow
 
 ```mermaid
 flowchart LR
-    A["1. Code on dev (localhost:3000)"] --> B["2. git push origin dev"]
-    B --> C["3. Verify live on onselli-dev"]
-    C --> D["4. Merge dev -> master & push (onselli.com)"]
+    A["1. dev (pull origin dev)"] --> B["2. git checkout -b feat/feature-name"]
+    B --> C["3. Build & Test (localhost:3000)"]
+    C --> D["4. npm run typecheck"]
+    D --> E["5. Merge into dev & push (onselli-dev)"]
+    E --> F["6. QA on staging -> Merge dev into master (onselli.com)"]
 ```
 
-### Daily Coding Routine (Stay on `dev`):
-You don't juggle feature branches. Stay on `dev`, test on `localhost:3000`, and commit:
+### Step-by-Step Routine:
+
+#### 1. Start from clean `dev`
 ```bash
-# Verify you are on dev
 git checkout dev
-
-# Code your feature, then commit directly:
-git add <files>
-git commit -m "feat(courses): add video upload progress indicator"
+git pull origin dev
 ```
 
-### Deploy to Staging (`onselli-dev`):
-Whenever you want to test on the live staging link or preview on mobile:
+#### 2. Create your dedicated feature branch
 ```bash
+git checkout -b feat/creator-product-flow
+```
+
+#### 3. Build & Verify Locally
+- Use the atomic UI primitives in `app/components/ui/` (`Button`, `Input`, `SearchInput`, `Badge`, `Card`, `EmptyState`, `DropdownMenu`).
+- Ensure zero errors:
+```bash
+npm run typecheck
+```
+
+#### 4. Commit with Conventional Commits
+```bash
+git add <files>
+git commit -m "feat(products): revamp creator product creation, edit flow, and preview page"
+```
+
+#### 5. Merge back to `dev` for Staging Deployment
+```bash
+git checkout dev
+git merge feat/creator-product-flow
 git push origin dev
 ```
-*Your staging environment (`onselli-dev`) automatically deploys.*
+*Auto-deploys to **onselli-dev** for live end-to-end testing.*
 
----
-
-### Release to Production (`onselli.com`):
-Once you verify that everything looks and works great on `onselli-dev`:
+#### 6. Promote to Production (`onselli.com`)
+Once verified on `onselli-dev`:
 ```bash
 git checkout master
 git merge dev
 git push origin master
-git checkout dev    # return to dev to continue coding
+git checkout dev
 ```
-*Your live production site (`onselli.com`) is updated instantly.*
 
 ---
 
