@@ -667,6 +667,13 @@ export default function EditProductForm({ productId }: { productId: string }) {
                 </p>
               )}
             </div>
+            <div className="product-static-url-display">
+              <span className="product-static-url-label">Page link</span>
+              <p className="product-static-url-value">
+                onselli.com/c/{product.creatorSlug || '...'}/{slug}
+              </p>
+              <small className="product-static-url-hint">Unique permanent link automatically generated for this product.</small>
+            </div>
           </section>
 
           {/* STEP 1: Curriculum (Course Only) */}

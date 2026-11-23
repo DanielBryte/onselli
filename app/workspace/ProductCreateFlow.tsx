@@ -871,6 +871,13 @@ export default function ProductCreateFlow({
               </small>
               {fieldErrors.cover && <p className="field-error" role="alert">{fieldErrors.cover}</p>}
             </div>
+            <div className="product-static-url-display">
+              <span className="product-static-url-label">Page link</span>
+              <p className="product-static-url-value">
+                onselli.com/c/{workspaceSlug || '...'}/{slug}
+              </p>
+              <small className="product-static-url-hint">Unique permanent link automatically generated for this product.</small>
+            </div>
             {type === 'download' && <p className="product-editor__callout">{copy.nextStep}</p>}
           </section>
           {type !== 'course' && <section className="product-create__section">
