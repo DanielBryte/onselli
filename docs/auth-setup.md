@@ -1,47 +1,29 @@
-# Supabase Auth setup for development and production
+# Authentication setup
 
-Onselli uses Supabase Auth in the browser. Auth callbacks return to `/auth/callback`; the callback completes OAuth, email confirmation, and password recovery before sending the user to the requested page.
+Onselli uses Better Auth for email/password accounts, email verification, password recovery, OAuth, sessions, application roles, and administrator two-factor authentication. Better Auth stores its identity tables in the Neon Postgres database through Drizzle.
 
-## App environment variables
+## Required environment
 
-Set these in the local `.env.local` and in each deployed web environment:
+- `DATABASE_URL`: Neon pooled connection string.
+- `DATABASE_URL_UNPOOLED`: Neon direct connection string used by Drizzle migrations.
+- `BETTER_AUTH_SECRET`: random secret with at least 32 characters.
+- `NEXT_PUBLIC_APP_URL`: local or deployed application origin.
+- `ZEPTOMAIL_SEND_API_KEY`, `ZEPTOMAIL_API_URL`, `ZEPTOMAIL_FROM_EMAIL`, and `ZEPTOMAIL_FROM_NAME`: ZeptoMail delivery for verification, password reset, and platform notification messages. Use the API endpoint for your account's data center and a verified sender address.
+- `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`: OAuth credentials for Google sign-in. Both are required in production; local development can omit them while setting up email sign-in.
+- For production, also set the QStash variables documented in [workflow-setup.md](./workflow-setup.md); production environment validation requires them.
 
-- `NEXT_PUBLIC_SUPABASE_URL`: the Supabase project URL.
-- `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`: that project’s publishable/anon key.
-- `SUPABASE_SERVICE_ROLE_KEY`: server-only key used by authenticated API routes. Never expose it with a `NEXT_PUBLIC_` prefix.
+Configure `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` from a Google OAuth Web application. Add `http://localhost:3000` (and your deployed origin) under Authorized JavaScript origins. Add `http://localhost:3000/api/auth/callback/google` (and the matching deployed callback URL) under Authorized redirect URIs. Better Auth handles the callback at `/api/auth/callback/google`. Admin accounts must sign in with email and password so the authenticator challenge is enforced; social sign-in sessions are denied for admin users.
 
-Use the same Supabase project across environments only if you intentionally want shared users and data. For isolated development and production, create separate Supabase projects and set each environment’s variables to the matching project.
+## Local setup
 
-## Supabase Auth URL configuration
+1. Copy `.env.example` to `.env.local`. Set `NEXT_PUBLIC_APP_URL=http://localhost:3000`, Neon `DATABASE_URL` and `DATABASE_URL_UNPOOLED`, and a newly generated `BETTER_AUTH_SECRET`.
+2. Set the ZeptoMail API URL for your account region, its Send Mail API key, and a verified sender address/name. This is needed for verification and password reset emails. Add Google OAuth credentials when you want to enable the Google button locally; production requires them.
+3. Run `npm run db:migrate` to create the identity and application tables.
+4. Start the app with `npm run dev`, sign up, then open the verification link delivered to your inbox.
+5. Choose your persona at `/onboarding`. Buyers continue to `/discover`; creators continue through `/workspace/setup` and then to `/workspace`. Buyers open purchases at `/dashboard/learning` and courses at `/dashboard/learning/courses/[productId]`. Guest buyers use the verified link on their receipt to establish a private purchase session.
 
-In **Authentication → URL Configuration**:
+Admin accounts are provisioned by an operator by setting the account's `admin_role` in the database; that field is not available in signup or onboarding. After signing in, an admin without two-factor enabled is directed to `/two-factor` to enroll an authenticator app and save backup codes. Sign-in challenges use the same page. The current admin workspace is `/admin`.
 
-- Set **Site URL** to the canonical production origin, for example `https://onselli.com`.
-- Add `http://localhost:3000/**` for local development.
-- Add the production app origin, for example `https://onselli.com/**` (and `https://www.onselli.com/**` if both hosts serve the app).
-- Add any staging or preview origins you use. Keep the entries limited to domains you control.
+For a local secret, run `node -e "console.log(require('node:crypto').randomBytes(32).toString('base64url'))"` and paste the output as `BETTER_AUTH_SECRET`. Keep the same secret across restarts and deployments that share sessions.
 
-The app uses the current browser origin for callback links, so the same auth code works on localhost, staging, and production when each origin is allowlisted.
-
-## Email confirmation and recovery
-
-Keep email confirmation enabled for production. Onselli sends confirmation and recovery links back through `/auth/callback`; recovery then continues to `/auth/reset-password`. Use Supabase’s normal confirmation and recovery email templates unless you have customized them. If customizing, preserve Supabase’s confirmation URL/token parameters and the redirect target.
-
-Configure the email sender and SMTP provider in Supabase for production deliverability. Test confirmation, expired links, password recovery, and resend/rate-limit behavior using the development project before release.
-
-## Social provider
-
-Onselli offers Google sign-in alongside email and password. Enable Google under **Authentication → Providers** and enter the Google OAuth client credentials. In the Google provider console, set the callback/redirect URI to the Supabase callback URL shown in the Supabase provider settings (the Supabase project URL ending in `/auth/v1/callback`). The app’s post-auth destinations such as `/auth/callback` are configured in Supabase’s URL allow list above; they are not the provider-console callback URI.
-
-Supabase automatically links a Google identity to an existing account when the email matches and is verified. This preserves the existing user ID and creator data while preventing an unverified email from being used to claim an account. Do not create a second account or manually link identities based only on a typed email address. Manual linking is a separate signed-in flow and is not needed for same-email Google sign-in.
-
-Use separate development and production OAuth apps/credentials where provider policy or security requires it. Only request the basic profile and email scopes needed for sign-in.
-
-## Verify before launch
-
-1. Create an account and confirm the email on localhost.
-2. Sign in and sign out with email/password.
-3. Test Google sign-in using an email that has no Onselli account, then with the same verified email as an existing email/password account. Confirm both methods reach the same Supabase user and existing creator data.
-4. Request a password reset, open the link, and save a new password.
-5. Try an expired or reused link and confirm the page offers a way back to login or to request another link.
-6. Repeat on the production domain using production Supabase and provider credentials.
+Do not reuse the example secret or commit `.env.local`. Better Auth roles and onboarding state are written server-side; never trust role values supplied by a browser form.

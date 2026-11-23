@@ -1,0 +1,1 @@
+export function creatorSettlementAllocation(grossMinor: bigint | number | string, platformFeeMinor: bigint | number | string, reserveBps?: bigint | number | string | null): { earned: bigint; reserve: bigint; available: bigint };

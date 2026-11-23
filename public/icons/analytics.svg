@@ -1,0 +1,15 @@
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g clip-path="url(#clip0_117_59)">
+<use xlink:href="#stroke0_117_59" fill="black"/>
+<mask id="stroke1_117_59" fill="white">
+<use xlink:href="#stroke0_117_59"/>
+</mask>
+<path d="M19 5H14V1C14 0.45 13.55 0 13 0H7C6.45 0 6 0.45 6 1V9H1C0.45 9 0 9.45 0 10V19C0 19.55 0.45 20 1 20H19C19.55 20 20 19.55 20 19V6C20 5.45 19.55 5 19 5ZM2 11H6V18H2V11ZM8 10V2H12V18H8V10ZM18 18H14V7H18V18Z" stroke-width="2" stroke="#464646" mask="url(#stroke1_117_59)"/>
+</g>
+<defs>
+<clipPath id="clip0_117_59">
+<rect width="20" height="20" fill="white"/>
+</clipPath>
+<path id="stroke0_117_59" d="M19 5H14V1C14 0.45 13.55 0 13 0H7C6.45 0 6 0.45 6 1V9H1C0.45 9 0 9.45 0 10V19C0 19.55 0.45 20 1 20H19C19.55 20 20 19.55 20 19V6C20 5.45 19.55 5 19 5ZM2 11H6V18H2V11ZM8 10V2H12V18H8V10ZM18 18H14V7H18V18Z"/>
+</defs>
+</svg>

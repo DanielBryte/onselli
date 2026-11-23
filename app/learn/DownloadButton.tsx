@@ -2,18 +2,14 @@
 
 import { useState } from 'react';
 import { Download } from 'lucide-react';
-import { getSupabase } from '@/lib/supabase';
 
 export default function DownloadButton({ fileId, fileName }: { fileId: string; fileName: string }) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
 
   async function download() {
-    const supabase = getSupabase();
-    if (!supabase) { setError('Sign in again to download this file.'); return; }
     setBusy(true); setError('');
-    const { data } = await supabase.auth.getSession();
-    const response = await fetch(`/api/learning/files/${fileId}`, { headers: { Authorization: `Bearer ${data.session?.access_token ?? ''}` }, cache: 'no-store' });
+    const response = await fetch(`/api/learning/files/${fileId}`, { cache: 'no-store' });
     const payload = await response.json().catch(() => ({}));
     setBusy(false);
     if (!response.ok || typeof payload.url !== 'string') { setError(payload.error || 'Could not prepare this download.'); return; }

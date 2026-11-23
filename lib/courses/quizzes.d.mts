@@ -1,0 +1,11 @@
+export type QuizOption = { id: string; text: string };
+export type QuizQuestion = { id: string; prompt: string; options: QuizOption[]; correctOptionId: string };
+export type QuizConfig = { questions: QuizQuestion[]; passingScore: number; maxAttempts: number | null; revealCorrectAnswers: boolean; version?: number };
+export function validateQuizConfig(quiz: QuizConfig): string | null;
+export function snapshotQuiz(quiz: QuizConfig): QuizConfig;
+export function nextQuizVersion(existing: (QuizConfig & { version: number }) | null, next: QuizConfig): number;
+export function quizForLearner(snapshot: QuizConfig, options?: { submitted?: boolean }): Omit<QuizConfig, 'questions'> & { questions: Array<Omit<QuizQuestion, 'correctOptionId'> & { correctOptionId?: string }> };
+export function gradeQuiz(snapshot: QuizConfig, answers: Record<string, string>): { score: number; passed: boolean; correctCount: number; totalCount: number; error?: string };
+export function canAccessCourseQuiz(input: Record<string, any>): boolean;
+export function canAccessQuizAttempt(input: Record<string, any>): boolean;
+export function attemptsRemaining(input: { maxAttempts: number | null; attemptsUsed: number; passed: boolean }): number | null;

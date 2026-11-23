@@ -1,0 +1,1 @@
+ALTER TABLE "creators" ADD COLUMN "country_code" varchar(2);

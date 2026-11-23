@@ -1,64 +1,85 @@
-# Onselli web product architecture
+# Onselli platform architecture
 
-## Product direction
+## Product
 
-Onselli is a web-first operating platform for creators who teach, coach, and sell expertise. It helps a creator move from an audience on X, TikTok, YouTube, Instagram, or email to an owned business: a public creator page, paid or free offers, checkout, learner access, and customer relationships. The product is not a local business directory and does not require a native mobile app.
+Onselli is a creator business platform. Creators use one workspace to publish a branded website, sell downloads, courses, bundles, and payment links, collect leads, manage contacts, see performance, and manage earnings. Buyers use creator pages, checkout, and their learning library. Admins review risk, KYC, payouts, and support issues.
 
-## Runtime and deployment boundary
+## Current stack
 
-The product is a TypeScript modular monolith with one Next.js App Router application rooted at `/app`. Run it directly from the repository root with `npm run dev`. Supabase provides authentication and PostgreSQL with row-level security; Cloudflare R2 stores private digital product files. Keep browser code limited to publishable configuration. Credentials, provider calls, webhook verification, order creation, refunds, and entitlement changes stay server-side.
+- **Application:** Next.js App Router with TypeScript strict mode; one codebase serves marketing, creator/buyer/admin pages, and APIs.
+- **Database:** Neon Postgres. `DATABASE_URL` is the pooled runtime connection; `DATABASE_URL_UNPOOLED` is reserved for schema migrations.
+- **Queries and migrations:** Drizzle ORM and Drizzle Kit. Database contracts are in `src/server/db/schema.ts`; committed SQL migrations live in `drizzle/`.
+- **Authentication:** Better Auth with Neon-backed sessions, role/persona onboarding, email verification, password reset, optional Google OAuth, and the two-factor plugin.
+- **Files:** Cloudflare R2 for private downloads and KYC material. Do not expose a public bucket or long-lived object URL.
+- **Course video:** Bunny Stream handles hosted lesson uploads and playback. Uploads use server-signed TUS credentials; learners receive short-lived signed player embeds only after server-side entitlement checks. Existing YouTube/Vimeo links remain externally hosted.
+- **Payments:** Bachs API. Live payment/payout switches remain off pending confirmed platform payout capabilities and account approval.
+- **Email:** ZeptoMail API for transactional application messages, React Email for templated markup, and Amazon SES for creator and Onselli newsletter campaigns. Zoho Mail is the human support mailbox only.
+- **Jobs:** Upstash Workflow (backed by QStash) for campaign delivery, form notifications, hold release, and expirations. Upstash Redis is used separately for API rate limits.
+- **Safety:** Upstash Redis rate limits and Cloudflare Turnstile verification for public forms and checkout.
+- **Observability:** Sentry and PostHog dependencies are present; environment configuration and operational dashboards are deployment work.
+
+## Runtime boundaries
 
 ```text
-Creator / learner browser
+Creator / buyer browser
         │
         ▼
-app/ — Next.js pages, server routes, server actions
-lib/ ├── domains            creator, offer, commerce, learning rules
-     ├── payments           Bachs checkout and webhook integration
-     ├── Supabase           auth and PostgreSQL/RLS
-     └── Cloudflare R2      private digital product files
+Next.js App Router — pages, route handlers, server actions
+        │
+        ├── Better Auth ── Neon Postgres (Drizzle)
+        ├── Upstash Workflow ── durable jobs, retries, and schedules
+        ├── ZeptoMail ──── transactional mail
+        ├── Amazon SES ─── creator and Onselli campaign mail
+        ├── Cloudflare R2 ─ private files and KYC documents
+        ├── Bunny Stream ─ signed course video
+        └── Bachs API ──── checkout and approved payouts
 ```
 
-## Product domains
+Browser code may use public site keys only. Database, mail, storage, video, payment, encryption, and webhook secrets are server-only. Route handlers validate input, authenticate the caller, check creator/admin ownership, and write audit events for sensitive changes.
 
-- **Identity and creator profile:** Auth user identity, public slug, brand, biography, and connected social links.
-- **Offers:** Courses, downloads, workshops, coaching, and later memberships or cohorts. Offer content and publication status belong to the creator.
-- **Storefront and discovery:** Public creator page and offer pages are the shareable destination for social audiences. Discovery is an optional acquisition surface; each creator owns their audience relationship.
-- **Commerce:** Orders, payment attempts, refunds, disputes, and webhook event ledger. A provider callback alone never grants access.
-- **Learning:** Entitlements are derived from confirmed orders and control access to private course/download content. Revocation follows refunds or lost disputes.
-- **Creator operations:** Sales, payout onboarding and status, learner support, and later analytics/CRM.
+## Module map
 
-Keep route files as thin HTTP/UI adapters. Put reusable validation and domain rules in feature-owned modules rather than coupling product behavior to page components or provider payloads. Internal `packages/` are domain/database contracts only; there is no separate web or mobile app workspace.
+1. Identity, roles, and onboarding — Better Auth sessions and post-auth persona choice.
+2. Creator setup — profile, public slug, branding, timezone, and first actions.
+3. Products — courses, digital downloads, one-time bundles, and payment links, priced in integer minor units for NGN or USD.
+4. Courses — sections, lessons, learner progress, and Bunny video metadata.
+5. Storefront and website — creator site, page builder, published content, SEO, and product rendering.
+6. Checkout and orders — order snapshots, Bachs references, payment events, and entitlements.
+7. Earnings and payouts — append-only ledger, payout requests, bank destinations, KYC, and review records.
+8. Forms and leads — public forms, consent, submissions, status management, notifications, and CSV export.
+9. Contacts — contact identity, tags, notes, consent, purchase history, and suppression.
+10. Analytics — events, daily aggregates, and creator reporting.
+11. Platform operations — admin roles/2FA, audit log, moderation, settings, email logs, and webhook queue.
 
-## Route map
+The schema establishes persistence contracts across these modules. The application uses Neon and Drizzle as its database layer; Better Auth manages identity and sessions.
 
-- `/` — public product and creator acquisition page
-- `/signup`, `/login` — identity entry points
-- `/creator/*` — authenticated creator setup, offers, sales, and payout workspace
-- `/c/[slug]` and `/c/[slug]/[productSlug]` — creator-owned public storefront and offer pages
-- `/learn` — buyer learning library, guarded by entitlements
-- `/discover` — optional creator/offer discovery
-- `/api/checkout` — authenticated order and checkout-session creation
-- `/api/webhooks/bachs` — signed, idempotent Bachs event ingestion
+## Money and access invariants
 
-## Payments architecture
+- Store monetary values as integer minor units in their explicit currency. Never use floating point for balances, fees, order totals, or ledger entries.
+- The ledger is append-only; balances are derived from ledger entries grouped by bucket.
+- Reserve payout funds atomically. A request or admin decision cannot directly edit ledger history.
+- Verify Bachs signatures against the raw body, persist provider event IDs uniquely, and make fulfillment idempotent.
+- A browser redirect never grants paid access. Only a verified payment transition creates an entitlement and ledger credit.
+- Keep live payments disabled until Bachs confirms seller ownership, payout destination, reconciliation, refunds, and dispute responsibilities for Onselli's intended platform model.
+- Private downloads require an active entitlement and short-lived signed URLs. KYC documents are never public.
 
-Bachs Connect is Onselli's only payment gateway. Every checkout, webhook, refund, and dispute flow uses Bachs and its connected creator account. Persist the provider and its identifiers on each order. Never create a second charge attempt after an ambiguous timeout; confirm the original attempt's status with Bachs first.
+## Local setup
 
-Verify Bachs signatures over the raw webhook body, record event IDs under a unique constraint, validate amount/currency/account against the order, and fulfill an order atomically and idempotently. Keep live payment controls disabled until merchant settlement roles, platform fees, tax/refund/dispute ownership, regional coverage, and support operations are explicitly approved.
+1. Copy `.env.example` to `.env.local` and configure a disposable development database plus a 32-character `BETTER_AUTH_SECRET`.
+2. Run `npm install` and `npm run db:migrate` against the intended development database using the unpooled migration URL. Do not point a sandbox rehearsal at production data.
+3. Configure provider credentials individually when enabling those features. Keep `PAYMENTS_LIVE_ENABLED=false` and `BACHS_PLATFORM_READY=false` until provider approval.
+4. Start with `npm run dev`.
 
-## Persistence and authorization
+### Bunny Stream course videos
 
-`auth.uid()` identifies the signed-in person. `creators.user_id` establishes creator ownership; products and creator operations are scoped through the creator. RLS is the enforcement layer for user-facing reads and writes. Service-role access is server-only and must check the caller’s identity and ownership before privileged mutations. Anonymous users can read only published creator and offer records.
+Set `BUNNY_STREAM_LIBRARY_ID`, that library's Stream API key in `BUNNY_STREAM_API_KEY`, and the library's separate Embed View Token Authentication key in `BUNNY_STREAM_TOKEN_AUTH_KEY`. In Bunny Stream, enable Embed View Token Authentication and set `BUNNY_STREAM_EMBED_TOKEN_AUTH_ENABLED=true` only after confirming that library setting; unsigned embeds are otherwise public. Do not enable public original-file exposure or promise DRM unless it is separately configured and verified with Bunny. Creator uploads use TUS directly from the browser with a one-hour signed authorization; learner player embeds are signed server-side for one hour after an active paid course entitlement is confirmed. These signed embeds limit casual unauthorized access but cannot prevent screen recording or copying after playback.
 
-Never store paid product files in a public bucket. Grant learning access only after server-side payment confirmation; issue a short-lived R2 download URL only after checking the buyer's active entitlement. Refunds and chargebacks update the entitlement state through the same commerce domain.
+### Learner course progress
 
-## Build sequence
+Lesson completion and resumable positions are stored per authenticated buyer and lesson. The progress API rechecks a paid order, active course entitlement, published course/module/lesson, and matching creator ownership on every update. Resume positions are currently collected only from Onselli-hosted Bunny videos through the Bunny Player Player.js `timeupdate` events; YouTube and Vimeo lessons do not report positions to Onselli. Positions are saved periodically and on pause/page exit, with offline updates retained for retry during the session. No additional progress migration is required because `lesson_progress.last_position_seconds` and its user/lesson unique key already exist.
 
-1. Reliable creator profile and offer publishing.
-2. Safe hosted checkout, payment confirmation, and learner entitlement delivery.
-3. Creator sales and payout operations, with provider reconciliation and refund/dispute support.
-4. Email capture, launch tools, analytics, and imports from creator social channels.
-5. Courses, memberships, cohorts, community, and workflow automation based on creator demand.
+Do not use production credentials in local development. Secrets belong in deployment secret storage, not source control.
 
-Do not add broad integrations or marketplace features ahead of proving the full creator-to-paid-learner loop.
+### Product launch readiness
+
+Guest checkout sends a transactional receipt and, for course/download/bundle purchases, a single-use email link that establishes a private purchase session. Payment-link purchases receive a receipt without product access. Registered-account buyers see order status on the completion page; a registered-buyer receipt email is not currently implemented. Email delivery is attempted after webhook fulfillment and is not backed by a durable outbox, so delivery failure requires the buyer to request a fresh access email. Bachs checkout, webhook fulfillment, refunds, and dispute operations still require a sandbox rehearsal; code and unit-test coverage alone do not confirm provider behavior.

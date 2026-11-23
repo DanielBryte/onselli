@@ -1,32 +1,34 @@
 import { GetObjectCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
+import { and, eq } from 'drizzle-orm';
 import { NextResponse } from 'next/server';
-import { getAdminSupabase, getUserFromRequest } from '@/lib/server-supabase';
+import { getBuyerPrincipal } from '@/src/server/purchases/guest-access';
+import { getDatabase } from '@/src/server/db';
+import { entitlements, orders, productFiles } from '@/src/server/db/schema';
 import { getR2Client, getR2Config } from '@/lib/storage/r2';
+import { canDownloadProductFile } from '@/lib/storage/product-file-rules.mjs';
 
 export const runtime = 'nodejs';
 
-export async function GET(request: Request, { params }: { params: Promise<{ fileId: string }> }) {
-  const user = await getUserFromRequest(request);
-  if (!user) return NextResponse.json({ error: 'Sign in to download this purchase.' }, { status: 401 });
-  const { fileId } = await params;
-  const admin = getAdminSupabase();
-  const { data: file } = await admin.from('creator_product_files').select('id,product_id,object_key,file_name,content_type,status').eq('id', fileId).eq('status', 'READY').maybeSingle();
-  if (!file) return NextResponse.json({ error: 'This file is unavailable.' }, { status: 404 });
-  const { data: entitlement } = await admin.from('creator_entitlements').select('id').eq('buyer_user_id', user.id).eq('product_id', file.product_id).is('revoked_at', null).limit(1).maybeSingle();
-  if (!entitlement) return NextResponse.json({ error: 'A completed purchase is required to download this file.' }, { status: 403 });
-
+export async function GET(_request: Request, { params }: { params: Promise<{ fileId: string }> }) {
   try {
-    const { bucket } = getR2Config();
-    const safeName = file.file_name.replace(/[\r\n"\\]/g, '_');
-    const url = await getSignedUrl(getR2Client(), new GetObjectCommand({
-      Bucket: bucket,
-      Key: file.object_key,
-      ResponseContentType: 'application/octet-stream',
-      ResponseContentDisposition: `attachment; filename="${safeName}"`,
-    }), { expiresIn: 180 });
+    const principal = await getBuyerPrincipal(); if (!principal) return NextResponse.json({ error: 'Verify your purchase email or sign in to continue.' }, { status: 401 }); const { fileId } = await params; const db = getDatabase();
+    const entitlementOwner = principal.userId ? eq(entitlements.userId, principal.userId) : eq(entitlements.guestBuyerId, principal.guestBuyerId!);
+    const orderOwner = principal.userId ? eq(orders.buyerUserId, principal.userId) : eq(orders.guestBuyerId, principal.guestBuyerId!);
+    const [file] = await db.select().from(productFiles).where(eq(productFiles.id, fileId)).limit(1);
+    if (!file || file.status !== 'ready') return NextResponse.json({ error: 'This file is unavailable.' }, { status: 404 });
+    const [access] = await db.select({ entitlement: entitlements, order: orders }).from(entitlements)
+      .innerJoin(orders, eq(entitlements.orderId, orders.id))
+      .where(and(
+        entitlementOwner, eq(entitlements.productId, file.productId),
+        eq(entitlements.creatorId, file.creatorId), eq(entitlements.status, 'active'),
+        eq(orders.status, 'paid'), orderOwner,
+      )).limit(1);
+    if (!canDownloadProductFile({ file, entitlement: access?.entitlement, order: access?.order, userId: principal.userId ?? '', guestBuyerId: principal.guestBuyerId ?? '' })) {
+      return NextResponse.json({ error: 'A completed purchase with active access is required to download this file.' }, { status: 403 });
+    }
+    const { bucket } = getR2Config(); const safeName = file.name.replace(/[\r\n"\\]/g, '_');
+    const url = await getSignedUrl(getR2Client(), new GetObjectCommand({ Bucket: bucket, Key: file.r2Key, ResponseContentType: 'application/octet-stream', ResponseContentDisposition: `attachment; filename="${safeName}"` }), { expiresIn: 180 });
     return NextResponse.json({ url }, { headers: { 'Cache-Control': 'private, no-store' } });
-  } catch {
-    return NextResponse.json({ error: 'Download service is temporarily unavailable.' }, { status: 503 });
-  }
+  } catch (error) { console.error('Secure download failed', error); return NextResponse.json({ error: 'Download service is temporarily unavailable.' }, { status: 503 }); }
 }
