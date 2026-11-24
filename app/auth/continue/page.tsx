@@ -35,8 +35,8 @@ export default function ContinueAuthPage() {
     return () => { active = false; };
   }, [router]);
 
-  return <main className="onboarding-loading">
-    <img src="/logo.png" alt="Onselli" />
-    {error ? <><p role="alert">{error}</p><Link href="/login">Return to sign in</Link></> : <p>Taking you to your Onselli workspace…</p>}
+  return <main className="grid min-h-svh place-content-center justify-items-center gap-[18px] bg-white text-center text-sm text-[#596d63]">
+    <img className="h-[58px] w-[58px] object-contain" src="/logo.png" alt="Onselli" />
+    {error ? <><p role="alert">{error}</p><Link className="font-semibold text-[#145336] hover:underline" href="/login">Return to sign in</Link></> : <p>Taking you to your Onselli workspace…</p>}
   </main>;
 }
