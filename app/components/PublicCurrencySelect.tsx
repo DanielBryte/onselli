@@ -12,7 +12,7 @@ export default function PublicCurrencySelect({
   onChange?: (currency: 'NGN' | 'USD') => void;
 }) {
   return (
-    <div className="public-currency-select bs-currency-select public-product-currency-select">
+    <div className="relative inline-flex">
       <WorkspaceSelect
         value={currency}
         onChange={(event) => {
@@ -23,8 +23,7 @@ export default function PublicCurrencySelect({
             window.location.assign(`/c/${encodeURIComponent(creatorSlug)}?currency=${nextCurrency}`);
           }
         }}
-        className="public-currency-select__trigger bs-currency-select__trigger"
-        menuClassName="public-currency-select__menu public-product-currency-select__menu"
+        className="!inline-flex !h-9 !min-h-9 !cursor-pointer !items-center !gap-1.5 !rounded-[9px] !border !border-[#e2e8e4] !bg-white !px-3 !text-[13px] !font-semibold !text-[#17221d] !shadow-none !transition-[border-color,background-color] hover:!border-[#c0d1c5] hover:!bg-[#fbfdfc] focus:!border-[#087653] focus:!outline-none focus:!shadow-none focus-visible:!border-[#087653] focus-visible:!outline-none focus-visible:!shadow-none"
         aria-label="Choose catalog currency"
         hideCheckmark={false}
       >

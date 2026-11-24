@@ -232,12 +232,12 @@ export default async function PublicProductPage({
 
   return (
     <PublicCartProvider creatorSlug={row.creator.slug} initialEmail={session?.user.email ?? ''}>
-    <main className="page-shell public-product-page">
-      <header className="public-site-header public-product-site-header">
-        <div className="public-site-header__inner public-product-site-header__inner">
+    <main className="min-h-screen bg-white text-[#111815]">
+      <header className="sticky top-0 z-50 border-b border-[#edf0ed] bg-white/[.98] backdrop-blur-xl">
+        <div className="mx-auto flex h-[66px] max-w-[1140px] items-center justify-between gap-[18px] px-6 max-[760px]:h-[60px] max-[760px]:gap-3 max-[760px]:px-4">
           <Link
             href={`/c/${row.creator.slug}`}
-            className="public-site-brand public-product-brand"
+            className="inline-flex min-w-0 items-center gap-[10px] transition-opacity hover:opacity-85"
             aria-label={`${row.creator.displayName} storefront`}
           >
             {creatorLogoUrl ? (
@@ -246,18 +246,18 @@ export default async function PublicProductPage({
                 alt=""
                 width={36}
                 height={36}
-                className="public-site-brand__avatar"
+                className="size-9 shrink-0 rounded-full border border-[#e8eee9] object-cover"
                 unoptimized
                 priority
               />
             ) : (
-              <span className="public-site-brand__fallback" aria-hidden="true">
+              <span className="grid size-9 shrink-0 place-items-center rounded-full border border-[#dce8e0] bg-[#e8f4ed] text-sm font-bold text-[#07533c]" aria-hidden="true">
                 {row.creator.displayName.trim().slice(0, 1).toUpperCase()}
               </span>
             )}
-            <strong className="public-site-brand__name">{row.creator.displayName}</strong>
+            <strong className="overflow-hidden text-ellipsis whitespace-nowrap text-[15px] font-semibold tracking-[-.015em] text-[#111815] max-[760px]:max-w-[120px] max-[760px]:text-sm">{row.creator.displayName}</strong>
           </Link>
-          <div className="public-site-header__actions public-product-site-header__actions">
+          <div className="flex shrink-0 items-center gap-[10px]">
             <PublicCurrencySelect creatorSlug={row.creator.slug} currency={row.product.currency as 'NGN' | 'USD'} />
             <CartTrigger />
             <Link
@@ -266,45 +266,45 @@ export default async function PublicProductPage({
                   ? '/dashboard/learning'
                   : `/login?next=${encodeURIComponent(`/c/${row.creator.slug}/${row.product.slug}`)}`
               }
-              className="public-site-login public-product-login"
+              className="inline-flex h-9 min-h-9 items-center justify-center whitespace-nowrap rounded-[9px] border border-[#e2e8e4] bg-white px-[14px] text-[13px] font-semibold text-[#17221d] transition-all hover:border-[#07533c] hover:bg-[#fbfdfc] hover:text-[#07533c] max-[760px]:px-[10px] max-[760px]:text-xs"
             >
               {session?.user ? 'My account' : 'Log in'}
             </Link>
           </div>
         </div>
       </header>
-      <header className="public-product-header">
-        <div className="public-product-header__inner">
-          <div className="public-product-heading">
-            <span className="public-product-kicker">
+      <header className="bg-white px-6 pt-11 max-[860px]:px-5 max-[860px]:pt-6">
+        <div className="mx-auto max-w-[1140px]">
+          <div>
+            <span className="mb-2 block text-[11px] font-extrabold uppercase tracking-[.09em] text-[#64748b]">
               {typeLabel.toUpperCase()} · BY{' '}
-              <Link href={`/c/${row.creator.slug}`} className="public-product-creator-link">
+              <Link href={`/c/${row.creator.slug}`} className="text-inherit transition-colors hover:text-[#07533c] hover:underline">
                 {row.creator.displayName.toUpperCase()}
               </Link>
             </span>
-            <h1 className="public-product-title">{row.product.title}</h1>
+            <h1 className="m-0 max-w-[820px] text-[clamp(30px,4.2vw,44px)] font-extrabold leading-[1.15] tracking-[-.035em] text-[#111815]">{row.product.title}</h1>
             {row.creator.headline && (
-              <p className="public-product-subtitle">{row.creator.headline}</p>
+              <p className="mt-[10px] mb-0 max-w-[720px] text-base leading-[1.6] text-[#59665e]">{row.creator.headline}</p>
             )}
           </div>
         </div>
       </header>
 
-      <section className="public-product-content">
-        <div className="public-product-layout">
+      <section className="mx-auto max-w-[1100px] px-8 pt-8 pb-20 max-[860px]:px-5 max-[860px]:pt-5 max-[860px]:pb-16">
+        <div className="grid grid-cols-[minmax(0,1fr)_360px] items-start gap-10 max-[860px]:grid-cols-1 max-[860px]:gap-6">
           {/* Main Left Column */}
-          <article className="public-product-description">
+          <article className="min-w-0 border-0 bg-transparent p-0">
             {coverUrl && (
-              <div className="public-product-cover-wrap">
+              <div className="mb-7 aspect-[16/10] w-full overflow-hidden rounded-[14px] border border-[#e5e7eb] bg-[#f4f6f4]">
                 <img
                   src={coverUrl}
                   alt={row.product.title}
-                  className="public-product-cover-img"
+                  className="block size-full object-cover"
                 />
               </div>
             )}
 
-            <h2>
+            <h2 className="mb-[14px] mt-0 text-xl font-bold tracking-[-.02em] text-[#111815]">
               About this{' '}
               {row.product.type === 'course'
                 ? 'course'
@@ -315,14 +315,14 @@ export default async function PublicProductPage({
                     : 'payment'}
             </h2>
             <div
-              className="public-product-description__content"
+              className="text-[15px] leading-[1.7] text-[#374151] [&_p]:mb-5 [&_p]:mt-0 [&_p]:text-[15px] [&_p]:leading-[1.7] [&_p]:text-[#374151] [&_h3]:mt-[1.6em] [&_h3]:mb-[.6em] [&_h3]:text-lg [&_h3]:font-bold [&_h3]:tracking-[-.02em] [&_h3]:text-[#111815] [&_h4]:mt-[1.4em] [&_h4]:mb-2 [&_h4]:text-base [&_h4]:font-semibold [&_h4]:text-[#111815] [&_ul]:mb-5 [&_ol]:mb-5 [&_ul]:pl-6 [&_ol]:pl-6 [&_li]:mb-[.4em] [&_li]:leading-[1.65] [&_strong]:font-semibold [&_strong]:text-[#111815] [&_a]:font-medium [&_a]:text-[#07533c] [&_a]:underline [&_a]:underline-offset-[3px] [&_blockquote]:my-[1.4em] [&_blockquote]:border-l-[3px] [&_blockquote]:border-[#07533c] [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:text-[#4b5563]"
               dangerouslySetInnerHTML={{
                 __html: productDescriptionHtml(row.product.description),
               }}
             />
 
             {row.product.type === 'bundle' && (
-              <section className="bundle-public-list" aria-labelledby="bundle-includes-heading">
+              <section className="mt-6 rounded-xl border border-[#e1e9e3] bg-white p-4" aria-labelledby="bundle-includes-heading">
                 <h3 id="bundle-includes-heading">Included in this bundle</h3>
                 {bundleItems.length ? (
                   <ul>
@@ -348,24 +348,24 @@ export default async function PublicProductPage({
           </article>
 
           {/* Sticky Right Purchase Column */}
-          <aside className="public-product-purchase">
+          <aside className="sticky top-20 rounded-[14px] border border-[#e5e7eb] bg-white px-[22px] pt-6 pb-5 shadow-[0_1px_2px_rgba(0,0,0,.04)] max-[860px]:static">
             {isEnrolled ? (
-              <div className="public-product-enrolled-card">
-                <div className="public-product-enrolled-badge">
+              <div className="grid gap-3 rounded-xl border border-[#dcece2] bg-[#f7fbf8] p-4">
+                <div className="inline-flex items-center gap-2 text-sm font-bold text-[#07533c]">
                   <Check size={16} />
                   <span>You are enrolled</span>
                 </div>
-                <p>You have full access to this course in your library.</p>
+                <p className="m-0 text-[13px] leading-6 text-[#5b6a61]">You have full access to this course in your library.</p>
                 <Link
                   href={`/dashboard/learning/courses/${row.product.id}`}
-                  className="button button--mint public-product-enrolled-cta"
+                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-[#006b4c] px-4 text-sm font-semibold text-white hover:bg-[#00543d]"
                 >
                   <GraduationCap size={16} /> Go to Course Player
                 </Link>
               </div>
             ) : (
               <>
-                <span className="section-kicker public-product-purchase__kicker">
+                <span className="mb-1 block text-[10.5px] font-bold uppercase tracking-[.09em] text-[#6b7280]">
                   {row.product.type === 'course'
                     ? 'Course enrollment'
                     : row.product.type === 'download'
@@ -374,14 +374,14 @@ export default async function PublicProductPage({
                         ? 'Bundle purchase'
                         : 'Secure payment'}
                 </span>
-                <strong className="public-product-price">{price}</strong>
+                <strong className="mb-[18px] block text-[30px] font-extrabold leading-[1.1] tracking-[-.04em] text-[#111815]">{price}</strong>
                 {hasUnsupportedCurrencyOptions ? (
-                  <p className="form-error" role="alert">
+                  <p className="rounded-lg border border-[#fecaca] bg-[#fef2f2] p-3 text-xs leading-5 text-[#991b1b]" role="alert">
                     Checkout for this offer is being updated. Please contact the creator before
                     paying.
                   </p>
                 ) : row.product.type === 'bundle' && !bundleReady ? (
-                  <p className="public-product-unavailable" role="status">
+                  <p className="rounded-[9px] border border-[#e3e8e4] bg-[#f7f9f7] p-3 text-xs leading-[1.5] text-[#657269]" role="status">
                     This bundle is temporarily unavailable while the creator updates its included
                     products.
                   </p>
@@ -418,7 +418,7 @@ export default async function PublicProductPage({
             )}
 
             {row.product.type === 'course' && (
-              <ul className="public-product-features">
+              <ul className="mt-[18px] grid list-none gap-[9px] border-t border-[#f0f4f1] p-0 pt-4">
                 <li>
                   <GraduationCap size={14} /> Full access to {sections.length} modules &amp;{' '}
                   {courseLessons.length} lessons
@@ -438,7 +438,7 @@ export default async function PublicProductPage({
               </ul>
             )}
             {row.product.type !== 'course' && row.product.refundWindowDays > 0 && (
-              <ul className="public-product-features">
+              <ul className="mt-[18px] grid list-none gap-[9px] border-t border-[#f0f4f1] p-0 pt-4">
                 <li>
                   <ShieldCheck size={14} />
                   {row.product.refundWindowDays}-day money-back guarantee
@@ -446,7 +446,7 @@ export default async function PublicProductPage({
               </ul>
             )}
 
-            <p className="public-product-secure-note">
+            <p className="mt-[18px] mb-0 flex items-center justify-center gap-1.5 border-t border-[#f0f4f1] pt-4 text-center text-[11.5px] leading-[1.4] text-[#9ca3af]">
               <LockKeyhole size={13} />
               {row.product.type === 'payment_link'
                 ? 'Secure payment processing'
@@ -457,11 +457,11 @@ export default async function PublicProductPage({
 
         {/* Course Curriculum & Syllabus Section */}
         {row.product.type === 'course' && (
-          <section className="course-public-outline" aria-labelledby="curriculum-heading">
-            <div className="course-public-outline__heading">
+          <section className="mt-[22px] grid grid-cols-2 items-start gap-3 max-[700px]:mt-[15px] max-[700px]:grid-cols-1" aria-labelledby="curriculum-heading">
+            <div className="col-span-full mb-[3px] max-[700px]:col-span-1">
               <span className="section-kicker">SYLLABUS & CURRICULUM</span>
-              <h2 id="curriculum-heading">What you’ll learn</h2>
-              <p>
+              <h2 id="curriculum-heading" className="my-[5px] text-xl tracking-[-.03em] text-[#203128]">What you’ll learn</h2>
+              <p className="m-0 text-xs text-[#728077]">
                 {sections.length} {sections.length === 1 ? 'module' : 'modules'} ·{' '}
                 {courseLessons.length} {courseLessons.length === 1 ? 'lesson' : 'lessons'}
               </p>
@@ -471,17 +471,17 @@ export default async function PublicProductPage({
               if (!items.length) return null;
 
               return (
-                <article className="course-public-outline__module" key={section.id}>
-                  <div className="course-public-outline__module-header">
-                    <span className="course-public-outline__module-index">
+                <article className="overflow-hidden rounded-[11px] border border-[#e1e9e3] bg-white" key={section.id}>
+                  <div>
+                    <span>
                       MODULE {sectionIndex + 1}
                     </span>
-                    <h3>{section.title}</h3>
-                    <small>
+                    <h3 className="m-0 border-b border-[#edf1ee] bg-[#f8faf8] px-[14px] py-3 text-[13px] font-semibold text-[#293b30]">{section.title}</h3>
+                    <small className="px-[14px] py-[11px] text-[10px]">
                       {items.length} {items.length === 1 ? 'lesson' : 'lessons'}
                     </small>
                   </div>
-                  <div className="course-public-outline__lessons-list">
+                  <div>
                     {items.map((lesson) => {
                       const text =
                         lesson.content &&
@@ -497,9 +497,9 @@ export default async function PublicProductPage({
                           : '';
 
                       return (
-                        <div className="course-public-outline__lesson" key={lesson.id}>
-                          <div className="course-public-outline__lesson-main">
-                            <span className="course-public-outline__lesson-icon">
+                        <div className="border-b border-[#edf1ee] px-[14px] py-[11px] last:border-b-0" key={lesson.id}>
+                          <div className="flex items-center gap-2">
+                            <span className="grid place-items-center text-[#5d7465]">
                               {lesson.type === 'video' ? (
                                 <CirclePlay size={16} />
                               ) : lesson.type === 'quiz' ? (
@@ -508,9 +508,9 @@ export default async function PublicProductPage({
                                 <FileText size={16} />
                               )}
                             </span>
-                            <div className="course-public-outline__lesson-info">
-                              <strong>{lesson.title}</strong>
-                              <span className="course-public-outline__lesson-meta">
+                            <div className="grid min-w-0">
+                              <strong className="text-xs font-semibold text-[#34473b]">{lesson.title}</strong>
+                              <span className="text-[11px] text-[#728077]">
                                 {lesson.type === 'video'
                                   ? 'Video lesson'
                                   : lesson.type === 'quiz'
@@ -519,22 +519,23 @@ export default async function PublicProductPage({
                               </span>
                             </div>
                             {lesson.isFreePreview && (
-                              <span className="course-public-outline__preview-pill">
+                              <span className="rounded-full bg-[#eaf4ee] px-[7px] py-[3px] text-[10px] font-semibold text-[#07533c]">
                                 Free Preview
                               </span>
                             )}
                           </div>
                           {lesson.isFreePreview && lesson.type === 'text' && text && (
-                            <div className="course-public-outline__preview-text">
-                              <p>{text.slice(0, 320)}{text.length > 320 ? '…' : ''}</p>
+                            <div className="mt-[9px]">
+                              <p className="m-0 whitespace-pre-wrap text-xs leading-[1.65] text-[#64756a]">{text.slice(0, 320)}{text.length > 320 ? '…' : ''}</p>
                             </div>
                           )}
                           {lesson.isFreePreview &&
                             lesson.type === 'video' &&
                             safeCourseEmbed(videoUrl) && (
-                              <div className="course-public-outline__video">
+                              <div className="relative mt-[10px] aspect-video overflow-hidden rounded-[7px] bg-[#111]">
                                 <iframe
                                   src={safeCourseEmbed(videoUrl)}
+                                  className="absolute inset-0 size-full border-0"
                                   title={lesson.title}
                                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                   allowFullScreen
