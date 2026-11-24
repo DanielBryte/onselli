@@ -11,29 +11,41 @@ function configuredFrom(): EmailAddress {
 }
 
 export async function sendTransactionalEmail(input: { to: string; subject: string; html: string; text?: string }) {
-  const { ZEPTOMAIL_SEND_API_KEY: apiKey, ZEPTOMAIL_API_URL: apiUrl } = getEnv();
-  if (!apiKey || !apiUrl) throw new Error('ZeptoMail transactional email is not configured.');
+  const { ZEPTOMAIL_SEND_API_KEY: apiKey, ZEPTOMAIL_API_URL: apiUrl, ZEPTOMAIL_FROM_EMAIL: fromEmail } = getEnv();
+  if (!apiKey || !apiUrl || !fromEmail) {
+    throw new Error('Transactional email is not fully configured. Set ZEPTOMAIL_API_URL, ZEPTOMAIL_SEND_API_KEY, and ZEPTOMAIL_FROM_EMAIL.');
+  }
 
-  const response = await fetch(apiUrl, {
-    method: 'POST',
-    headers: {
-      accept: 'application/json',
-      'content-type': 'application/json',
-      authorization: `Zoho-enczapikey ${apiKey}`,
-    },
-    body: JSON.stringify({
-      from: configuredFrom(),
-      to: [{ email_address: { address: input.to } }],
-      subject: input.subject,
-      htmlbody: input.html,
-      ...(input.text ? { textbody: input.text } : {}),
-    }),
-    signal: AbortSignal.timeout(15_000),
-  });
+  let response: Response;
+  try {
+    response = await fetch(apiUrl, {
+      method: 'POST',
+      headers: {
+        accept: 'application/json',
+        'content-type': 'application/json',
+        authorization: `Zoho-enczapikey ${apiKey}`,
+      },
+      body: JSON.stringify({
+        from: configuredFrom(),
+        to: [{ email_address: { address: input.to } }],
+        subject: input.subject,
+        htmlbody: input.html,
+        ...(input.text ? { textbody: input.text } : {}),
+      }),
+      signal: AbortSignal.timeout(15_000),
+    });
+  } catch (error) {
+    // Do not log request bodies, addresses, credentials, or provider URLs.
+    console.error('[email] ZeptoMail request failed.', { errorType: error instanceof Error ? error.name : 'UnknownError' });
+    throw new Error('Transactional email could not be delivered. Please try again later.');
+  }
   const result = await response.json().catch(() => null) as { message?: string; error?: { message?: string }; request_id?: string } | null;
   if (!response.ok) {
-    const detail = result?.error?.message ?? result?.message;
-    throw new Error(`ZeptoMail rejected the email (${response.status})${detail ? `: ${detail}` : '.'}`);
+    console.error('[email] ZeptoMail rejected a transactional message.', {
+      status: response.status,
+      requestId: result?.request_id,
+    });
+    throw new Error('Transactional email could not be delivered. Please try again later.');
   }
 }
 
@@ -48,10 +60,12 @@ export async function sendPurchaseReceiptEmail(input: { to: string; orderNumber:
 
 async function sendAccountEmail(to: string, subject: string, heading: string, url: string) {
   const appUrl = getEnv().NEXT_PUBLIC_APP_URL;
+  const safeUrl = escapeHtml(url);
   await sendTransactionalEmail({
     to,
     subject,
-    html: `<main style="font-family:Arial,sans-serif;max-width:560px;margin:auto;color:#17251b"><p style="color:#176343;font-weight:bold">ONSELLI</p><h1>${heading}</h1><p>Use the secure link below to continue with your Onselli account.</p><p><a href="${url}" style="display:inline-block;background:#014733;color:white;padding:12px 18px;border-radius:8px;text-decoration:none">Continue to Onselli</a></p><p style="color:#718077;font-size:12px">If you did not request this, you can ignore this message.</p><a href="${appUrl}" style="color:#718077;font-size:12px">onselli.com</a></main>`,
+    html: `<main style="font-family:Arial,sans-serif;max-width:560px;margin:auto;color:#17251b"><p style="color:#176343;font-weight:bold">ONSELLI</p><h1>${heading}</h1><p>Use the secure link below to continue with your Onselli account.</p><p><a href="${safeUrl}" style="display:inline-block;background:#014733;color:white;padding:12px 18px;border-radius:8px;text-decoration:none">Continue to Onselli</a></p><p style="color:#718077;font-size:12px">If you did not request this, you can ignore this message.</p><a href="${escapeHtml(appUrl)}" style="color:#718077;font-size:12px">onselli.com</a></main>`,
+    text: `${heading}\n\nUse this secure link to continue with your Onselli account: ${url}\n\nIf you did not request this, you can ignore this message.`,
   });
 }
 

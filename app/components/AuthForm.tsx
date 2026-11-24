@@ -85,6 +85,13 @@ export default function AuthForm({ mode, googleEnabled }: { mode: 'signup' | 'lo
           setMessage('Your email is not verified yet. We sent a new verification link; check your inbox and spam folder.');
           return;
         }
+        // Better Auth can fail signup after creating the account if the mail
+        // provider rejects the verification message. Keep a recovery path on
+        // screen so the user can retry delivery without repeating signup.
+        if (signup || (!signup && (result.error.status ?? 0) >= 500)) {
+          setNeedsConfirmation(true);
+          setMessage('If your account is waiting for verification, you can request a fresh email below.');
+        }
         setError(getAuthErrorMessage(result.error));
         return;
       }
