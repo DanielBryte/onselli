@@ -24,7 +24,7 @@ export default function ContinueAuthPage() {
       const destination = user.adminRole
         ? '/admin'
         : user.role === 'buyer'
-          ? safeNext ?? '/discover'
+          ? safeNext ?? '/dashboard/learning'
           : !user.onboardingCompletedAt
             ? safeNext ? `/onboarding?next=${encodeURIComponent(safeNext)}` : '/onboarding'
             : safeNext ?? '/workspace';

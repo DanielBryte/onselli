@@ -19,6 +19,7 @@ import {
 import { currencyMinorToDecimal } from '@/lib/money.mjs';
 import { CartTrigger, PublicCartProvider } from '@/app/components/PublicCart';
 import PublicCurrencySelect from '@/app/components/PublicCurrencySelect';
+import BuyerAccountMenu from '@/app/components/BuyerAccountMenu';
 
 type Creator = {
   slug: string;
@@ -205,16 +206,7 @@ export default function BuyerStorefront({
                 onChange={handleCurrencyChange}
               />
               <CartTrigger />
-              <Link
-                href={
-                  isLoggedIn
-                    ? '/dashboard/learning'
-                    : `/login?next=${encodeURIComponent(`/c/${creator.slug}`)}`
-                }
-                className="inline-flex h-9 min-h-9 items-center justify-center whitespace-nowrap rounded-[9px] border border-border bg-white px-[14px] text-[13px] font-semibold text-ink transition-all hover:border-brand-strong hover:bg-surface hover:text-display-strong max-[760px]:px-[10px] max-[760px]:text-xs"
-              >
-                {isLoggedIn ? 'My account' : 'Log in'}
-              </Link>
+              <BuyerAccountMenu isLoggedIn={isLoggedIn} nextPath={`/c/${creator.slug}`} />
             </div>
           </div>
         </header>

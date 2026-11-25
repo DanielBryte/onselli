@@ -10,7 +10,7 @@ const navigationItems = [
   { label: 'How it works', href: '/#how-it-works' },
   { label: 'Company', href: '/#company' },
   { label: 'Pricing', href: '/pricing' },
-  { label: 'Community', href: '/discover' },
+  { label: 'Creator challenge', href: '/challenge' },
 ] as const;
 
 export default function Header() {

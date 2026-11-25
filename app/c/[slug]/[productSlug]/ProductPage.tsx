@@ -33,6 +33,7 @@ import { getCurrentSession } from '@/src/server/auth/permissions';
 import { getCreatorLogoUrl } from '@/src/server/workspaces/logo';
 import { AddToCartButton, CartTrigger, PublicCartProvider } from '@/app/components/PublicCart';
 import PublicCurrencySelect from '@/app/components/PublicCurrencySelect';
+import BuyerAccountMenu from '@/app/components/BuyerAccountMenu';
 
 function safeCourseEmbed(value: string) {
   try {
@@ -260,16 +261,7 @@ export default async function PublicProductPage({
           <div className="flex shrink-0 items-center gap-[10px]">
             <PublicCurrencySelect creatorSlug={row.creator.slug} currency={row.product.currency as 'NGN' | 'USD'} />
             <CartTrigger />
-            <Link
-              href={
-                session?.user
-                  ? '/dashboard/learning'
-                  : `/login?next=${encodeURIComponent(`/c/${row.creator.slug}/${row.product.slug}`)}`
-              }
-              className="inline-flex h-9 min-h-9 items-center justify-center whitespace-nowrap rounded-[9px] border border-border bg-white px-[14px] text-[13px] font-semibold text-ink transition-all hover:border-brand-strong hover:bg-surface hover:text-display-strong max-[760px]:px-[10px] max-[760px]:text-xs"
-            >
-              {session?.user ? 'My account' : 'Log in'}
-            </Link>
+            <BuyerAccountMenu isLoggedIn={Boolean(session?.user)} nextPath={`/c/${row.creator.slug}/${row.product.slug}`} userLabel={session?.user?.name || session?.user?.email} />
           </div>
         </div>
       </header>

@@ -35,8 +35,8 @@ export default function ChallengePage() {
           <Link href="/signup" className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-[10px] bg-[linear-gradient(180deg,#0a5137_0%,#014733_100%)] px-7 text-[15px] font-extrabold text-white shadow-[0_10px_24px_rgba(1,71,51,.18),inset_0_1px_0_rgba(255,255,255,.14)] transition hover:-translate-y-0.5">
             Join the Challenge Free <ArrowRight size={18} />
           </Link>
-          <Link href="/discover" className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-[10px] border border-border bg-white px-6 text-[15px] font-bold text-ink transition hover:border-brand hover:bg-[#eff7f2]">
-            Explore Creator Stories
+          <Link href="/#how-it-works" className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-[10px] border border-border bg-white px-6 text-[15px] font-bold text-ink transition hover:border-brand hover:bg-[#eff7f2]">
+            See how Onselli works
           </Link>
         </div>
       </section>

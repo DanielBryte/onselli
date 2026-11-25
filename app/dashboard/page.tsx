@@ -14,7 +14,7 @@ export default async function DashboardEntryPage() {
   const destination = user.adminRole
     ? '/admin'
     : user.role === 'buyer'
-      ? '/discover'
+      ? '/dashboard/learning'
       : !user.onboardingCompletedAt
         ? '/onboarding'
         : '/workspace';

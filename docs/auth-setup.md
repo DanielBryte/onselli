@@ -20,7 +20,7 @@ Configure `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` from a Google OAuth Web 
 2. Set the ZeptoMail API URL for your account region, its Send Mail API key, and a verified sender address/name. This is needed for verification and password reset emails. Add Google OAuth credentials when you want to enable the Google button locally; production requires them.
 3. Run `npm run db:migrate` to create the identity and application tables.
 4. Start the app with `npm run dev`, sign up, then open the verification link delivered to your inbox.
-5. Choose your persona at `/onboarding`. Buyers continue to `/discover`; creators continue through `/workspace/setup` and then to `/workspace`. Buyers open purchases at `/dashboard/learning` and courses at `/dashboard/learning/courses/[productId]`. Guest buyers use the verified link on their receipt to establish a private purchase session.
+5. Choose your persona at `/onboarding`. Buyers continue to `/dashboard/learning`; creators continue through `/workspace/setup` and then to `/workspace`. Buyers open purchases at `/dashboard/learning` and courses at `/dashboard/learning/courses/[productId]`. Guest buyers use the verified link on their receipt to establish a private purchase session.
 
 Admin accounts are provisioned by an operator by setting the account's `admin_role` in the database; that field is not available in signup or onboarding. After signing in, an admin without two-factor enabled is directed to `/two-factor` to enroll an authenticator app and save backup codes. Sign-in challenges use the same page. The current admin workspace is `/admin`.
 
