@@ -97,7 +97,7 @@ export async function POST(request: Request) {
       const state = bachsCreatorAccountState(bachsAccount);
       await db.update(creators).set({ bachsAccountId: bachsAccount.id, bachsAccountStatus: state.status, bachsTransfersStatus: state.transfersStatus, bachsPayoutsStatus: state.payoutsStatus, bachsRequirements: state.requirements, kycStatus: state.status === 'approved' ? 'approved' : 'not_started', updatedAt: new Date() }).where(eq(creators.id, creatorId));
     }
-    return NextResponse.json({ next: '/dashboard' });
+    return NextResponse.json({ next: '/workspace' });
   } catch (error) {
     const databaseError = getDatabaseErrorInfo(error);
     const duplicateCreatorSlug = databaseError.code === '23505' && (databaseError.constraint === 'creators_slug_unique' || (databaseError.table === 'creators' && databaseError.column === 'slug'));

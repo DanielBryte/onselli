@@ -23,7 +23,7 @@ export default function PublicCurrencySelect({
             window.location.assign(`/c/${encodeURIComponent(creatorSlug)}?currency=${nextCurrency}`);
           }
         }}
-        className="!inline-flex !h-9 !min-h-9 !cursor-pointer !items-center !gap-1.5 !rounded-[9px] !border !border-[#e2e8e4] !bg-white !px-3 !text-[13px] !font-semibold !text-[#17221d] !shadow-none !transition-[border-color,background-color] hover:!border-[#c0d1c5] hover:!bg-[#fbfdfc] focus:!border-[#087653] focus:!outline-none focus:!shadow-none focus-visible:!border-[#087653] focus-visible:!outline-none focus-visible:!shadow-none"
+        className="!inline-flex !h-9 !min-h-9 !cursor-pointer !items-center !gap-1.5 !rounded-[9px] !border !border-border !bg-white !px-3 !text-[13px] !font-semibold !text-ink !shadow-none !transition-[border-color,background-color] hover:!border-border-hover hover:!bg-surface focus:!border-[#087653] focus:!outline-none focus:!shadow-none focus-visible:!border-[#087653] focus-visible:!outline-none focus-visible:!shadow-none"
         aria-label="Choose catalog currency"
         hideCheckmark={false}
       >
