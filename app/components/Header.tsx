@@ -6,10 +6,10 @@ import { ArrowRight, Menu, X } from 'lucide-react';
 import Logo from './Logo';
 
 const navigationItems = [
-  { label: 'Product', href: '#platform' },
-  { label: 'How it works', href: '#how-it-works' },
-  { label: 'Company', href: '#company' },
-  { label: 'Pricing', href: '#pricing' },
+  { label: 'Product', href: '/#platform' },
+  { label: 'How it works', href: '/#how-it-works' },
+  { label: 'Company', href: '/#company' },
+  { label: 'Pricing', href: '/pricing' },
   { label: 'Community', href: '/discover' },
 ] as const;
 
@@ -34,18 +34,18 @@ export default function Header() {
           <Logo className="gap-[14px] [&_.onselli-logo-mark]:size-11 [&_.onselli-logo-mark]:rounded-[11px] [&_strong]:text-[29px] [&_strong]:tracking-[-.045em] max-[960px]:[&_.onselli-logo-mark]:size-10 max-[960px]:[&_strong]:text-[27px] max-[390px]:gap-[10px] max-[390px]:[&_.onselli-logo-mark]:size-9 max-[390px]:[&_strong]:text-[25px]" />
         </Link>
 
-        <nav className="flex flex-1 items-center justify-center gap-[clamp(16px,2.25vw,34px)] whitespace-nowrap text-[14px] font-semibold text-[#25332a] max-[960px]:hidden" aria-label="Main navigation">
+        <nav className="flex flex-1 items-center justify-center gap-[clamp(16px,2.25vw,34px)] whitespace-nowrap text-[14px] font-semibold text-ink max-[960px]:hidden" aria-label="Main navigation">
           {navigationItems.map((item) => <Link key={item.label} href={item.href}>{item.label}</Link>)}
         </nav>
 
         <div className="flex flex-1 items-center justify-end gap-[25px] max-[960px]:hidden">
-          <Link className="text-[14px] font-semibold text-[#202921] hover:text-[#014733]" href="/login">Log in</Link>
-          <Link className="inline-flex min-h-12 items-center justify-center gap-2 rounded-[11px] bg-[#014733] px-5 text-xs font-extrabold text-white shadow-[0_3px_0_#075c39] transition hover:bg-[#06683f]" href="/signup">Start for free <ArrowRight size={15} /></Link>
+          <Link className="text-[14px] font-semibold text-ink hover:text-display" href="/login">Log in</Link>
+          <Link className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-display px-5 text-xs font-extrabold text-white shadow-[0_3px_0_#075c39] transition hover:bg-display-strong" href="/signup">Start for free <ArrowRight size={15} /></Link>
         </div>
 
         <button
           type="button"
-          className="grid size-10 shrink-0 place-items-center rounded-full border border-[#dce7da] bg-white text-[#38533a] min-[961px]:hidden"
+          className="grid size-10 shrink-0 place-items-center rounded-full border border-border bg-white text-ink min-[961px]:hidden"
           aria-label={open ? 'Close menu' : 'Open menu'}
           aria-expanded={open}
           aria-controls="mobile-navigation"
@@ -64,7 +64,7 @@ export default function Header() {
         {navigationItems.map((item) => (
           <Link
             key={item.label}
-            className="flex min-h-[46px] items-center rounded-full px-[13px] py-[11px] text-[15px] font-semibold leading-[1.2] text-[#20362a] hover:bg-[#eff5ef] hover:text-[#014733] max-[390px]:px-[10px] max-[390px]:text-sm"
+            className="flex min-h-[46px] items-center rounded-full px-[13px] py-[11px] text-[15px] font-semibold leading-[1.2] text-ink hover:bg-surface-hover hover:text-display max-[390px]:px-[10px] max-[390px]:text-sm"
             href={item.href}
             onClick={closeMenu}
             tabIndex={open ? 0 : -1}
@@ -73,7 +73,7 @@ export default function Header() {
           </Link>
         ))}
         <Link
-          className="flex min-h-[46px] items-center rounded-full px-[13px] py-[11px] text-[15px] font-semibold leading-[1.2] text-[#20362a] hover:bg-[#eff5ef] hover:text-[#014733] max-[390px]:px-[10px] max-[390px]:text-sm"
+          className="flex min-h-[46px] items-center rounded-full px-[13px] py-[11px] text-[15px] font-semibold leading-[1.2] text-ink hover:bg-surface-hover hover:text-display max-[390px]:px-[10px] max-[390px]:text-sm"
           href="/login"
           onClick={closeMenu}
           tabIndex={open ? 0 : -1}
@@ -81,7 +81,7 @@ export default function Header() {
           Log in
         </Link>
         <Link
-          className="col-span-2 mt-[3px] flex min-h-[46px] items-center justify-center gap-2 rounded-full bg-[#014733] px-[13px] py-[11px] text-[15px] font-bold leading-[1.2] text-white hover:bg-[#003c2c]"
+          className="col-span-2 mt-[3px] flex min-h-[46px] items-center justify-center gap-2 rounded-full bg-display px-[13px] py-[11px] text-[15px] font-bold leading-[1.2] text-white hover:bg-brand-strong"
           href="/signup"
           onClick={closeMenu}
           tabIndex={open ? 0 : -1}

@@ -8,18 +8,18 @@ export const metadata = {
 
 export default function TermsPage() {
   return (
-    <main className="min-h-screen bg-[linear-gradient(180deg,#f7faf7_0%,#f1f6f2_100%)] pb-12 text-[#152219]">
-      <header className="border-b border-[#e6ece6] bg-white/90 backdrop-blur-xl"><div className="mx-auto flex max-w-[1100px] items-center justify-between gap-[18px] px-6 py-[18px]">
+    <main className="min-h-screen bg-[linear-gradient(180deg,#f7faf7_0%,#f1f6f2_100%)] pb-12 text-ink">
+      <header className="border-b border-border bg-white/90 backdrop-blur-xl"><div className="mx-auto flex max-w-[1100px] items-center justify-between gap-[18px] px-6 py-[18px]">
         <Link href="/" className="inline-flex items-center" aria-label="Go to Onselli home"><Logo /></Link>
-        <Link href="/legal" className="text-[13px] font-bold text-[#244833] hover:text-[#014733]">Legal center</Link>
+        <Link href="/legal" className="text-[13px] font-bold text-ink hover:text-display">Legal center</Link>
       </div></header>
       <section className="mx-auto max-w-[900px] px-6 pt-[42px] pb-5">
-        <div className="border-b border-[#e3ebe4] pb-[18px]">
-          <span className="mb-[18px] inline-block text-[10px] font-extrabold tracking-[.17em] text-[#0f5b3a]">TERMS OF SERVICE</span>
-          <h1 className="my-[10px] text-[clamp(34px,3.7vw,54px)] leading-[1.04] tracking-[-.055em] text-[#13241b]">Terms of Service</h1>
-          <p className="m-0 text-[15px] text-[#68796f]">Effective 2 November 2026 · Updated 2 November 2026</p>
+        <div className="border-b border-border pb-[18px]">
+          <span className="mb-[18px] inline-block text-[10px] font-extrabold tracking-[.17em] text-display-strong">TERMS OF SERVICE</span>
+          <h1 className="my-[10px] text-[clamp(34px,3.7vw,54px)] leading-[1.04] tracking-[-.055em] text-ink">Terms of Service</h1>
+          <p className="m-0 text-[15px] text-muted">Effective 2 November 2026 · Updated 2 November 2026</p>
         </div>
-        <div className="pt-[18px] [&_p]:text-base [&_p]:leading-[1.8] [&_p]:text-[#3c4d46] [&_li]:text-base [&_li]:leading-[1.8] [&_li]:text-[#3c4d46] [&_h2]:mt-7 [&_h2]:mb-3 [&_h2]:text-[22px] [&_h2]:leading-[1.2] [&_h2]:tracking-[-.04em] [&_h2]:text-[#13261d] [&_a]:text-[#014733] [&_a]:underline [&_a]:underline-offset-2">
+        <div className="pt-[18px] [&_p]:text-base [&_p]:leading-[1.8] [&_p]:text-ink-secondary [&_li]:text-base [&_li]:leading-[1.8] [&_li]:text-ink-secondary [&_h2]:mt-7 [&_h2]:mb-3 [&_h2]:text-[22px] [&_h2]:leading-[1.2] [&_h2]:tracking-[-.04em] [&_h2]:text-ink [&_a]:text-display [&_a]:underline [&_a]:underline-offset-2">
           <p><strong>Operator details must be completed before these terms are published as final:</strong> replace <em>[LEGAL COMPANY NAME]</em>, <em>[COMPANY NUMBER]</em>, and <em>[REGISTERED ADDRESS]</em> with the registered details of the Onselli operating entity. This draft is written for Onselli’s current creator-commerce service and needs Nigerian legal review, particularly for payment and marketplace responsibilities.</p>
 
           <h2>1. Who these terms cover</h2>
