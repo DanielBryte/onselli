@@ -12,7 +12,7 @@ export const PLAN_CATALOG = {
     id: 'pro', name: 'Pro', tagline: 'For creators building a steady business', monthly: { NGN: 950000, USD: 900 }, yearly: { NGN: 9500000, USD: 9000 }, maxWorkspaces: 3, maxPublishedOffers: null, maxContacts: 10000, maxRecipientsPerSend: 5000, analyticsDays: 90, prioritySupport: false, platformFeeBps: 500,
   },
   studio: {
-    id: 'studio', name: 'Studio', tagline: 'For teams managing multiple brands', monthly: { NGN: 2450000, USD: 2400 }, yearly: { NGN: 24500000, USD: 24000 }, maxWorkspaces: 10, maxPublishedOffers: null, maxContacts: 50000, maxRecipientsPerSend: 5000, analyticsDays: 90, prioritySupport: true, platformFeeBps: 300,
+    id: 'studio', name: 'Business', tagline: 'For teams managing multiple brands', monthly: { NGN: 2450000, USD: 2400 }, yearly: { NGN: 24500000, USD: 24000 }, maxWorkspaces: 10, maxPublishedOffers: null, maxContacts: 50000, maxRecipientsPerSend: 5000, analyticsDays: 90, prioritySupport: true, platformFeeBps: 300,
   },
 } as const;
 

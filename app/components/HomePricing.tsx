@@ -4,11 +4,47 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import PricingPlanGrid from './PricingPlanGrid';
 
-export default function HomePricing() {
-  return <section className="scroll-mt-6 bg-white px-[clamp(18px,5vw,72px)] pb-[82px] pt-[90px] max-[760px]:px-4 max-[760px]:pb-[58px] max-[760px]:pt-16" id="pricing" aria-labelledby="home-pricing-title">
-    <div className="mx-auto mb-[30px] max-w-[1100px] text-center max-[760px]:mb-[23px]"><span className="block text-xs font-[750] uppercase leading-[1.5] tracking-[.17em] text-[#71847a]">SIMPLE PLANS, ROOM TO GROW</span><h2 id="home-pricing-title" className="my-3 text-[clamp(34px,4.4vw,54px)] font-[650] leading-[1.04] tracking-[-.06em] text-[#17241c] max-[760px]:text-4xl">Choose the plan<br/>that fits <em className="text-[#397b5d] not-italic">your next step.</em></h2><p className="mt-[10px] text-sm leading-[1.6] text-[#718077] max-[760px]:text-[13px]">Start free, then upgrade when your audience and business are ready.</p></div>
-    <PricingPlanGrid presentation="marketing" renderAction={(plan) => <Link href="/signup" className={`pricing-plan__action !mt-px !flex !min-h-[46px] !w-full !items-center !justify-center !gap-2 !rounded-[10px] !border !border-[#dce5de] !bg-white !px-[14px] !text-[13px] !font-semibold !text-[#253a2c] !no-underline !transition-[background-color,border-color,transform] hover:!-translate-y-px hover:!border-[#0b6848] hover:!bg-[#eff7f2] ${plan.id === 'pro' ? '!border-[#07573d] !bg-[#07573d] !text-white hover:!bg-[#086345]' : ''}`}>
-      {plan.id === 'free' ? 'Start for free' : `Choose ${plan.name}`}<ArrowRight size={15}/>
-    </Link>} />
-  </section>;
+export default function HomePricing({ asPage = false }: { asPage?: boolean }) {
+  const Heading = asPage ? 'h1' : 'h2';
+  return (
+    <section
+      className={`scroll-mt-12 bg-white px-4 sm:px-6 lg:px-8 pb-20 pt-16 sm:pb-28 sm:pt-24 ${
+        asPage ? 'min-h-[calc(100svh-82px)] pt-20 sm:pt-28' : ''
+      }`}
+      id="pricing"
+      aria-labelledby="home-pricing-title"
+    >
+      <div className="mx-auto mb-12 max-w-3xl text-center">
+        <span className="block text-xs font-extrabold uppercase tracking-widest text-brand mb-2">
+          SIMPLE PLANS, ROOM TO GROW
+        </span>
+        <Heading
+          id="home-pricing-title"
+          className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-ink leading-[1.08]"
+        >
+          A clear plan for <em className="text-display not-italic font-black">what’s next.</em>
+        </Heading>
+        <p className="mx-auto mt-4 max-w-2xl text-sm sm:text-base leading-relaxed text-muted">
+          Start with the essentials, then unlock more room to sell, grow your audience, and understand what’s working. Compare plans and choose the pace that fits your business.
+        </p>
+      </div>
+
+      <PricingPlanGrid
+        presentation="marketing"
+        renderAction={(plan) => (
+          <Link
+            href="/signup"
+            className={`flex min-h-[46px] w-full items-center justify-center gap-2 rounded-xl px-4 text-sm font-semibold transition-all duration-150 cursor-pointer ${
+              plan.id === 'pro'
+                ? 'bg-brand text-white shadow-sm hover:bg-brand-strong hover:shadow-md'
+                : 'border border-border bg-surface text-ink hover:border-brand hover:bg-brand-tint/60'
+            }`}
+          >
+            {plan.id === 'free' ? 'Start for free' : `Choose ${plan.name}`}
+            <ArrowRight size={16} />
+          </Link>
+        )}
+      />
+    </section>
+  );
 }

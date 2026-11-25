@@ -1,16 +1,186 @@
 'use client';
 
 import { useEffect, useState, type ReactNode } from 'react';
-import { Check, ChartNoAxesCombined, Layers3, Mail, Rocket, Store, UsersRound } from 'lucide-react';
-import { formatPlanPrice, PLAN_CATALOG, SUBSCRIPTION_CURRENCY, type BillingInterval, type PlanId } from '@/src/server/billing/plans';
+import {
+  Check,
+  ChartNoAxesCombined,
+  ChevronDown,
+  Database,
+  FileText,
+  Layers3,
+  Mail,
+  Rocket,
+  Store,
+  UsersRound,
+  X,
+  type LucideIcon,
+} from 'lucide-react';
+import {
+  formatPlanPrice,
+  PLAN_CATALOG,
+  SUBSCRIPTION_CURRENCY,
+  type BillingInterval,
+  type PlanId,
+} from '@/src/server/billing/plans';
 
 type PricingPlan = (typeof PLAN_CATALOG)[PlanId];
+type MarketingFeature = { text: string; emphasis?: string; included?: boolean };
+type MarketingSection = { title: string; icon: LucideIcon; features: MarketingFeature[] };
 
-export default function PricingPlanGrid({ currentPlan, className = '', presentation = 'workspace', renderAction }: {
+// Shared plan feature copy for the public page and dashboard plan picker.
+const PLAN_FEATURE_COPY: Record<PlanId, MarketingSection[]> = {
+  free: [
+    {
+      title: 'Storefronts & offers',
+      icon: Store,
+      features: [
+        { text: '1 workspace', emphasis: '1' },
+        { text: '1 storefront', emphasis: '1' },
+        { text: 'Unlimited published offers', emphasis: 'Unlimited' },
+      ],
+    },
+    {
+      title: 'Forms',
+      icon: FileText,
+      features: [
+        { text: '3 forms', emphasis: '3' },
+        { text: '500 form submissions per month', emphasis: '500' },
+      ],
+    },
+    {
+      title: 'Audience & email',
+      icon: Mail,
+      features: [
+        { text: '500 active contacts', emphasis: '500' },
+        { text: '1,000 emails included per month', emphasis: '1,000' },
+        { text: 'Up to 500 recipients per campaign', emphasis: '500' },
+      ],
+    },
+    {
+      title: 'Storage & domain',
+      icon: Database,
+      features: [
+        { text: '1 GB storage', emphasis: '1 GB' },
+        { text: 'Connect your own domain' },
+        { text: 'Remove Onselli branding', included: false },
+      ],
+    },
+    {
+      title: 'Insights & fees',
+      icon: ChartNoAxesCombined,
+      features: [
+        { text: '30-day sales analytics', emphasis: '30-day' },
+        { text: '5% Onselli fee on each sale', emphasis: '5%' },
+      ],
+    },
+  ],
+  pro: [
+    {
+      title: 'Storefronts & offers',
+      icon: Store,
+      features: [
+        { text: '3 workspaces', emphasis: '3' },
+        { text: '3 storefronts', emphasis: '3' },
+        { text: 'Unlimited published offers', emphasis: 'Unlimited' },
+      ],
+    },
+    {
+      title: 'Forms',
+      icon: FileText,
+      features: [
+        { text: 'Unlimited forms', emphasis: 'Unlimited' },
+        { text: '10,000 form submissions per month', emphasis: '10,000' },
+      ],
+    },
+    {
+      title: 'Audience & email',
+      icon: Mail,
+      features: [
+        { text: '10,000 active contacts', emphasis: '10,000' },
+        { text: '10,000 emails included per month', emphasis: '10,000' },
+        { text: 'Up to 5,000 recipients per campaign', emphasis: '5,000' },
+      ],
+    },
+    {
+      title: 'Storage & domain',
+      icon: Database,
+      features: [
+        { text: '25 GB storage', emphasis: '25 GB' },
+        { text: 'Connect your own domain' },
+        { text: 'Remove Onselli branding' },
+      ],
+    },
+    {
+      title: 'Insights & fees',
+      icon: ChartNoAxesCombined,
+      features: [
+        { text: '90-day sales analytics', emphasis: '90-day' },
+        { text: '3% Onselli fee on each sale', emphasis: '3%' },
+      ],
+    },
+  ],
+  studio: [
+    {
+      title: 'Storefronts & offers',
+      icon: Store,
+      features: [
+        { text: '10 workspaces', emphasis: '10' },
+        { text: '10 storefronts', emphasis: '10' },
+        { text: 'Unlimited published offers', emphasis: 'Unlimited' },
+      ],
+    },
+    {
+      title: 'Forms',
+      icon: FileText,
+      features: [
+        { text: 'Unlimited forms', emphasis: 'Unlimited' },
+        { text: '50,000 form submissions per month', emphasis: '50,000' },
+      ],
+    },
+    {
+      title: 'Audience & email',
+      icon: Mail,
+      features: [
+        { text: '50,000 active contacts', emphasis: '50,000' },
+        { text: '50,000 emails included per month', emphasis: '50,000' },
+        { text: 'Up to 25,000 recipients per campaign', emphasis: '25,000' },
+      ],
+    },
+    {
+      title: 'Storage & domain',
+      icon: Database,
+      features: [
+        { text: '100 GB storage', emphasis: '100 GB' },
+        { text: 'Connect your own domain' },
+        { text: 'Remove Onselli branding' },
+      ],
+    },
+    {
+      title: 'Insights & fees',
+      icon: ChartNoAxesCombined,
+      features: [
+        { text: '12-month sales analytics with export', emphasis: '12-month' },
+        { text: '2% Onselli fee on each sale', emphasis: '2%' },
+      ],
+    },
+  ],
+};
+
+export default function PricingPlanGrid({
+  currentPlan,
+  className = '',
+  presentation = 'workspace',
+  renderAction,
+}: {
   currentPlan?: PlanId;
   className?: string;
   presentation?: 'workspace' | 'marketing';
-  renderAction: (plan: PricingPlan, isCurrent: boolean, needsPlanChange: boolean, billingInterval: BillingInterval) => ReactNode;
+  renderAction: (
+    plan: PricingPlan,
+    isCurrent: boolean,
+    needsPlanChange: boolean,
+    billingInterval: BillingInterval,
+  ) => ReactNode;
 }) {
   const marketing = presentation === 'marketing';
   const [displayCurrency, setDisplayCurrency] = useState('USD');
@@ -29,60 +199,259 @@ export default function PricingPlanGrid({ currentPlan, className = '', presentat
         return response.json() as Promise<{ rate: number }>;
       })
       .then((data) => {
-        if (!Number.isFinite(data.rate) || data.rate <= 0) throw new Error('Conversion rate unavailable');
+        if (!Number.isFinite(data.rate) || data.rate <= 0)
+          throw new Error('Conversion rate unavailable');
         if (active) setConversion({ currency: displayCurrency, rate: data.rate });
       })
-      .catch(() => { if (active) { setConversion(null); setConversionFailed(true); } });
-    return () => { active = false; };
+      .catch(() => {
+        if (active) {
+          setConversion(null);
+          setConversionFailed(true);
+        }
+      });
+    return () => {
+      active = false;
+    };
   }, [displayCurrency]);
 
-  return <>
-    <div className={`pricing-currency-preview ${marketing ? '!mx-auto !flex !w-full !max-w-[1100px] !flex-wrap !justify-center !gap-x-3 !gap-y-2 !text-left max-[760px]:!justify-start' : ''}`}>
-      <label className={marketing ? '!text-xs !font-semibold !text-[#34483b] max-[760px]:!basis-full' : ''} htmlFor="pricing-display-currency">Display prices in</label>
-      <select className={marketing ? '!min-h-[38px] !min-w-[190px] !rounded-lg !border !border-[#dfe7e1] !bg-white !px-3 !text-[13px] !font-semibold !text-[#22342a] max-[760px]:!w-full max-[760px]:!min-w-0' : ''} id="pricing-display-currency" value={displayCurrency} onChange={(event) => setDisplayCurrency(event.target.value)} aria-label="Currency for price estimate">
-        <option value="USD">USD — US Dollar</option><option value="NGN">NGN — Nigerian Naira</option><option value="GBP">GBP — British Pound</option><option value="EUR">EUR — Euro</option><option value="CAD">CAD — Canadian Dollar</option>
-      </select>
-      <span className={`pricing-currency-preview__charge ${marketing ? '!text-xs !font-semibold !text-[#34483b] max-[760px]:!basis-full' : ''}`}>Checkout is charged in USD. Local prices are estimates.</span>
-      {displayCurrency !== 'USD' && conversionFailed && <span className={`pricing-currency-preview__rate ${marketing ? '!basis-full !text-center !text-[11px] !leading-[1.4] !text-[#738078] max-[760px]:!text-left' : ''}`} role="status">Conversion unavailable. Prices remain in USD.</span>}
-      {displayCurrency !== 'USD' && !conversion && !conversionFailed && <span className={`pricing-currency-preview__rate ${marketing ? '!basis-full !text-center !text-[11px] !leading-[1.4] !text-[#738078] max-[760px]:!text-left' : ''}`} role="status">Loading estimate…</span>}
-    </div>
-    <div className={`pricing-billing-toggle ${marketing ? '!mx-auto !mt-4 !flex !w-max !max-w-full !items-center !gap-[3px] !rounded-[9px] !border !border-[#e1e8e2] !bg-[#f6f8f6] !p-[3px] max-[760px]:!mx-0 max-[760px]:!mt-[14px]' : ''}`} role="group" aria-label="Billing frequency">
-      <button type="button" aria-pressed={billingInterval === 'month'} className={`${billingInterval === 'month' ? 'is-selected' : ''} ${marketing ? '!inline-flex !min-h-9 !items-center !justify-center !gap-[7px] !rounded-md !border-0 !bg-transparent !px-3 !text-xs !font-medium !text-[#647269] !shadow-none max-[760px]:!min-h-[34px] max-[760px]:!px-[9px] max-[760px]:!text-[11px]' : ''} ${marketing && billingInterval === 'month' ? '!bg-white !text-[#173c2b] !shadow-[0_1px_3px_#17231b18]' : ''}`} onClick={() => setBillingInterval('month')}>Monthly</button>
-      <button type="button" aria-pressed={billingInterval === 'year'} className={`${billingInterval === 'year' ? 'is-selected' : ''} ${marketing ? '!inline-flex !min-h-9 !items-center !justify-center !gap-[7px] !rounded-md !border-0 !bg-transparent !px-3 !text-xs !font-medium !text-[#647269] !shadow-none max-[760px]:!min-h-[34px] max-[760px]:!px-[9px] max-[760px]:!text-[11px]' : ''} ${marketing && billingInterval === 'year' ? '!bg-white !text-[#173c2b] !shadow-[0_1px_3px_#17231b18]' : ''}`} onClick={() => setBillingInterval('year')}>Yearly {marketing ? <span className="!rounded-[5px] !bg-[#e8f2eb] !px-1.5 !py-[3px] !text-[10px] !font-semibold !text-[#226245] max-[760px]:!text-[9px]">Save 2 months</span> : <span>Save 2 months</span>}</button>
-    </div>
-    <div className={`pricing-plans ${className} ${marketing ? '!mx-auto !mt-[22px] !grid !w-full !max-w-[1100px] !grid-cols-3 !items-stretch !gap-4 max-[900px]:!grid-cols-2 max-[900px]:[&_.pricing-plan--featured]:!col-span-2 max-[760px]:!mt-4 max-[760px]:!grid-cols-1 max-[760px]:!gap-3 max-[760px]:[&_.pricing-plan--featured]:[grid-column:auto]' : ''}`.trim()}>
-      {(Object.values(PLAN_CATALOG) as PricingPlan[]).map((plan) => {
-        const amount = plan[billingInterval === 'month' ? 'monthly' : 'yearly'][SUBSCRIPTION_CURRENCY];
-        const isCurrent = plan.id === currentPlan;
-        const needsPlanChange = Boolean(currentPlan && currentPlan !== 'free' && !isCurrent && plan.id !== 'free');
-        const PlanIcon = plan.id === 'free' ? UsersRound : plan.id === 'pro' ? Rocket : Layers3;
-        const convertedPrice = amount > 0 && displayCurrency !== 'USD' && conversion?.currency === displayCurrency
-          ? new Intl.NumberFormat(undefined, { style: 'currency', currency: displayCurrency, currencyDisplay: 'code', maximumFractionDigits: 2 }).format((amount / 100) * conversion.rate)
-          : null;
-        const equivalentMonthly = billingInterval === 'year' && amount > 0 ? formatPlanPrice(amount / 10, SUBSCRIPTION_CURRENCY) : null;
-        return <article className={`pricing-plan${plan.id === 'pro' ? ' pricing-plan--featured' : ''} ${marketing ? '!relative !flex !min-w-0 !flex-col !rounded-[18px] !border !border-[#e5ebe6] !bg-white !p-[22px] !shadow-[0_8px_24px_rgba(24,56,36,.04)] max-[480px]:!p-4' : ''} ${marketing && plan.id === 'pro' ? '!border-t-4 !border-t-[#16b783] !border-x-[#0b6848] !border-b-[#0b6848] !pt-[19px] !shadow-[0_12px_30px_rgba(6,75,52,.09)] max-[760px]:!pt-[21px] max-[480px]:!pt-[17px]' : ''}`} key={plan.id}>
-          {plan.id === 'pro' && <span className={`pricing-plan__badge ${marketing ? '!absolute !right-[14px] !top-[13px] !rounded-full !bg-[#13a878] !px-2 !py-[5px] !text-[9px] !font-bold !tracking-[.07em] !text-white' : ''}`}>MOST POPULAR</span>}
-          <div className={`pricing-plan__identity ${marketing ? '!flex !min-h-[53px] !items-start !gap-[11px]' : ''}`}><span className={`pricing-plan__icon ${marketing ? '!grid !h-10 !w-10 !shrink-0 !place-items-center !rounded-xl !bg-[#e9f6ef] !text-[#07986a]' : ''}`}><PlanIcon size={19}/></span><div className={marketing ? '!min-w-0' : ''}><div className={`pricing-plan__top ${marketing ? '!flex !justify-start !gap-2' : ''}`}><h3 className={marketing ? '!m-0 !text-[17px] !font-bold !tracking-[-.02em] !text-[#1d2c23]' : ''}>{plan.name}</h3>{isCurrent && <span className={`pricing-plan__current ${marketing ? '!rounded-full !bg-[#edf5ef] !px-1.5 !py-[3px] !text-[9px] !font-bold !text-[#286849]' : ''}`}>Current plan</span>}</div><p className={marketing ? '!mt-1 !text-xs !leading-[1.5] !text-[#748078]' : ''}>{plan.tagline}</p></div></div>
-          <div className={`pricing-plan__price-wrap ${marketing ? '!grid !min-h-[105px] !justify-items-center !content-center !gap-[3px] !px-0 !py-[15px] !pb-[14px] max-[760px]:!min-h-[82px] max-[480px]:!min-h-[72px]' : ''}`}><p className={`pricing-plan__price ${marketing ? '!m-0 !text-[clamp(30px,3vw,40px)] !font-bold !leading-[1.1] !tracking-[-.045em] !text-[#16231c]' : ''}`}>{amount ? formatPlanPrice(amount, SUBSCRIPTION_CURRENCY) : 'Free'}{amount > 0 && <span className={`pricing-plan__period ${marketing ? '!ml-1 !text-[.38em] !font-medium !tracking-normal !text-[#758078]' : ''}`}>/{billingInterval === 'month' ? 'month' : 'year'}</span>}</p>{amount > 0 && <small className={marketing ? '!text-center !text-xs !leading-[1.4] !text-[#78847d]' : ''}>{convertedPrice ? `≈ ${convertedPrice} · estimate` : `Billed ${billingInterval === 'month' ? 'monthly' : 'yearly'} in USD`}{billingInterval === 'year' && equivalentMonthly ? ` · ${equivalentMonthly}/month, save 2 months` : ''}</small>}</div>
-          {renderAction(plan, isCurrent, needsPlanChange, billingInterval)}
-          <div className={`pricing-plan__sections ${marketing ? '!mt-[13px] !grid !gap-[14px] !border-t !border-[#edf1ed] !pt-[14px] max-[760px]:!grid-cols-2 max-[760px]:!gap-x-[14px] max-[480px]:!grid-cols-1 max-[480px]:!gap-3' : ''}`}>
-            <section className={marketing ? 'max-[760px]:[&:last-child]:!col-span-full max-[480px]:[&:last-child]:!col-auto' : ''}><h4 className={marketing ? '!mb-2 !flex !items-center !gap-[7px] !text-xs !font-bold !leading-[1.4] !text-[#25382c]' : ''}><Store className={marketing ? 'shrink-0 !text-[#28734f]' : ''} size={14}/> Storefronts &amp; offers</h4><ul className={marketing ? '!grid !gap-2 !p-0 !m-0 !list-none' : ''}>
-              <li className={marketing ? '!flex !items-start !gap-[7px] !text-xs !leading-[1.5] !text-[#536159]' : ''}><span className={marketing ? '!grid !h-[18px] !w-[18px] !shrink-0 !place-items-center !rounded-full !bg-[#e8f5ed] !text-[#158053]' : ''}><Check size={12}/></span><strong className={marketing ? '!font-bold !text-[#26362c]' : ''}>{plan.maxWorkspaces}</strong> {plan.maxWorkspaces === 1 ? 'workspace and storefront' : 'workspaces and storefronts'}</li>
-              <li className={marketing ? '!flex !items-start !gap-[7px] !text-xs !leading-[1.5] !text-[#536159]' : ''}><span className={marketing ? '!grid !h-[18px] !w-[18px] !shrink-0 !place-items-center !rounded-full !bg-[#e8f5ed] !text-[#158053]' : ''}><Check size={12}/></span>{plan.maxPublishedOffers === null ? 'Unlimited published offers' : `${plan.maxPublishedOffers} published offers`}</li>
-            </ul></section>
-            <section className={marketing ? 'max-[760px]:[&:last-child]:!col-span-full max-[480px]:[&:last-child]:!col-auto' : ''}><h4 className={marketing ? '!mb-2 !flex !items-center !gap-[7px] !text-xs !font-bold !leading-[1.4] !text-[#25382c]' : ''}><Mail className={marketing ? 'shrink-0 !text-[#28734f]' : ''} size={14}/> Audience &amp; email</h4><ul className={marketing ? '!grid !gap-2 !p-0 !m-0 !list-none' : ''}>
-              <li className={marketing ? '!flex !items-start !gap-[7px] !text-xs !leading-[1.5] !text-[#536159]' : ''}><span className={marketing ? '!grid !h-[18px] !w-[18px] !shrink-0 !place-items-center !rounded-full !bg-[#e8f5ed] !text-[#158053]' : ''}><Check size={12}/></span><strong className={marketing ? '!font-bold !text-[#26362c]' : ''}>{plan.maxContacts.toLocaleString()}</strong> active contacts</li>
-              <li className={marketing ? '!flex !items-start !gap-[7px] !text-xs !leading-[1.5] !text-[#536159]' : ''}><span className={marketing ? '!grid !h-[18px] !w-[18px] !shrink-0 !place-items-center !rounded-full !bg-[#e8f5ed] !text-[#158053]' : ''}><Check size={12}/></span>{plan.maxRecipientsPerSend ? `Up to ${plan.maxRecipientsPerSend.toLocaleString()} recipients per campaign` : 'Campaign sending unavailable'}</li>
-              {plan.maxRecipientsPerSend > 0 && <li className={`pricing-plan__note ${marketing ? '!pl-[25px] !text-[11px] !leading-[1.45] !text-[#7a867e]' : ''}`}>Email credits are purchased separately; no monthly sending credits are included.</li>}
-            </ul></section>
-            <section className={marketing ? 'max-[760px]:[&:last-child]:!col-span-full max-[480px]:[&:last-child]:!col-auto [&:last-child_ul]:!grid-cols-2 max-[480px]:[&:last-child_ul]:!grid-cols-1' : ''}><h4 className={marketing ? '!mb-2 !flex !items-center !gap-[7px] !text-xs !font-bold !leading-[1.4] !text-[#25382c]' : ''}><ChartNoAxesCombined className={marketing ? 'shrink-0 !text-[#28734f]' : ''} size={14}/> Insights &amp; fees</h4><ul className={marketing ? '!grid !gap-2 !p-0 !m-0 !list-none' : ''}>
-              <li className={marketing ? '!flex !items-start !gap-[7px] !text-xs !leading-[1.5] !text-[#536159]' : ''}><span className={marketing ? '!grid !h-[18px] !w-[18px] !shrink-0 !place-items-center !rounded-full !bg-[#e8f5ed] !text-[#158053]' : ''}><Check size={12}/></span>{plan.analyticsDays}-day sales analytics</li>
-              <li className={marketing ? '!flex !items-start !gap-[7px] !text-xs !leading-[1.5] !text-[#536159]' : ''}><span className={marketing ? '!grid !h-[18px] !w-[18px] !shrink-0 !place-items-center !rounded-full !bg-[#e8f5ed] !text-[#158053]' : ''}><Check size={12}/></span><strong className={marketing ? '!font-bold !text-[#26362c]' : ''}>{(plan.platformFeeBps / 100).toFixed(1).replace('.0', '')}%</strong> Onselli fee on each sale</li>
-              {plan.prioritySupport && <li className={marketing ? '!flex !items-start !gap-[7px] !text-xs !leading-[1.5] !text-[#536159]' : ''}><span className={marketing ? '!grid !h-[18px] !w-[18px] !shrink-0 !place-items-center !rounded-full !bg-[#e8f5ed] !text-[#158053]' : ''}><Check size={12}/></span>Priority support</li>}
-            </ul></section>
+  return (
+    <div className={`w-full ${className}`}>
+      {/* Controls Container: Currency Selector & Billing Interval Toggle */}
+      <div className="mx-auto flex flex-col items-center justify-center gap-4 sm:flex-row sm:justify-between sm:gap-6 mb-8 max-w-5xl">
+        {/* Currency preview dropdown */}
+        <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 text-xs font-medium text-ink">
+          <label htmlFor="pricing-display-currency" className="text-muted">
+            Display prices in
+          </label>
+          <div className="relative inline-flex items-center">
+            <select
+              id="pricing-display-currency"
+              value={displayCurrency}
+              onChange={(e) => setDisplayCurrency(e.target.value)}
+              aria-label="Currency for price estimate"
+              className="appearance-none rounded-lg border border-border bg-surface pl-3 pr-8 py-1.5 text-xs font-semibold text-ink shadow-xs hover:border-border-hover focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20 transition-colors cursor-pointer"
+            >
+              <option value="USD">USD ($)</option>
+              <option value="NGN">NGN (₦)</option>
+              <option value="GBP">GBP (£)</option>
+              <option value="EUR">EUR (€)</option>
+              <option value="CAD">CAD ($)</option>
+            </select>
+            <ChevronDown
+              size={13}
+              className="pointer-events-none absolute right-2.5 text-muted"
+            />
           </div>
-        </article>;
-      })}
+          {displayCurrency !== 'USD' && conversionFailed && (
+            <span className="w-full text-center sm:text-left text-[11px] text-danger" role="status">
+              Estimate unavailable. Charged in USD.
+            </span>
+          )}
+          {displayCurrency !== 'USD' && !conversion && !conversionFailed && (
+            <span className="w-full text-center sm:text-left text-[11px] text-muted" role="status">
+              Loading conversion rate…
+            </span>
+          )}
+        </div>
+
+        {/* Monthly / Yearly Billing Toggle */}
+        <div
+          role="radiogroup"
+          aria-label="Billing frequency"
+          className="inline-flex items-center rounded-xl border border-border bg-canvas/80 p-1 shadow-inner"
+        >
+          <button
+            type="button"
+            role="radio"
+            aria-checked={billingInterval === 'month'}
+            onClick={() => setBillingInterval('month')}
+            className={`inline-flex items-center justify-center rounded-lg px-3.5 py-1.5 text-xs font-semibold transition-all cursor-pointer ${
+              billingInterval === 'month'
+                ? 'bg-surface text-ink shadow-sm'
+                : 'text-muted hover:text-ink'
+            }`}
+          >
+            Monthly
+          </button>
+          <button
+            type="button"
+            role="radio"
+            aria-checked={billingInterval === 'year'}
+            onClick={() => setBillingInterval('year')}
+            className={`inline-flex items-center justify-center gap-1.5 rounded-lg px-3.5 py-1.5 text-xs font-semibold transition-all cursor-pointer ${
+              billingInterval === 'year'
+                ? 'bg-surface text-ink shadow-sm'
+                : 'text-muted hover:text-ink'
+            }`}
+          >
+            Yearly
+            <span className="rounded-full bg-brand-tint px-2 py-0.5 text-[10px] font-bold text-success-strong tracking-tight">
+              Save 2 mo
+            </span>
+          </button>
+        </div>
+      </div>
+
+      {/* Pricing Cards Grid */}
+      <div className="mx-auto grid w-full max-w-6xl grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch">
+        {(Object.values(PLAN_CATALOG) as PricingPlan[]).map((plan) => {
+          const amount = plan[billingInterval === 'month' ? 'monthly' : 'yearly'][SUBSCRIPTION_CURRENCY];
+          const isCurrent = plan.id === currentPlan;
+          const isPro = plan.id === 'pro';
+          const needsPlanChange = Boolean(currentPlan && currentPlan !== 'free' && !isCurrent && plan.id !== 'free');
+          const PlanIcon = plan.id === 'free' ? UsersRound : isPro ? Rocket : Layers3;
+          const planSections = PLAN_FEATURE_COPY[plan.id];
+          const convertedPrice =
+            amount > 0 && displayCurrency !== 'USD' && conversion?.currency === displayCurrency
+              ? new Intl.NumberFormat(undefined, {
+                  style: 'currency',
+                  currency: displayCurrency,
+                  currencyDisplay: 'narrowSymbol',
+                  maximumFractionDigits: 0,
+                }).format((amount / 100) * conversion.rate)
+              : null;
+          const equivalentMonthly =
+            billingInterval === 'year' && amount > 0
+              ? formatPlanPrice(Math.round(amount / 12), SUBSCRIPTION_CURRENCY)
+              : null;
+
+          return (
+            <article
+              key={plan.id}
+              className={`relative flex flex-col rounded-2xl bg-surface p-6 sm:p-7 transition-all duration-200 ${
+                isPro
+                  ? 'border-2 border-brand shadow-xl ring-1 ring-brand/20 lg:-translate-y-2'
+                  : 'border border-border shadow-xs hover:border-border-hover hover:shadow-md'
+              }`}
+            >
+              {/* Featured Badge */}
+              {isPro && (
+                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full bg-brand px-3.5 py-1 text-[10px] font-extrabold uppercase tracking-widest text-white shadow-sm">
+                  Most Popular
+                </div>
+              )}
+
+              {/* Plan Identity: Icon, Name, Tagline & Current Plan Badge */}
+              <div className="flex items-start gap-3.5 min-h-[58px]">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand-tint text-brand">
+                  <PlanIcon size={22} />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center justify-between gap-2">
+                    <h3 className="text-lg font-bold tracking-tight text-ink">{plan.name}</h3>
+                    {isCurrent && (
+                      <span className="rounded-full bg-brand-tint px-2.5 py-0.5 text-[10px] font-bold text-success-strong">
+                        Current plan
+                      </span>
+                    )}
+                  </div>
+                  <p className="mt-0.5 text-xs leading-relaxed text-muted line-clamp-2">
+                    {plan.tagline}
+                  </p>
+                </div>
+              </div>
+
+              {/* Pricing Display */}
+              <div className="my-5 rounded-xl border border-border-subtle bg-canvas/40 px-4 py-4 text-center">
+                <div className="flex items-baseline justify-center gap-1">
+                  <span className="text-3xl sm:text-4xl font-extrabold tracking-tight text-ink">
+                    {amount ? formatPlanPrice(amount, SUBSCRIPTION_CURRENCY) : 'Free'}
+                  </span>
+                  {amount > 0 && (
+                    <span className="text-sm font-semibold text-muted">
+                      /{billingInterval === 'month' ? 'mo' : 'yr'}
+                    </span>
+                  )}
+                </div>
+                <div className="mt-1 text-xs text-muted min-h-[18px]">
+                  {amount > 0 ? (
+                    convertedPrice ? (
+                      <span>≈ {convertedPrice} · estimated conversion</span>
+                    ) : billingInterval === 'year' && equivalentMonthly ? (
+                      <span>
+                        {equivalentMonthly}/mo billed annually in USD
+                      </span>
+                    ) : (
+                      <span>Billed monthly in USD</span>
+                    )
+                  ) : (
+                    <span>Free forever, no credit card required</span>
+                  )}
+                </div>
+              </div>
+
+              {/* Action Button */}
+              <div className="mb-6">
+                {renderAction(plan, isCurrent, needsPlanChange, billingInterval)}
+              </div>
+
+              {/* Feature Sections */}
+              <div className="flex-1 space-y-5 border-t border-border-subtle pt-5">
+                {planSections.map((section) => {
+                  const SectionIcon = section.icon;
+                  return (
+                    <section key={section.title} className="space-y-2.5">
+                      <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-ink pb-1 border-b border-border-subtle/80">
+                        <SectionIcon size={14} className="shrink-0 text-brand" />
+                        <span>{section.title}</span>
+                      </div>
+                      <ul className="space-y-2.5 p-0 m-0 list-none">
+                        {section.features.map((feature) => {
+                          const emphasisIndex = feature.emphasis
+                            ? feature.text.indexOf(feature.emphasis)
+                            : -1;
+                          const before =
+                            emphasisIndex >= 0 ? feature.text.slice(0, emphasisIndex) : feature.text;
+                          const after =
+                            emphasisIndex >= 0
+                              ? feature.text.slice(emphasisIndex + feature.emphasis!.length)
+                              : '';
+                          const isIncluded = feature.included !== false;
+
+                          return (
+                            <li
+                              key={feature.text}
+                              className="flex items-start gap-2.5 text-xs leading-normal"
+                            >
+                              <span
+                                className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full mt-0.5 ${
+                                  isIncluded
+                                    ? 'bg-success-tint text-success-strong'
+                                    : 'bg-danger-tint text-danger'
+                                }`}
+                                aria-hidden="true"
+                              >
+                                {isIncluded ? (
+                                  <Check size={11} strokeWidth={2.5} />
+                                ) : (
+                                  <X size={11} strokeWidth={2.5} />
+                                )}
+                              </span>
+                              <span
+                                className={`flex-1 min-w-0 ${
+                                  isIncluded ? 'text-ink-secondary' : 'text-muted line-through opacity-70'
+                                }`}
+                              >
+                                {before}
+                                {emphasisIndex >= 0 && (
+                                  <strong className="font-semibold text-ink">
+                                    {feature.emphasis}
+                                  </strong>
+                                )}
+                                {after}
+                              </span>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </section>
+                  );
+                })}
+              </div>
+            </article>
+          );
+        })}
+      </div>
     </div>
-  </>;
+  );
 }
