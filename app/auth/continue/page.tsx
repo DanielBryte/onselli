@@ -27,7 +27,7 @@ export default function ContinueAuthPage() {
           ? safeNext ?? '/discover'
           : !user.onboardingCompletedAt
             ? safeNext ? `/onboarding?next=${encodeURIComponent(safeNext)}` : '/onboarding'
-            : safeNext ?? '/dashboard';
+            : safeNext ?? '/workspace';
       router.replace(destination);
     }).catch(() => {
       if (active) setError('We could not finish signing you in. Please try again.');
@@ -35,8 +35,8 @@ export default function ContinueAuthPage() {
     return () => { active = false; };
   }, [router]);
 
-  return <main className="grid min-h-svh place-content-center justify-items-center gap-[18px] bg-white text-center text-sm text-[#596d63]">
+  return <main className="grid min-h-svh place-content-center justify-items-center gap-[18px] bg-white text-center text-sm text-muted">
     <img className="h-[58px] w-[58px] object-contain" src="/logo.png" alt="Onselli" />
-    {error ? <><p role="alert">{error}</p><Link className="font-semibold text-[#145336] hover:underline" href="/login">Return to sign in</Link></> : <p>Taking you to your Onselli workspace…</p>}
+    {error ? <><p role="alert">{error}</p><Link className="font-semibold text-display hover:underline" href="/login">Return to sign in</Link></> : <p>Taking you to your Onselli workspace…</p>}
   </main>;
 }

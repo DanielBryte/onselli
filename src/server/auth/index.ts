@@ -5,10 +5,11 @@ import * as schema from '../db/schema';
 import { getDatabase } from '../db';
 import { getEnv } from '../config/env';
 import { eq } from 'drizzle-orm';
+import { after } from 'next/server';
 
 const env = getEnv();
 const socialProviders = env.GOOGLE_CLIENT_ID && env.GOOGLE_CLIENT_SECRET
-  ? { google: { clientId: env.GOOGLE_CLIENT_ID, clientSecret: env.GOOGLE_CLIENT_SECRET } }
+  ? { google: { clientId: env.GOOGLE_CLIENT_ID, clientSecret: env.GOOGLE_CLIENT_SECRET, requireEmailVerification: true } }
   : undefined;
 
 export const auth = betterAuth({
@@ -26,18 +27,38 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
     requireEmailVerification: true,
+    resetPasswordTokenExpiresIn: 60 * 60,
+    revokeSessionsOnPasswordReset: true,
     sendResetPassword: async ({ user, url }) => {
-      const { sendPasswordResetEmail } = await import('../emails/send');
-      await sendPasswordResetEmail(user.email, url);
+      after(async () => {
+        try {
+          const { sendPasswordResetEmail } = await import('../emails/send');
+          await sendPasswordResetEmail(user.email, url);
+        } catch {
+          console.error('[auth] Could not send password reset email.');
+        }
+      });
+    },
+  },
+  rateLimit: {
+    customRules: {
+      '/sign-up/email': { window: 60, max: 5 },
     },
   },
   emailVerification: {
     sendOnSignUp: true,
     sendOnSignIn: true,
+    expiresIn: 60 * 60,
     autoSignInAfterVerification: true,
     sendVerificationEmail: async ({ user, url }) => {
-      const { sendVerificationEmail } = await import('../emails/send');
-      await sendVerificationEmail(user.email, url);
+      after(async () => {
+        try {
+          const { sendVerificationEmail } = await import('../emails/send');
+          await sendVerificationEmail(user.email, url);
+        } catch {
+          console.error('[auth] Could not send email verification message.');
+        }
+      });
     },
   },
   socialProviders,

@@ -22,6 +22,8 @@ const envSchema = z.object({
   ZEPTOMAIL_API_URL: optionalUrl,
   ZEPTOMAIL_FROM_EMAIL: z.string().email().optional(),
   ZEPTOMAIL_FROM_NAME: z.string().optional(),
+  // Zoho CPaaS requires a verified bounce (Return-Path) address for sends.
+  ZEPTOMAIL_BOUNCE_ADDRESS: z.string().email().optional(),
   AWS_ACCESS_KEY_ID: z.string().optional(),
   AWS_SECRET_ACCESS_KEY: z.string().optional(),
   AWS_SESSION_TOKEN: z.string().optional(),
